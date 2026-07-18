@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /install
 
-Sitemap: http://127.0.0.1:58595/sitemap.xml
+Sitemap: https://robertobendi.github.io/sarabonella/sitemap.xml
