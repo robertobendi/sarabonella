@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>document.documentElement.className = 'js';</script>
-    <title>{{ page_title|default('Sara Bonella — Computational physicist at EPFL and CECAM') }}</title>
-    <meta name="description" content="{{ meta_description|default('Sara Bonella connects computational physics, molecular simulation, teaching, and international scientific leadership.') }}">
-    <meta property="og:title" content="{{ og_title|default(page_title|default('Sara Bonella — Computational physicist')) }}">
-    <meta property="og:description" content="{{ og_description|default(meta_description|default('Computational physics, scientific leadership, teaching, and collaboration.')) }}">
+    <title>Sara Bonella — Computational physics, leadership, and teaching</title>
+    <meta name="description" content="Sara Bonella connects molecular simulation, quantum dynamics, and international research leadership at EPFL and CECAM.">
+    <meta property="og:title" content="Sara Bonella — Computational physics for matter, motion, and scientific communities">
+    <meta property="og:description" content="Sara Bonella connects molecular simulation, quantum dynamics, and international research leadership at EPFL and CECAM.">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#070A18">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23070A18'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%2300D9FF' stroke-width='2'/%3E%3Cpath d='M13 34C22 13 44 14 51 31C44 50 20 50 13 34Z' fill='none' stroke='%235B4BFF' stroke-width='3'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='sans-serif' font-size='20' font-weight='700' fill='%23F5F2FF'%3ESB%3C/text%3E%3C/svg%3E">
@@ -1137,9 +1137,25 @@
             .hero-exit-trajectory path { animation: none !important; }
         }
     </style>
-    {% block head %}{% endblock %}
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Sara Bonella",
+  "url": "/",
+  "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23070A18'/%3E%3Ccircle cx='32' cy='32' r='23' fill='none' stroke='%2300D9FF'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='700' fill='%23F5F2FF'%3ESB%3C/text%3E%3C/svg%3E",
+  "image": "/uploads/home-hero/epfl_campus___lausanne__36524188580__jpg.jpg",
+  "description": "Computational physicist, EPFL educator, and Deputy Director of CECAM working across molecular simulation, statistical and quantum physics, and scientific infrastructure.",
+  "jobTitle": ["Deputy Director of CECAM", "Maître d’Enseignement et de Recherche at EPFL"],
+  "affiliation": [
+    {"@type": "Organization", "name": "CECAM", "url": "https://www.cecam.org/"},
+    {"@type": "Organization", "name": "EPFL", "url": "https://www.epfl.ch/"}
+  ],
+  "sameAs": ["https://orcid.org/0000-0003-4131-2513"]
+}
+</script>
 </head>
-<body class="{{ body_class|default('page-default') }}">
+<body class="page-home">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
         <div class="header-inner">
@@ -1166,7 +1182,228 @@
     </header>
 
     <main id="main">
-        {% block content %}{% endblock %}
+                                                                        <section class="orbital-hero hero--home" aria-labelledby="hero-title-home">
+    <div class="hero-grid">
+        <div class="orbital-visual">
+            <div class="orbit-disc">
+                <span class="stage-halo" aria-hidden="true"></span>
+                <svg class="orbit-svg" viewBox="0 0 1000 1000" aria-hidden="true">
+                    <defs>
+                        <path id="ring-path-home" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
+                    </defs>
+                    <circle class="orbit-guide" cx="500" cy="500" r="430"/>
+                    <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
+                    <g class="orbit-rotor">
+                        <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-home">SARA BONELLA • COMPUTATIONAL PHYSICS •</textPath></text>
+                        <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-home">SARA BONELLA • COMPUTATIONAL PHYSICS •</textPath></text>
+                        <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-home">SARA BONELLA • COMPUTATIONAL PHYSICS •</textPath></text>
+                    </g>
+                </svg>
+
+                <figure class="hero-aperture">
+                    <img src="/uploads/home-hero/epfl_campus___lausanne__36524188580__jpg.jpg" alt="Red structural tower on the EPFL campus in Lausanne">
+                    <figcaption class="aperture-caption">
+                        EPFL campus context, Lausanne — not a research facility claim
+                         · <a href="https://commons.wikimedia.org/wiki/File:EPFL_Campus_-_Lausanne_(36524188580).jpg" target="_blank" rel="noopener">Wikimedia source</a>                    </figcaption>
+                </figure>
+
+                                    <a class="orbit-node node--1" href="/research#statistical">Statistical physics</a>
+                                    <a class="orbit-node node--2" href="/research#quantum">Quantum dynamics</a>
+                                    <a class="orbit-node node--3" href="/research#molecular">Molecular simulation</a>
+                                    <a class="orbit-node node--4" href="/research#hpc">HPC &amp; infrastructure</a>
+                                    <a class="orbit-node node--5 orbit-node--lime" href="/leadership">Scientific leadership</a>
+                
+                            </div>
+        </div>
+
+        <div class="hero-panel">
+            <p class="eyebrow">00 / SARA BONELLA / LAUSANNE</p>
+            <h1 id="hero-title-home">Computational physics for matter, motion, and scientific communities</h1>
+            <p class="hero-deck">Sara Bonella connects molecular simulation, quantum dynamics, and European research leadership to advance ambitious collaborations.</p>
+                            <ul class="role-lines">
+                    <li>Deputy Director / CECAM at EPFL</li><li>Maître d’Enseignement et de Recherche / EPFL</li>                </ul>
+                        <div class="action-row">
+                <a class="button" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">Discuss collaboration <span class="arrow-glyph" aria-hidden="true">↗</span></a>
+                <a class="text-action" href="/research">Enter the research map</a>            </div>
+        </div>
+    </div>
+    <svg class="hero-exit-trajectory trajectory" viewBox="0 0 760 190" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M760 18 C620 12 590 88 462 88 S260 56 208 126 S74 178 0 160"/>
+        <circle cx="462" cy="88" r="7"/>
+        <circle cx="208" cy="126" r="5"/>
+    </svg>
+</section>
+
+    <section aria-label="Selected track record">
+        <div class="marquee" role="region" aria-label="Track record: 70 plus peer-reviewed articles, 60 plus invited talks, 25 plus international events">
+            <div class="marquee__track">
+                <span>70+ PEER-REVIEWED ARTICLES — 60+ INVITED TALKS — 25+ INTERNATIONAL EVENTS —</span>
+                <span aria-hidden="true">70+ PEER-REVIEWED ARTICLES — 60+ INVITED TALKS — 25+ INTERNATIONAL EVENTS —</span>
+            </div>
+        </div>
+        <div class="shell marquee-sources">
+            <span>Publication record / supplied academic CV</span>
+            <span>Invited talks / international meetings &amp; schools</span>
+            <span>Events / conferences, workshops &amp; training</span>
+        </div>
+    </section>
+
+    <section class="section section--large section--field" aria-labelledby="constellation-title">
+        <div class="shell">
+            <div class="section-heading section-heading--split">
+                <div>
+                    <p class="eyebrow">01 / RESEARCH FIELD</p>
+                    <h2 id="constellation-title">A constellation of questions, methods, and communities</h2>
+                </div>
+                <p class="section-deck">The work moves between foundational statistical mechanics and practical simulation methods: how matter evolves, how models retain physical meaning, and how computational communities share the infrastructure to investigate both.</p>
+            </div>
+
+            <div class="constellation-grid">
+                <svg class="trajectory" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M80 130 C310 20 420 240 610 170 S970 60 1120 190 C980 320 820 310 660 390 S300 330 160 470 C310 680 800 610 1080 690"/>
+                    <circle cx="80" cy="130" r="8"/><circle cx="610" cy="170" r="8"/><circle cx="660" cy="390" r="8"/><circle cx="160" cy="470" r="8"/><circle cx="1080" cy="690" r="8"/>
+                </svg>
+
+                <article class="research-card accent-cyan constellation-card--statistical" id="home-statistical">
+                    <div class="card-meta"><span class="card-coordinate">R.01 / FIELD</span><span>Foundations</span></div>
+                    <h3>Statistical physics</h3>
+                    <p>Non-equilibrium behaviour, fluctuation relations, constrained dynamics, and the statistical structure behind molecular trajectories.</p>
+                    <a class="card-link" href="/research#statistical">Trace the statistical path →</a>
+                </article>
+
+                <article class="research-card accent-pink constellation-card--quantum" id="home-quantum">
+                    <div class="card-meta"><span class="card-coordinate">R.02 / FIELD</span><span>Approximation</span></div>
+                    <h3>Quantum dynamics</h3>
+                    <p>Trajectory-based approximations that make nuclear quantum effects and time-dependent observables computationally accessible.</p>
+                    <a class="card-link" href="/research#quantum">Open the quantum route →</a>
+                </article>
+
+                <article class="research-card accent-lime constellation-card--molecular" id="home-molecular">
+                    <div class="card-meta"><span class="card-coordinate">R.03 / FIELD</span><span>Simulation</span></div>
+                    <h3>Molecular simulation</h3>
+                    <p>Methods for condensed-phase systems, electrochemical interfaces, free-energy landscapes, and charge transport in external magnetic fields.</p>
+                    <a class="card-link" href="/research#molecular">Enter molecular simulation →</a>
+                </article>
+
+                <article class="research-card accent-violet constellation-card--hpc" id="home-hpc">
+                    <div class="card-meta"><span class="card-coordinate">R.04 / FIELD</span><span>Scale</span></div>
+                    <h3>HPC &amp; infrastructure</h3>
+                    <p>High-performance computing as a shared scientific capability: methods, software, training, and durable access to expertise.</p>
+                    <a class="card-link" href="/research#hpc">Inspect methods &amp; infrastructure →</a>
+                </article>
+
+                <article class="research-card accent-pink constellation-card--leadership" id="home-leadership">
+                    <div class="card-meta"><span class="card-coordinate">R.05 / FIELD</span><span>Networks</span></div>
+                    <h3>Scientific leadership</h3>
+                    <p>Building research programmes across institutions, disciplines, and countries—then connecting them to training and public science.</p>
+                    <a class="card-link" href="/leadership">See leadership &amp; teaching →</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--large section--plum" aria-labelledby="two-roles-title">
+        <div class="shell split-5-7">
+            <figure class="halftone-media">
+                <img src="/uploads/home-lab/co2_sunrise__4071453149__jpg.jpg" alt="Global carbon dioxide simulation visualized across a world map">
+                <figcaption>Scientific-computing context: a global CO₂ simulation visualization, not Bonella’s research data. <a href="https://commons.wikimedia.org/wiki/File:CO2_Sunrise_(4071453149).jpg" target="_blank" rel="noopener">Wikimedia source</a></figcaption>
+            </figure>
+            <div>
+                <p class="eyebrow">02 / TWO MODES OF WORK</p>
+                <h2 id="two-roles-title">Researcher / institution-builder</h2>
+                <p class="section-deck" style="margin-top:1.5rem;">The scientific record and the infrastructure work are not parallel stories. They reinforce one another: research sharpens the questions; networks create the conditions for more people to answer them well.</p>
+                <div class="thesis-pair" style="margin-top:2rem;">
+                    <article class="thesis-block">
+                        <h3>Develop methods that hold onto the physics</h3>
+                        <p>Bonella’s work spans condensed-phase simulation, statistical and quantum physics, molecular dynamics, supercapacitors, and magnetic-field charge transport.</p>
+                    </article>
+                    <article class="thesis-block">
+                        <h3>Build structures that let research travel</h3>
+                        <p>At CECAM, EPFL, and across international networks, she connects programmes, training, infrastructure, and communities around computational science.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--large" aria-labelledby="evidence-title">
+        <div class="shell">
+            <div class="section-heading section-heading--split">
+                <div>
+                    <p class="eyebrow">03 / SELECTED EVIDENCE</p>
+                    <h2 id="evidence-title">Recent papers / leadership now</h2>
+                </div>
+                <p class="section-deck">A deliberately short readout: current scholarship alongside the scientific networks where Bonella serves, advises, and coordinates.</p>
+            </div>
+
+            <div class="evidence-grid">
+                <section class="evidence-band" aria-labelledby="selected-papers-title">
+                    <p class="eyebrow">03A / PUBLICATIONS</p>
+                    <h3 id="selected-papers-title">Selected papers</h3>
+                    <div class="publication-line">
+                        <span class="year">2025</span>
+                        <div><strong>Electrically driven first-order phase transition of a 2D ionic crystal</strong><small>PNAS · Angiolari, Coretti, Salanne &amp; Bonella</small></div>
+                        <a href="https://doi.org/10.1073/pnas.2520026122" target="_blank" rel="noopener">DOI ↗</a>
+                    </div>
+                    <div class="publication-line">
+                        <span class="year">2024</span>
+                        <div><strong>Jupyter widgets and extensions for education and research</strong><small>Computer Physics Communications · Dou et al.</small></div>
+                        <a href="https://doi.org/10.1016/j.cpc.2024.109353" target="_blank" rel="noopener">DOI ↗</a>
+                    </div>
+                    <div class="publication-line">
+                        <span class="year">2023</span>
+                        <div><strong>Inferring free-energy barriers and kinetic rates from molecular dynamics</strong><small>Journal of Chemical Physics · Girardier et al.</small></div>
+                        <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">DOI ↗</a>
+                    </div>
+                    <a class="text-action" href="/publications">Read the selected record</a>
+                </section>
+
+                <section class="evidence-band" aria-labelledby="leadership-now-title">
+                    <p class="eyebrow">03B / NETWORKS</p>
+                    <h3 id="leadership-now-title">Leadership now</h3>
+                    <div class="publication-line">
+                        <span class="year">2014—</span>
+                        <div><strong>CECAM Deputy Director</strong><small>Scientific programme, network activity, research infrastructure, and international representation</small></div>
+                        <a href="https://www.cecam.org/" target="_blank" rel="noopener">CECAM ↗</a>
+                    </div>
+                    <div class="publication-line">
+                        <span class="year">2021—</span>
+                        <div><strong>LUMI Scientific Advisory Group</strong><small>European flagship supercomputing infrastructure</small></div>
+                        <a href="/leadership#networks">Context →</a>
+                    </div>
+                    <div class="publication-line">
+                        <span class="year">2025—</span>
+                        <div><strong>Invited professor, University of Rwanda</strong><small>Statistical mechanics and international scientific training</small></div>
+                        <a href="/leadership#teaching">Teaching →</a>
+                    </div>
+                    <a class="text-action" href="/leadership">Follow the leadership trajectory</a>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--large" aria-labelledby="invitation-title">
+        <div class="shell">
+            <div class="invitation-panel">
+                <div>
+                    <p class="eyebrow">04 / OPEN CHANNEL</p>
+                    <h2 id="invitation-title">A strong collaboration begins with a precise question.</h2>
+                    <p class="section-deck">Research partnership, invited speaking, supervision, teaching, or scientific-programme work—start with the context and the point of connection.</p>
+                    <div class="action-row" style="margin-top:2rem;">
+                        <a class="button" href="/contact">Choose an enquiry route <span class="arrow-glyph" aria-hidden="true">↗</span></a>
+                    </div>
+                </div>
+                <span class="sticker" aria-hidden="true">
+                    <svg viewBox="0 0 120 120">
+                        <defs><path id="home-sticker-ring" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs>
+                        <circle cx="60" cy="60" r="53" fill="#070A18" stroke="currentColor" stroke-width="2"/>
+                        <text font-size="10" letter-spacing="1.8"><textPath href="#home-sticker-ring">COLLABORATE • COLLABORATE • </textPath></text>
+                        <text x="60" y="68" text-anchor="middle" font-size="24" font-weight="700">↗</text>
+                    </svg>
+                </span>
+            </div>
+        </div>
+    </section>
     </main>
 
     <footer class="site-footer">
@@ -1216,7 +1453,7 @@
                 </section>
             </div>
             <div class="footer-meta">
-                <span>© {{ "now"|date('Y') }} Sara Bonella</span>
+                <span>© 2026 Sara Bonella</span>
                 <span>No tracking. No enquiry data is collected by this site.</span>
                 <span>Context photography: Wikimedia Commons; source links appear in captions.</span>
             </div>

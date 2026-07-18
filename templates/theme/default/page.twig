@@ -1,13 +1,38 @@
 {% extends '@theme/layout.twig' %}
-{% set meta_description = entry.field('meta_description') %}
-
-{% block title %}{{ entry.field('title') }} · {{ site.name }}{% endblock %}
+{% set page_title = entry.field('title') ~ ' — Sara Bonella' %}
+{% set meta_description = entry.field('meta_description')|default(entry.field('summary')|default('Academic work, research, teaching, and scientific leadership from Sara Bonella.'), true) %}
+{% set og_title = page_title %}
+{% set og_description = meta_description %}
+{% set body_class = 'page-default' %}
 
 {% block content %}
-<article class="wrap">
-    <h1>{{ entry.field('title') }}</h1>
-    <div class="article-body">
-        {{ entry.field('body')|markdown }}
-    </div>
-</article>
+    {% set hero_kind = 'page' %}
+    {% set hero_ring_text = entry.field('title')|upper ~ ' • SARA BONELLA •' %}
+    {% set hero_image = entry.field('lead_image')|default('/uploads/home-hero/epfl_campus___lausanne__36780868741__jpg.jpg', true) %}
+    {% set hero_alt = 'EPFL campus in Lausanne, contextual image for ' ~ entry.field('title') %}
+    {% set hero_caption = 'EPFL campus context, Lausanne' %}
+    {% set hero_source_url = '' %}
+    {% set hero_eyebrow = 'PAGE / ACADEMIC PROFILE' %}
+    {% set hero_title = entry.field('title') %}
+    {% set hero_deck = entry.field('summary')|default('Research, teaching, and scientific communities connected through precise computational work.', true) %}
+    {% set hero_roles = ['Sara Bonella / EPFL & CECAM'] %}
+    {% set hero_primary_url = '/contact' %}
+    {% set hero_primary_label = 'Start a conversation' %}
+    {% set hero_secondary_url = '/research' %}
+    {% set hero_secondary_label = 'Explore research' %}
+    {% set hero_nodes = [
+        {'label': 'Research', 'url': '/research'},
+        {'label': 'Publications', 'url': '/publications'},
+        {'label': 'Leadership', 'url': '/leadership'},
+        {'label': 'Outreach', 'url': '/outreach'},
+        {'label': 'Contact', 'url': '/contact', 'lime': true}
+    ] %}
+    {% include '@theme/orbital-hero.twig' %}
+
+    <article class="article-shell">
+        <p class="eyebrow">01 / DOCUMENT</p>
+        <div class="article-body">
+            {{ entry.field('body')|markdown }}
+        </div>
+    </article>
 {% endblock %}

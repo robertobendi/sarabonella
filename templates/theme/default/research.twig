@@ -1,0 +1,37 @@
+{% extends '@theme/layout.twig' %}
+{% set page_title = entry.field('title') ~ ' — Research — Sara Bonella' %}
+{% set meta_description = entry.field('summary')|default('A research area in Sara Bonella’s computational-physics programme.', true) %}
+{% set og_title = page_title %}
+{% set og_description = meta_description %}
+{% set body_class = 'page-research' %}
+
+{% block content %}
+    {% set hero_kind = 'research-detail' %}
+    {% set hero_ring_text = entry.field('category')|upper ~ ' • RESEARCH • METHODS •' %}
+    {% set hero_image = entry.field('lead_image')|default('/uploads/research-hero/dutch_national_supercomputer__huygens____8183833489_png.png', true) %}
+    {% set hero_alt = 'High-performance computing context for ' ~ entry.field('title') %}
+    {% set hero_caption = 'Computational-infrastructure context image' %}
+    {% set hero_source_url = '' %}
+    {% set hero_eyebrow = 'RESEARCH NOTE / ' ~ entry.field('category') %}
+    {% set hero_title = entry.field('title') %}
+    {% set hero_deck = entry.field('summary')|default('A focused research territory within a wider programme connecting matter, motion, and method.', true) %}
+    {% set hero_roles = [entry.field('category')|default('Computational physics', true)] %}
+    {% set hero_primary_url = 'mailto:sara.bonella@epfl.ch?subject=Research%20collaboration' %}
+    {% set hero_primary_label = 'Discuss collaboration' %}
+    {% set hero_secondary_url = '/research' %}
+    {% set hero_secondary_label = 'Back to the research map' %}
+    {% set hero_nodes = [
+        {'label': 'Statistical physics', 'url': '/research#statistical'},
+        {'label': 'Quantum dynamics', 'url': '/research#quantum'},
+        {'label': 'Molecular simulation', 'url': '/research#molecular'},
+        {'label': 'HPC', 'url': '/research#hpc'},
+        {'label': 'Publications', 'url': '/publications', 'lime': true}
+    ] %}
+    {% include '@theme/orbital-hero.twig' %}
+
+    <article class="article-shell">
+        <p class="eyebrow">01 / RESEARCH DETAIL</p>
+        <div class="article-body">{{ entry.field('body')|markdown }}</div>
+        <div class="action-row" style="margin-top:3rem;"><a class="button" href="/research">Return to all research areas <span class="arrow-glyph" aria-hidden="true">↗</span></a></div>
+    </article>
+{% endblock %}

@@ -1,17 +1,29 @@
 {% extends '@theme/layout.twig' %}
-
-{% block title %}{{ ok ? 'Thanks' : 'Try again' }} · {{ site.name }}{% endblock %}
+{% set page_title = (ok ? 'Message received' : 'Message not sent') ~ ' — Sara Bonella' %}
+{% set meta_description = ok ? 'Your message was received by the local Pebblestack contact endpoint.' : 'The local contact endpoint could not accept this message.' %}
+{% set og_title = page_title %}
+{% set og_description = meta_description %}
+{% set body_class = 'page-contact' %}
 
 {% block content %}
-<div class="wrap" style="text-align:center;padding:4rem 0;">
-    {% if ok %}
-        <h1>Thanks for getting in touch.</h1>
-        <p class="lede">We received your message.</p>
-    {% else %}
-        <h1>Something went wrong.</h1>
-        <ul style="display:inline-block;text-align:left;">
-            {% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
-        <p style="margin-top:2rem;"><a href="javascript:history.back()">← Go back</a></p>
-    {% endif %}
-</div>
+<section class="section section--large">
+    <div class="shell split-5-7">
+        <figure class="halftone-media">
+            <img src="/uploads/contact-hero/panorama_depuis_l_avenue_du_l_man_lausanne_jpg.jpg" alt="Lausanne rooftops, Lake Geneva, and the Alps">
+            <figcaption>Lausanne context image.</figcaption>
+        </figure>
+        <div>
+            <p class="eyebrow">FORM ENDPOINT / LOCAL ONLY</p>
+            {% if ok %}
+                <h1>Message received.</h1>
+                <p class="lede" style="margin-top:1.5rem;">The local Pebblestack endpoint accepted your message.</p>
+            {% else %}
+                <h1>The message was not sent.</h1>
+                <ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+                <p class="lede">Use the direct email route instead; the static public site does not expose a form.</p>
+            {% endif %}
+            <div class="action-row" style="margin-top:2rem;"><a class="button" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">Open a direct email <span class="arrow-glyph" aria-hidden="true">↗</span></a><a class="text-action" href="/contact">Contact routes</a></div>
+        </div>
+    </div>
+</section>
 {% endblock %}

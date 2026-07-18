@@ -1,22 +1,19 @@
 {% extends '@theme/layout.twig' %}
-{% set meta_description = entry.field('excerpt') %}
-
-{% block title %}{{ entry.field('title') }} · {{ site.name }}{% endblock %}
+{% set page_title = entry.field('title') ~ ' — Sara Bonella' %}
+{% set meta_description = entry.field('excerpt')|default('An editorial note from Sara Bonella.', true) %}
+{% set og_title = page_title %}
+{% set og_description = meta_description %}
+{% set body_class = 'page-default' %}
 
 {% block content %}
-<article class="wrap">
+<article class="article-shell">
+    <figure class="halftone-media" style="margin-bottom:3rem;">
+        <img src="/uploads/home-lab/co2_sunrise__4071453149__jpg.jpg" alt="Global carbon dioxide simulation visualization used as scientific-computing context">
+        <figcaption>Scientific-computing context image.</figcaption>
+    </figure>
+    <p class="eyebrow">EDITORIAL NOTE / {{ (entry.publishAt ?? entry.createdAt)|date('Y.m.d') }}</p>
     <h1>{{ entry.field('title') }}</h1>
-    <p class="meta">
-        {{ (entry.publishAt ?? entry.createdAt)|date('F j, Y') }}
-        {% if entry.field('author') %} · by {{ entry.field('author') }}{% endif %}
-    </p>
-    {% if entry.field('excerpt') %}
-        <p class="lede">{{ entry.field('excerpt') }}</p>
-    {% endif %}
-    <div class="article-body">
-        {{ entry.field('body')|markdown }}
-    </div>
-    <hr>
-    <p><a href="/blog">← All posts</a></p>
+    {% if entry.field('excerpt') %}<p class="lede" style="margin-top:1.5rem;">{{ entry.field('excerpt') }}</p>{% endif %}
+    <div class="article-body" style="margin-top:3rem;">{{ entry.field('body')|markdown }}</div>
 </article>
 {% endblock %}

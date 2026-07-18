@@ -1,11 +1,31 @@
 {% extends '@theme/layout.twig' %}
-
-{% block title %}Not found · {{ site.name }}{% endblock %}
+{% set page_title = 'Signal not found — Sara Bonella' %}
+{% set meta_description = 'This route is outside the current Sara Bonella site map. Return to research, publications, leadership, outreach, or contact.' %}
+{% set og_title = page_title %}
+{% set og_description = meta_description %}
+{% set body_class = 'page-not-found' %}
 
 {% block content %}
-<div class="wrap empty-state">
-    <h1>404</h1>
-    <p class="lede">That page doesn’t exist — or has been moved.</p>
-    <p><a href="/">Go home →</a></p>
-</div>
+    {% set hero_kind = 'not-found' %}
+    {% set hero_ring_text = '404 • SIGNAL • ROUTE • RECALCULATE •' %}
+    {% set hero_image = '/uploads/contact-hero/ch_nb___lausanne_und_genfersee__panorama___collection_gugelm.jpg' %}
+    {% set hero_alt = 'Historic panoramic illustration of Lausanne and Lake Geneva' %}
+    {% set hero_caption = 'Historic Lausanne panorama — context image' %}
+    {% set hero_source_url = 'https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=Lausanne%20Genfersee%20Panorama%20Gugelmann' %}
+    {% set hero_eyebrow = '404 / ROUTE EXCEPTION' %}
+    {% set hero_title = 'This coordinate is outside the current map' %}
+    {% set hero_deck = 'The page may have moved, the link may be incomplete, or the requested route has not been published.' %}
+    {% set hero_roles = ['No data lost', 'Site map available below'] %}
+    {% set hero_primary_url = '/' %}
+    {% set hero_primary_label = 'Return home' %}
+    {% set hero_secondary_url = '/research' %}
+    {% set hero_secondary_label = 'Enter the research map' %}
+    {% set hero_nodes = [
+        {'label': 'Home', 'url': '/'},
+        {'label': 'Research', 'url': '/research'},
+        {'label': 'Publications', 'url': '/publications'},
+        {'label': 'Leadership', 'url': '/leadership'},
+        {'label': 'Contact', 'url': '/contact', 'lime': true}
+    ] %}
+    {% include '@theme/orbital-hero.twig' %}
 {% endblock %}
