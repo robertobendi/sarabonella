@@ -2,37 +2,53 @@
     <div class="hero-grid">
         <div class="orbital-visual">
             <div class="orbit-disc">
-                <span class="stage-halo" aria-hidden="true"></span>
-                <svg class="orbit-svg" viewBox="0 0 1000 1000" aria-hidden="true">
-                    <defs>
-                        <path id="ring-path-{{ hero_kind }}" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
-                    </defs>
-                    <circle class="orbit-guide" cx="500" cy="500" r="430"/>
-                    <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
-                    <g class="orbit-rotor">
-                        <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                        <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                        <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                    </g>
-                </svg>
+                <div class="orbit-stage">
+                    <span class="stage-halo" aria-hidden="true"></span>
+                    <svg class="orbit-svg orbit-svg--desktop" viewBox="0 0 1000 1000" aria-hidden="true">
+                        <defs>
+                            <path id="ring-path-{{ hero_kind }}" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
+                        </defs>
+                        <circle class="orbit-guide" cx="500" cy="500" r="430"/>
+                        <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
+                        <g class="orbit-rotor">
+                            <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
+                            <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
+                            <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
+                        </g>
+                    </svg>
+                    <svg class="orbit-svg orbit-svg--mobile" viewBox="-60 -60 1120 1120" aria-hidden="true">
+                        <defs>
+                            <path id="ring-path-mobile-{{ hero_kind }}" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
+                        </defs>
+                        <circle class="orbit-guide" cx="500" cy="500" r="430"/>
+                        <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
+                        <g class="orbit-rotor">
+                            <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
+                            <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
+                            <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
+                        </g>
+                    </svg>
 
-                <figure class="hero-aperture">
-                    <img src="{{ hero_image }}" alt="{{ hero_alt }}">
-                    <figcaption class="aperture-caption">
-                        {{ hero_caption }}
-                        {% if hero_source_url %} · <a href="{{ hero_source_url }}" target="_blank" rel="noopener">Wikimedia source</a>{% endif %}
-                    </figcaption>
-                </figure>
+                    <figure class="hero-aperture">
+                        <img src="{{ hero_image }}" alt="{{ hero_alt }}">
+                        <figcaption class="aperture-caption">
+                            {{ hero_caption }}
+                            {% if hero_source_url %} · <a href="{{ hero_source_url }}" target="_blank" rel="noopener">Wikimedia source</a>{% endif %}
+                        </figcaption>
+                    </figure>
 
-                {% for node in hero_nodes %}
-                    <a class="orbit-node node--{{ loop.index }}{% if node.lime|default(false) %} orbit-node--lime{% endif %}" href="{{ node.url }}">{{ node.label }}</a>
-                {% endfor %}
+                    {% if hero_kind == 'publications' %}
+                        <span class="citation-tab citation-tab--1">DOI / linked</span>
+                        <span class="citation-tab citation-tab--2">Peer reviewed</span>
+                        <span class="citation-tab citation-tab--3">1996—2026</span>
+                    {% endif %}
+                </div>
 
-                {% if hero_kind == 'publications' %}
-                    <span class="citation-tab citation-tab--1">DOI / linked</span>
-                    <span class="citation-tab citation-tab--2">Peer reviewed</span>
-                    <span class="citation-tab citation-tab--3">1996—2026</span>
-                {% endif %}
+                <div class="orbit-node-map">
+                    {% for node in hero_nodes %}
+                        <a class="orbit-node node--{{ loop.index }}{% if node.lime|default(false) %} orbit-node--lime{% endif %}" href="{{ node.url }}">{{ node.label }}</a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
