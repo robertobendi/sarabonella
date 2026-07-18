@@ -26,6 +26,7 @@
             --nebula-plum: #281A5B;
             --orbital-slate: #6E789B;
             --slate-readable: #AAB4D5;
+            --violet-readable: #A9A2FF;
             --font-display: 'Syne', sans-serif;
             --font-body: 'IBM Plex Sans', sans-serif;
             --font-accent: 'Space Mono', monospace;
@@ -73,8 +74,13 @@
             margin: 0;
             color: var(--lunar-chalk);
             text-wrap: balance;
-            overflow-wrap: anywhere;
         }
+        h1, h2 {
+            overflow-wrap: normal;
+            word-break: normal;
+            hyphens: none;
+        }
+        h3, h4 { overflow-wrap: anywhere; }
         h1 {
             font: 700 clamp(3rem, 6vw, 4.5rem)/.96 var(--font-display);
             letter-spacing: -.045em;
@@ -361,7 +367,12 @@
             aspect-ratio: 1;
             min-width: 0;
         }
+        .orbit-stage,
+        .orbit-node-map { position: absolute; inset: 0; }
+        .orbit-node-map { z-index: 5; pointer-events: none; }
+        .orbit-node-map .orbit-node { pointer-events: auto; }
         .orbit-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        .orbit-svg--mobile { display: none; }
         .orbit-guide { fill: none; stroke: rgba(110, 120, 155, .52); stroke-width: 1.4; stroke-dasharray: 2 12; }
         .orbit-guide--inner { stroke: rgba(0, 217, 255, .32); stroke-dasharray: 4 10; }
         .orbit-rotor {
@@ -493,7 +504,7 @@
         .hero-panel {
             position: relative;
             z-index: 8;
-            grid-column: 9 / -1;
+            grid-column: 8 / -1;
             align-self: end;
             min-width: 0;
             margin-bottom: clamp(3rem, 9vh, 6rem);
@@ -527,6 +538,9 @@
         .role-lines li { margin-bottom: .35rem; }
         .hero-panel .text-action { color: #2E21BE; }
         .hero-panel .text-action:hover { color: #8B005E; }
+        .hero-panel a:focus-visible,
+        .thesis-panel a:focus-visible,
+        .address-card a:focus-visible { outline-color: var(--abyss-navy); }
         .citation-tab {
             position: absolute;
             z-index: 6;
@@ -582,6 +596,20 @@
         }
         .marquee__track span::first-letter { color: var(--laser-lime); }
         @keyframes evidence-marquee { to { transform: translateX(-50%); } }
+        .marquee__static {
+            display: none;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+            font: 400 clamp(.78rem, 1.2vw, .96rem)/1.35 var(--font-accent);
+            letter-spacing: .055em;
+        }
+        .marquee__static > span {
+            min-width: 0;
+            padding: .15rem var(--gutter);
+            text-align: center;
+        }
+        .marquee__static > span + span { border-left: 1px solid rgba(0, 217, 255, .5); }
+        .marquee__static strong { color: var(--laser-lime); font-weight: 400; }
         .marquee-sources {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -616,6 +644,7 @@
         .accent-pink { --card-accent: var(--positron-pink); }
         .accent-lime { --card-accent: var(--laser-lime); }
         .accent-violet { --card-accent: var(--ultraviolet); }
+        .accent-violet .card-coordinate { color: var(--violet-readable); }
         .card-meta {
             display: flex;
             justify-content: space-between;
@@ -650,6 +679,8 @@
         }
         .constellation-grid > * { z-index: 2; min-width: 0; }
         .constellation-grid .trajectory { position: absolute; inset: 4% 3%; z-index: 0; width: 94%; height: 92%; color: var(--ion-cyan); pointer-events: none; }
+        .constellation-grid .research-card,
+        .constellation-grid .research-card:hover { background: var(--nebula-plum); }
         .constellation-card--statistical { grid-column: 1 / span 5; grid-row: 1; }
         .constellation-card--quantum { grid-column: 8 / span 5; grid-row: 1; }
         .constellation-card--molecular { grid-column: 4 / span 6; grid-row: 2; transform: translateY(-48px); }
@@ -1011,6 +1042,7 @@
             .hero-grid { align-items: center; }
             .orbital-visual { grid-column: 1 / span 8; min-height: 620px; }
             .hero-panel { grid-column: 8 / -1; }
+            .hero-panel h1 { font-size: clamp(2.45rem, 4.1vw, 3.3rem); }
             .orbit-node { font-size: .59rem; max-width: 9rem; }
             .method-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .program-sequence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1075,21 +1107,44 @@
             :root { --gutter: 1rem; --section-small: 3.5rem; --section-large: 5rem; }
             .primary-nav { grid-template-columns: 1fr; }
             h1 { font-size: clamp(2.75rem, 13vw, 3.5rem); }
-            .orbital-visual { min-height: calc(100vw - 1rem); }
-            .orbit-disc { width: 100%; }
+            .hero-grid { padding-top: var(--space-2); }
+            .hero-panel { grid-row: 1; margin-bottom: var(--space-3); }
+            .orbital-visual { grid-row: 2; min-height: 0; padding-bottom: var(--space-4); }
+            .orbit-disc { width: 100%; aspect-ratio: auto; display: grid; gap: var(--space-2); }
+            .orbit-stage { position: relative; inset: auto; aspect-ratio: 1; }
+            .orbit-svg--desktop { display: none; }
+            .orbit-svg--mobile { display: block; }
+            .orbit-node-map {
+                position: static;
+                inset: auto;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: var(--space-1);
+                pointer-events: auto;
+            }
             .hero-aperture { width: 58vw; box-shadow: 8px 8px 0 var(--cutout), 0 0 0 1px var(--orbital-slate); }
             .hero--contact .hero-aperture { width: 72vw; aspect-ratio: 4 / 3; }
-            .orbit-node { min-height: 36px; max-width: 7.2rem; padding: .38rem .46rem; font-size: .5rem; }
-            .node--1 { top: 1%; }
-            .node--2 { right: -1%; top: 22%; }
-            .node--3 { right: 0; bottom: 20%; }
-            .node--4 { left: 29%; bottom: 0; }
-            .node--5 { left: -1%; top: 34%; }
+            .orbit-node {
+                position: static;
+                min-height: 44px;
+                max-width: none;
+                padding: .55rem .65rem;
+                font-size: .75rem;
+                transform: none !important;
+            }
+            .orbit-node:nth-child(5) { grid-column: 1 / -1; width: calc(50% - .25rem); justify-self: center; }
             .aperture-caption { display: none; }
-            .hero-panel { padding: 1.5rem; box-shadow: 6px 6px 0 var(--ultraviolet); }
-            .hero-panel h1 { font-size: clamp(2.35rem, 11vw, 3.25rem); }
+            .hero-panel { padding: 1.25rem; box-shadow: 6px 6px 0 var(--ultraviolet); }
+            .hero-panel h1 { font-size: clamp(2.15rem, 10vw, 2.8rem); line-height: .98; }
+            .hero-panel .hero-deck { margin: var(--space-2) 0 var(--space-3); }
+            .hero-panel .role-lines { margin-bottom: var(--space-3); padding-top: .75rem; }
             .action-row { align-items: stretch; }
             .action-row .button { width: 100%; }
+            .marquee { padding: .45rem 0; }
+            .marquee__track { display: none; }
+            .marquee__static { display: grid; grid-template-columns: 1fr; }
+            .marquee__static > span { padding: .6rem var(--gutter); text-align: left; }
+            .marquee__static > span + span { border-left: 0; border-top: 1px solid rgba(0, 217, 255, .5); }
             .marquee-sources { grid-template-columns: 1fr; }
             .constellation-grid { display: flex; flex-direction: column; gap: var(--space-3); }
             .constellation-grid .trajectory { display: none; }
@@ -1136,6 +1191,8 @@
             .orbital-hero::before,
             .trajectory path,
             .hero-exit-trajectory path { animation: none !important; }
+            .marquee__track { display: none; }
+            .marquee__static { display: grid; }
         }
     </style>
     
@@ -1175,34 +1232,50 @@
     <div class="hero-grid">
         <div class="orbital-visual">
             <div class="orbit-disc">
-                <span class="stage-halo" aria-hidden="true"></span>
-                <svg class="orbit-svg" viewBox="0 0 1000 1000" aria-hidden="true">
-                    <defs>
-                        <path id="ring-path-contact" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
-                    </defs>
-                    <circle class="orbit-guide" cx="500" cy="500" r="430"/>
-                    <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
-                    <g class="orbit-rotor">
-                        <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
-                        <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
-                        <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
-                    </g>
-                </svg>
+                <div class="orbit-stage">
+                    <span class="stage-halo" aria-hidden="true"></span>
+                    <svg class="orbit-svg orbit-svg--desktop" viewBox="0 0 1000 1000" aria-hidden="true">
+                        <defs>
+                            <path id="ring-path-contact" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
+                        </defs>
+                        <circle class="orbit-guide" cx="500" cy="500" r="430"/>
+                        <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
+                        <g class="orbit-rotor">
+                            <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
+                            <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
+                            <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
+                        </g>
+                    </svg>
+                    <svg class="orbit-svg orbit-svg--mobile" viewBox="-60 -60 1120 1120" aria-hidden="true">
+                        <defs>
+                            <path id="ring-path-mobile-contact" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
+                        </defs>
+                        <circle class="orbit-guide" cx="500" cy="500" r="430"/>
+                        <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
+                        <g class="orbit-rotor">
+                            <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
+                            <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
+                            <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-contact">COLLABORATE • INVITE • SUPERVISE •</textPath></text>
+                        </g>
+                    </svg>
 
-                <figure class="hero-aperture">
-                    <img width="1920" height="1280" src="/sarabonella/uploads/contact-hero/panorama_depuis_l_avenue_du_l_man_lausanne_jpg.jpg" alt="Lausanne rooftops, Lake Geneva, and the Alps viewed from Avenue du Léman">
-                    <figcaption class="aperture-caption">
-                        Lausanne and Lake Geneva context
-                         · <a href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&amp;search=Panorama%20depuis%20avenue%20du%20L%C3%A9man%20Lausanne" target="_blank" rel="noopener">Wikimedia source</a>                    </figcaption>
-                </figure>
+                    <figure class="hero-aperture">
+                        <img width="1920" height="1280" src="/sarabonella/uploads/contact-hero/panorama_depuis_l_avenue_du_l_man_lausanne_jpg.jpg" alt="Lausanne rooftops, Lake Geneva, and the Alps viewed from Avenue du Léman">
+                        <figcaption class="aperture-caption">
+                            Lausanne and Lake Geneva context
+                             · <a href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&amp;search=Panorama%20depuis%20avenue%20du%20L%C3%A9man%20Lausanne" target="_blank" rel="noopener">Wikimedia source</a>                        </figcaption>
+                    </figure>
 
-                                    <a class="orbit-node node--1" href="#research-enquiry">Research</a>
-                                    <a class="orbit-node node--2" href="#speaking-enquiry">Speaking</a>
-                                    <a class="orbit-node node--3" href="#supervision-enquiry">Supervision</a>
-                                    <a class="orbit-node node--4" href="#programme-enquiry">Programmes</a>
-                                    <a class="orbit-node node--5 orbit-node--lime" href="#direct-contact">Direct email</a>
-                
-                            </div>
+                                    </div>
+
+                <div class="orbit-node-map">
+                                            <a class="orbit-node node--1" href="#research-enquiry">Research</a>
+                                            <a class="orbit-node node--2" href="#speaking-enquiry">Speaking</a>
+                                            <a class="orbit-node node--3" href="#supervision-enquiry">Supervision</a>
+                                            <a class="orbit-node node--4" href="#programme-enquiry">Programmes</a>
+                                            <a class="orbit-node node--5 orbit-node--lime" href="#direct-contact">Direct email</a>
+                                    </div>
+            </div>
         </div>
 
         <div class="hero-panel">
@@ -1266,15 +1339,15 @@
             <div class="section-heading section-heading--split">
                 <div>
                     <p class="eyebrow">07 / DIRECT READOUT</p>
-                    <h2 id="direct-contact-title">Verified identifiers / CV-listed contact route</h2>
+                    <h2 id="direct-contact-title">Direct identifiers / institutional contact route</h2>
                 </div>
-                <p class="section-deck">ORCID, CECAM, EPFL, address, and phone are transcribed from the supplied academic record. The email route is deliberately flagged for a final owner check before public launch.</p>
+                <p class="section-deck">The primary email is confirmed in EPFL’s public directory; ORCID, CECAM, address, and phone are transcribed from the supplied academic record.</p>
             </div>
             <div class="contact-readout">
                 <div>
                     <p class="eyebrow">EMAIL / PRIMARY CHANNEL</p>
                     <a class="email-readout" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">sara.bonella@epfl.ch</a>
-                    <p class="source-note" style="margin-top:1rem;"><span class="verify-tag">Owner check before launch</span><br>The address appears in the supplied CV; confirm the exact spelling before publishing.</p>
+                    <p class="source-note" style="margin-top:1rem;"><a href="https://people.epfl.ch/sara.bonella" target="_blank" rel="noopener">Confirmed in the EPFL directory ↗</a></p>
                     <div class="action-row" style="margin-top:2rem;"><a class="button" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">Open an email <span class="arrow-glyph" aria-hidden="true">↗</span></a></div>
                 </div>
                 <dl class="contact-details">
