@@ -122,6 +122,21 @@ return [
         ],
     ],
 
+    // Crawlable route for the themed static 404 page.
+    'errorpage' => [
+        'label'          => '404 Page',
+        'label_singular' => '404 Page',
+        'icon'           => 'file',
+        'route'          => '/404/{slug}',
+        'template'       => 'page.twig',
+        'list_template'  => '404.twig',
+        'order_by'       => 'updated_at DESC',
+        'fields' => [
+            'title' => ['type' => 'text', 'required' => true, 'label' => 'Title'],
+            'slug'  => ['type' => 'slug', 'required' => true, 'label' => 'Slug'],
+        ],
+    ],
+
     // Retained for future editorial work, but intentionally has no public
     // route until Sara chooses to publish news.
     'posts' => [
