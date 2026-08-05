@@ -1,75 +1,40 @@
-<section class="orbital-hero hero--{{ hero_kind }}" aria-labelledby="hero-title-{{ hero_kind }}">
-    <div class="hero-grid">
-        <div class="orbital-visual">
-            <div class="orbit-disc">
-                <div class="orbit-stage">
-                    <span class="stage-halo" aria-hidden="true"></span>
-                    <svg class="orbit-svg orbit-svg--desktop" viewBox="0 0 1000 1000" aria-hidden="true">
-                        <defs>
-                            <path id="ring-path-{{ hero_kind }}" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
-                        </defs>
-                        <circle class="orbit-guide" cx="500" cy="500" r="430"/>
-                        <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
-                        <g class="orbit-rotor">
-                            <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                            <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                            <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                        </g>
-                    </svg>
-                    <svg class="orbit-svg orbit-svg--mobile" viewBox="-60 -60 1120 1120" aria-hidden="true">
-                        <defs>
-                            <path id="ring-path-mobile-{{ hero_kind }}" d="M500,500 m-430,0 a430,430 0 1,1 860,0 a430,430 0 1,1 -860,0"/>
-                        </defs>
-                        <circle class="orbit-guide" cx="500" cy="500" r="430"/>
-                        <circle class="orbit-guide orbit-guide--inner" cx="500" cy="500" r="310"/>
-                        <g class="orbit-rotor">
-                            <text class="orbit-copy orbit-copy--violet" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                            <text class="orbit-copy orbit-copy--cyan" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                            <text class="orbit-copy" textLength="2670" lengthAdjust="spacingAndGlyphs"><textPath href="#ring-path-mobile-{{ hero_kind }}">{{ hero_ring_text }}</textPath></text>
-                        </g>
-                    </svg>
-
-                    <figure class="hero-aperture">
-                        <img src="{{ hero_image }}" alt="{{ hero_alt }}">
-                        <figcaption class="aperture-caption">
-                            {{ hero_caption }}
-                            {% if hero_source_url %} · <a href="{{ hero_source_url }}" target="_blank" rel="noopener">Wikimedia source</a>{% endif %}
-                        </figcaption>
-                    </figure>
-
-                    {% if hero_kind == 'publications' %}
-                        <span class="citation-tab citation-tab--1">DOI / linked</span>
-                        <span class="citation-tab citation-tab--2">Peer reviewed</span>
-                        <span class="citation-tab citation-tab--3">1996—2026</span>
-                    {% endif %}
-                </div>
-
-                <div class="orbit-node-map">
-                    {% for node in hero_nodes %}
-                        <a class="orbit-node node--{{ loop.index }}{% if node.lime|default(false) %} orbit-node--lime{% endif %}" href="{{ node.url }}">{{ node.label }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
+{% set hero_uses_simulation = hero_canvas|default(false) %}
+<section class="page-intro hero--{{ hero_kind }}"{% if hero_uses_simulation %} data-langevin-surface{% endif %} aria-labelledby="hero-title-{{ hero_kind }}">
+    <div class="page-intro__grid shell">
         <div class="hero-panel">
             <p class="eyebrow">{{ hero_eyebrow }}</p>
             <h1 id="hero-title-{{ hero_kind }}">{{ hero_title }}</h1>
             <p class="hero-deck">{{ hero_deck }}</p>
-            {% if hero_roles|length > 0 %}
-                <ul class="role-lines">
-                    {% for role in hero_roles %}<li>{{ role }}</li>{% endfor %}
-                </ul>
-            {% endif %}
+
+{% if hero_roles|length > 0 %}
+            <ul class="role-lines">
+                {% for role in hero_roles %}<li>{{ role }}</li>{% endfor %}
+            </ul>
+{% endif %}
+
             <div class="action-row">
-                <a class="button" href="{{ hero_primary_url }}">{{ hero_primary_label }} <span class="arrow-glyph" aria-hidden="true">↗</span></a>
-                {% if hero_secondary_url %}<a class="text-action" href="{{ hero_secondary_url }}">{{ hero_secondary_label }}</a>{% endif %}
+                <a class="button" href="{{ hero_primary_url }}">{{ hero_primary_label }}</a>
+                {% if hero_secondary_url %}<a class="text-action" href="{{ hero_secondary_url }}">{{ hero_secondary_label }} <span aria-hidden="true">→</span></a>{% endif %}
             </div>
         </div>
+
+        <figure class="page-intro__media{% if hero_uses_simulation %} page-intro__media--simulation{% endif %}">
+{% if hero_uses_simulation %}
+            {% set simulation_compact = true %}
+            {% set simulation_full = false %}
+            {% include '@theme/langevin-simulation.twig' %}
+{% else %}
+            <img src="{{ hero_image }}" alt="{{ hero_alt }}">
+{% endif %}
+            <figcaption>
+{% if hero_uses_simulation %}
+                {{ hero_simulation_caption|default('Underdamped Langevin particles crossing a double-well free-energy landscape') }}
+                · <a href="{{ hero_simulation_source_url|default('https://doi.org/10.1063/5.0169050') }}" target="_blank" rel="noopener">Research basis</a>
+{% else %}
+                {{ hero_caption }}
+                {% if hero_source_url %} · <a href="{{ hero_source_url }}" target="_blank" rel="noopener">Image source</a>{% endif %}
+{% endif %}
+            </figcaption>
+        </figure>
     </div>
-    <svg class="hero-exit-trajectory trajectory" viewBox="0 0 760 190" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M760 18 C620 12 590 88 462 88 S260 56 208 126 S74 178 0 160"/>
-        <circle cx="462" cy="88" r="7"/>
-        <circle cx="208" cy="126" r="5"/>
-    </svg>
 </section>

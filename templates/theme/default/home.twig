@@ -1,7 +1,7 @@
 {% extends '@theme/layout.twig' %}
-{% set page_title = 'Sara Bonella — Computational physics, leadership, and teaching' %}
-{% set meta_description = 'Sara Bonella connects molecular simulation, quantum dynamics, and international research leadership at EPFL and CECAM.' %}
-{% set og_title = 'Sara Bonella — Computational physics for matter, motion, and scientific communities' %}
+{% set page_title = 'Sara Bonella — Computational physicist, teacher, and scientific community builder' %}
+{% set meta_description = 'Meet Sara Bonella, computational physicist, EPFL Senior Scientist, teacher, and Deputy Director of CECAM in Lausanne.' %}
+{% set og_title = page_title %}
 {% set og_description = meta_description %}
 {% set body_class = 'page-home' %}
 
@@ -11,217 +11,297 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Sara Bonella",
-  "url": "{{ site.url }}/",
-  "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23070A18'/%3E%3Ccircle cx='32' cy='32' r='23' fill='none' stroke='%2300D9FF'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='700' fill='%23F5F2FF'%3ESB%3C/text%3E%3C/svg%3E",
-  "image": "{{ site.url }}/uploads/home-hero/epfl_campus___lausanne__36524188580__jpg.jpg",
-  "description": "Computational physicist, EPFL educator, and Deputy Director of CECAM working across molecular simulation, statistical and quantum physics, and scientific infrastructure.",
-  "jobTitle": ["Deputy Director of CECAM", "Maître d’Enseignement et de Recherche at EPFL"],
+  "url": "https://robertobendi.github.io/sarabonella/",
+  "image": "https://robertobendi.github.io/sarabonella/uploads/portrait/sara-bonella-seated.jpg",
+  "description": "Computational physicist, Senior Scientist at EPFL, teacher, and Deputy Director of CECAM.",
+  "jobTitle": ["Senior Scientist at EPFL", "Deputy Director of CECAM"],
   "affiliation": [
-    {"@type": "Organization", "name": "CECAM", "url": "https://www.cecam.org/"},
-    {"@type": "Organization", "name": "EPFL", "url": "https://www.epfl.ch/"}
+    {"@type": "Organization", "name": "EPFL", "url": "https://www.epfl.ch/"},
+    {"@type": "Organization", "name": "CECAM", "url": "https://www.cecam.org/"}
   ],
-  "sameAs": ["https://orcid.org/0000-0003-4131-2513"]
+  "sameAs": [
+    "https://people.epfl.ch/sara.bonella?lang=en",
+    "https://www.cecam.org/lausanne-hq",
+    "https://nccr-marvel.ch/people/profile/sara-bonella",
+    "https://orcid.org/0000-0003-4131-2513"
+  ]
 }
 </script>
 {% endblock %}
 
 {% block content %}
-    {% set hero_kind = 'home' %}
-    {% set hero_ring_text = 'SARA BONELLA • COMPUTATIONAL PHYSICS •' %}
-    {% set hero_image = '/uploads/home-hero/epfl_campus___lausanne__36524188580__jpg.jpg' %}
-    {% set hero_alt = 'Red structural tower on the EPFL campus in Lausanne' %}
-    {% set hero_caption = 'EPFL campus context, Lausanne — not a research facility claim' %}
-    {% set hero_source_url = 'https://commons.wikimedia.org/wiki/File:EPFL_Campus_-_Lausanne_(36524188580).jpg' %}
-    {% set hero_eyebrow = '00 / SARA BONELLA / LAUSANNE' %}
-    {% set hero_title = 'Computational physics for matter, motion, and scientific communities' %}
-    {% set hero_deck = 'Sara Bonella connects molecular simulation, quantum dynamics, and European research leadership to advance ambitious collaborations.' %}
-    {% set hero_roles = ['Deputy Director / CECAM at EPFL', 'Maître d’Enseignement et de Recherche / EPFL'] %}
-    {% set hero_primary_url = 'mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry' %}
-    {% set hero_primary_label = 'Discuss collaboration' %}
-    {% set hero_secondary_url = '/research' %}
-    {% set hero_secondary_label = 'Enter the research map' %}
-    {% set hero_nodes = [
-        {'label': 'Statistical physics', 'url': '/research#statistical'},
-        {'label': 'Quantum dynamics', 'url': '/research#quantum'},
-        {'label': 'Molecular simulation', 'url': '/research#molecular'},
-        {'label': 'HPC & infrastructure', 'url': '/research#hpc'},
-        {'label': 'Scientific leadership', 'url': '/leadership', 'lime': true}
-    ] %}
-    {% include '@theme/orbital-hero.twig' %}
-
-    <section aria-label="Selected track record">
-        <div class="marquee" role="region" aria-label="Track record: 70 plus peer-reviewed articles, 60 plus invited talks, 25 plus international events">
-            <div class="marquee__track">
-                <span>70+ PEER-REVIEWED ARTICLES — 60+ INVITED TALKS — 25+ INTERNATIONAL EVENTS —</span>
-                <span aria-hidden="true">70+ PEER-REVIEWED ARTICLES — 60+ INVITED TALKS — 25+ INTERNATIONAL EVENTS —</span>
-            </div>
-            <div class="marquee__static">
-                <span><strong>70+</strong> PEER-REVIEWED ARTICLES</span>
-                <span><strong>60+</strong> INVITED TALKS</span>
-                <span><strong>25+</strong> INTERNATIONAL EVENTS</span>
-            </div>
-        </div>
-        <div class="shell marquee-sources">
-            <span>Publication record / supplied academic CV</span>
-            <span>Invited talks / international meetings &amp; schools</span>
-            <span>Events / conferences, workshops &amp; training</span>
-        </div>
-    </section>
-
-    <section class="section section--large section--field" aria-labelledby="constellation-title">
-        <div class="shell">
-            <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">01 / RESEARCH FIELD</p>
-                    <h2 id="constellation-title">A constellation of questions, methods, and communities</h2>
+    <section class="personal-hero" data-langevin-surface aria-labelledby="home-title">
+        <div class="personal-hero__grid shell">
+            <div class="personal-hero__copy">
+                <p class="eyebrow">Computational physicist · Lausanne</p>
+                <h1 id="home-title">Sara<br>Bonella</h1>
+                <p class="personal-role">Physicist, teacher, and builder of scientific communities.</p>
+                <p class="personal-deck">Sara develops simulation methods to understand matter in motion—from quantum effects and non-equilibrium dynamics to electrochemical interfaces. At EPFL and CECAM, she also helps people, tools, and ideas travel.</p>
+                <div class="action-row">
+                    <a class="button" href="/research">Explore the research</a>
+                    <a class="text-action" href="/contact">Write to Sara <span aria-hidden="true">→</span></a>
                 </div>
-                <p class="section-deck">The work moves between foundational statistical mechanics and practical simulation methods: how matter evolves, how models retain physical meaning, and how computational communities share the infrastructure to investigate both.</p>
+                <ul class="hero-credentials" aria-label="Current roles">
+                    <li>Senior Scientist · EPFL</li>
+                    <li>Deputy Director · CECAM</li>
+                    <li>PhD programme committee · Physics, EPFL</li>
+                </ul>
             </div>
 
-            <div class="constellation-grid">
-                <svg class="trajectory" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
-                    <path d="M80 130 C310 20 420 240 610 170 S970 60 1120 190 C980 320 820 310 660 390 S300 330 160 470 C310 680 800 610 1080 690"/>
-                    <circle cx="80" cy="130" r="8"/><circle cx="610" cy="170" r="8"/><circle cx="660" cy="390" r="8"/><circle cx="160" cy="470" r="8"/><circle cx="1080" cy="690" r="8"/>
-                </svg>
-
-                <article class="research-card accent-cyan constellation-card--statistical" id="home-statistical">
-                    <div class="card-meta"><span class="card-coordinate">R.01 / FIELD</span><span>Foundations</span></div>
-                    <h3>Statistical physics</h3>
-                    <p>Non-equilibrium behaviour, fluctuation relations, constrained dynamics, and the statistical structure behind molecular trajectories.</p>
-                    <a class="card-link" href="/research#statistical">Trace the statistical path →</a>
-                </article>
-
-                <article class="research-card accent-pink constellation-card--quantum" id="home-quantum">
-                    <div class="card-meta"><span class="card-coordinate">R.02 / FIELD</span><span>Approximation</span></div>
-                    <h3>Quantum dynamics</h3>
-                    <p>Trajectory-based approximations that make nuclear quantum effects and time-dependent observables computationally accessible.</p>
-                    <a class="card-link" href="/research#quantum">Open the quantum route →</a>
-                </article>
-
-                <article class="research-card accent-lime constellation-card--molecular" id="home-molecular">
-                    <div class="card-meta"><span class="card-coordinate">R.03 / FIELD</span><span>Simulation</span></div>
-                    <h3>Molecular simulation</h3>
-                    <p>Methods for condensed-phase systems, electrochemical interfaces, free-energy landscapes, and charge transport in external magnetic fields.</p>
-                    <a class="card-link" href="/research#molecular">Enter molecular simulation →</a>
-                </article>
-
-                <article class="research-card accent-violet constellation-card--hpc" id="home-hpc">
-                    <div class="card-meta"><span class="card-coordinate">R.04 / FIELD</span><span>Scale</span></div>
-                    <h3>HPC &amp; infrastructure</h3>
-                    <p>High-performance computing as a shared scientific capability: methods, software, training, and durable access to expertise.</p>
-                    <a class="card-link" href="/research#hpc">Inspect methods &amp; infrastructure →</a>
-                </article>
-
-                <article class="research-card accent-pink constellation-card--leadership" id="home-leadership">
-                    <div class="card-meta"><span class="card-coordinate">R.05 / FIELD</span><span>Networks</span></div>
-                    <h3>Scientific leadership</h3>
-                    <p>Building research programmes across institutions, disciplines, and countries—then connecting them to training and public science.</p>
-                    <a class="card-link" href="/leadership">See leadership &amp; teaching →</a>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section class="section section--large section--plum" aria-labelledby="two-roles-title">
-        <div class="shell split-5-7">
-            <figure class="halftone-media">
-                <img src="/uploads/home-lab/co2_sunrise__4071453149__jpg.jpg" alt="Global carbon dioxide simulation visualized across a world map">
-                <figcaption>Scientific-computing context: a global CO₂ simulation visualization, not Bonella’s research data. <a href="https://commons.wikimedia.org/wiki/File:CO2_Sunrise_(4071453149).jpg" target="_blank" rel="noopener">Wikimedia source</a></figcaption>
+            <figure class="personal-portrait">
+                <img src="/uploads/portrait/sara-bonella-seated.jpg" alt="Sara Bonella seated in front of a whiteboard covered with equations">
+                <figcaption>Portrait from the <a href="https://nccr-marvel.ch/outreach/equal-opportunities/women-profiles/sara-bonella" target="_blank" rel="noopener">NCCR MARVEL profile</a></figcaption>
             </figure>
-            <div>
-                <p class="eyebrow">02 / TWO MODES OF WORK</p>
-                <h2 id="two-roles-title">Researcher / institution-builder</h2>
-                <p class="section-deck" style="margin-top:1.5rem;">The scientific record and the infrastructure work are not parallel stories. They reinforce one another: research sharpens the questions; networks create the conditions for more people to answer them well.</p>
-                <div class="thesis-pair" style="margin-top:2rem;">
-                    <article class="thesis-block">
-                        <h3>Develop methods that hold onto the physics</h3>
-                        <p>Bonella’s work spans condensed-phase simulation, statistical and quantum physics, molecular dynamics, supercapacitors, and magnetic-field charge transport.</p>
-                    </article>
-                    <article class="thesis-block">
-                        <h3>Build structures that let research travel</h3>
-                        <p>At CECAM, EPFL, and across international networks, she connects programmes, training, infrastructure, and communities around computational science.</p>
-                    </article>
-                </div>
+        </div>
+
+        <figure class="hero-simulation">
+            {% set simulation_full = true %}
+            {% set simulation_compact = false %}
+            {% include '@theme/langevin-simulation.twig' %}
+            <figcaption><span>Langevin model</span> Particles crossing a double-well free-energy landscape · <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">research basis</a></figcaption>
+        </figure>
+    </section>
+
+    <section class="philosophy-band" aria-labelledby="philosophy-title">
+        <div class="philosophy-grid shell">
+            <h2 class="philosophy-quote" id="philosophy-title">“Physics is not an exact science, it’s a science of <em>controlled approximation</em>.”</h2>
+            <div class="philosophy-note">
+                <p>For Sara, science begins with curiosity—and with learning to ask better questions at the boundary of what can be known.</p>
+                <p class="microcopy"><a href="https://nccr-marvel.ch/outreach/equal-opportunities/women-profiles/sara-bonella" target="_blank" rel="noopener">Read the full NCCR MARVEL interview →</a></p>
             </div>
         </div>
     </section>
 
-    <section class="section section--large" aria-labelledby="evidence-title">
+    <section class="section section--about" id="about" aria-labelledby="about-title">
+        <div class="bio-grid shell">
+            <div class="bio-lead">
+                <p class="eyebrow">About Sara</p>
+                <h2 id="about-title">A life in computational physics</h2>
+            </div>
+            <div class="bio-copy">
+                <p>Born and raised in Rome in a family shaped by the humanities, Sara considered studying history before choosing physics. During her third year at La Sapienza, a gap in her timetable led her into a simulation course. Statistical mechanics became matter in motion, and a lasting research direction began.</p>
+                <p>The route from Boston back to Italy and onward to Lausanne joins method development, teaching, and service to scientific communities.</p>
+
+                <ol class="career-timeline" data-career-timeline aria-label="Sara Bonella’s career journey">
+                    <li class="career-timeline__item" data-timeline-step>
+                        <details class="career-timeline__disclosure" name="career-journey" open>
+                            <summary class="career-timeline__summary">
+                                <span class="career-timeline__date"><time datetime="2004">2004</time></span>
+                                <span class="career-timeline__heading"><strong>PhD in Physics</strong><span>Boston University</span></span>
+                                <span class="career-timeline__toggle" aria-hidden="true">+</span>
+                            </summary>
+                            <div class="career-timeline__panel"><p>Semiclassical methods for non-adiabatic dynamics, followed by a research fellowship in Boston.</p></div>
+                        </details>
+                    </li>
+                    <li class="career-timeline__item" data-timeline-step>
+                        <details class="career-timeline__disclosure" name="career-journey">
+                            <summary class="career-timeline__summary">
+                                <span class="career-timeline__date"><time datetime="2004">2004</time>–<time datetime="2008">08</time></span>
+                                <span class="career-timeline__heading"><strong>Research fellowships</strong><span>Boston · Pisa · Rome</span></span>
+                                <span class="career-timeline__toggle" aria-hidden="true">+</span>
+                            </summary>
+                            <div class="career-timeline__panel"><p>Successive fellowships at Boston University, the NEST centre at Scuola Normale Superiore, and La Sapienza.</p></div>
+                        </details>
+                    </li>
+                    <li class="career-timeline__item" data-timeline-step>
+                        <details class="career-timeline__disclosure" name="career-journey">
+                            <summary class="career-timeline__summary">
+                                <span class="career-timeline__date"><time datetime="2008">2008</time>–<time datetime="2014">14</time></span>
+                                <span class="career-timeline__heading"><strong>Research &amp; teaching</strong><span>La Sapienza · Rome</span></span>
+                                <span class="career-timeline__toggle" aria-hidden="true">+</span>
+                            </summary>
+                            <div class="career-timeline__panel"><p>Research in computational physics, university teaching, and service as an Assistant Professor.</p></div>
+                        </details>
+                    </li>
+                    <li class="career-timeline__item" data-timeline-step>
+                        <details class="career-timeline__disclosure" name="career-journey">
+                            <summary class="career-timeline__summary">
+                                <span class="career-timeline__date">Since <time datetime="2014">2014</time></span>
+                                <span class="career-timeline__heading"><strong>Deputy Director</strong><span>CECAM · Lausanne</span></span>
+                                <span class="career-timeline__toggle" aria-hidden="true">+</span>
+                            </summary>
+                            <div class="career-timeline__panel"><p>Scientific programmes, workshops, training, infrastructure, partnerships, and community strategy.</p></div>
+                        </details>
+                    </li>
+                    <li class="career-timeline__item" data-timeline-step>
+                        <details class="career-timeline__disclosure" name="career-journey">
+                            <summary class="career-timeline__summary">
+                                <span class="career-timeline__date">Since <time datetime="2017-05">2017</time></span>
+                                <span class="career-timeline__heading"><strong>Senior Scientist &amp; lecturer</strong><span>EPFL · Lausanne</span></span>
+                                <span class="career-timeline__toggle" aria-hidden="true">+</span>
+                            </summary>
+                            <div class="career-timeline__panel"><p>Research, master’s and doctoral teaching, supervision, and service on the Physics PhD programme committee.</p></div>
+                        </details>
+                    </li>
+                    <li class="career-timeline__item" data-timeline-step>
+                        <details class="career-timeline__disclosure" name="career-journey">
+                            <summary class="career-timeline__summary">
+                                <span class="career-timeline__date"><time datetime="2022-05">2022</time>–<time datetime="2026-04">26</time></span>
+                                <span class="career-timeline__heading"><strong>Group leader</strong><span>NCCR MARVEL</span></span>
+                                <span class="career-timeline__toggle" aria-hidden="true">+</span>
+                            </summary>
+                            <div class="career-timeline__panel"><p>Digital infrastructure for open simulations and data, including service on MARVEL’s Executive Committee.</p></div>
+                        </details>
+                    </li>
+                    <li class="career-timeline__item" data-timeline-step>
+                        <details class="career-timeline__disclosure" name="career-journey">
+                            <summary class="career-timeline__summary">
+                                <span class="career-timeline__date">Since <time datetime="2025">2025</time></span>
+                                <span class="career-timeline__heading"><strong>Visiting Professor</strong><span>ICTP–EAIFR · Rwanda</span></span>
+                                <span class="career-timeline__toggle" aria-hidden="true">+</span>
+                            </summary>
+                            <div class="career-timeline__panel"><p>Graduate teaching in statistical physics and molecular dynamics at the University of Rwanda.</p></div>
+                        </details>
+                    </li>
+                </ol>
+                <p class="career-timeline__coda">Scroll to follow the route. Tab reaches every milestone; arrow keys move between them.</p>
+            </div>
+        </div>
+        {% include '@theme/scientific-ornament.twig' with {
+            ornament_kind: 'phase',
+            ornament_class: 'science-ornament--about',
+            ornament_title: 'Conservative Duffing portrait',
+            ornament_formula: 'H(q,p) = const.',
+            ornament_description: 'Closed trajectories follow a conserved Hamiltonian around two stable centres and a central saddle.'
+        } %}
+    </section>
+
+    <section class="section research-feature" aria-labelledby="questions-title">
+        <div class="research-feature__grid shell">
+            <div>
+                <p class="eyebrow">Matter in motion</p>
+                <h2 id="questions-title">Three questions she keeps returning to</h2>
+                <div class="question-list">
+                    <article class="question-row">
+                        <span>01</span>
+                        <div><h3>How can simulation stay faithful to physics?</h3><p>Efficient, controlled approximations for nuclear quantum effects, non-adiabatic dynamics, and systems whose exact evolution is out of computational reach.</p></div>
+                    </article>
+                    <article class="question-row">
+                        <span>02</span>
+                        <div><h3>How can constraints become useful methods?</h3><p>Mass-Zero constrained dynamics—MaZe—turns fast electronic and polarization variables into stable algorithms for first-principles and electrochemical simulation.</p></div>
+                    </article>
+                    <article class="question-row">
+                        <span>03</span>
+                        <div><h3>What happens where materials meet?</h3><p>Statistical mechanics, rare events, charged interfaces, transport, and the non-equilibrium behaviour of condensed-phase systems.</p></div>
+                    </article>
+                </div>
+                <div class="action-row"><a class="text-action" href="/research">Read about the research <span aria-hidden="true">→</span></a></div>
+            </div>
+
+            <aside class="research-study" aria-labelledby="research-thread-title">
+                <p class="eyebrow">Across the work</p>
+                <h3 id="research-thread-title">Quantum. Statistical. Molecular.</h3>
+                <p class="section-deck" style="margin-top:1rem;">Different scales and systems, joined by one concern: what must a useful simulation preserve?</p>
+            </aside>
+        </div>
+        {% include '@theme/scientific-ornament.twig' with {
+            ornament_kind: 'vortex',
+            ornament_class: 'science-ornament--research',
+            ornament_title: 'Taylor–Green vortices',
+            ornament_formula: '∇·u = 0',
+            ornament_description: 'Passive tracers circulate through a periodic incompressible velocity field.'
+        } %}
+    </section>
+
+    <section class="section section--plum" aria-labelledby="collective-title">
+        <div class="collective-grid shell">
+            <div class="teaching-intro">
+                <p class="eyebrow">Science is collective</p>
+                <h2 id="collective-title">Research is also something we build together.</h2>
+            </div>
+            <div class="collective-copy">
+                <p>Sara’s research and her work at CECAM are two parts of the same practice. One develops methods; the other creates the conditions in which scientists can meet, compute, learn, and collaborate across disciplines and borders.</p>
+                <div class="collective-facts">
+                    <div class="collective-fact"><span>CECAM</span><strong>Deputy Director since 2014</strong></div>
+                    <div class="collective-fact"><span>Open infrastructure</span><strong>Software, data, training, and shared methods</strong></div>
+                    <div class="collective-fact"><span>Public science</span><strong>Conversations, educational tools, and science comics</strong></div>
+                </div>
+                <div class="action-row"><a class="text-action" href="/leadership" style="color:#fff;">Teaching and community <span aria-hidden="true">→</span></a></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section teaching-section" aria-labelledby="teaching-title">
+        <div class="teaching-grid shell">
+            <div>
+                <p class="eyebrow">Teaching &amp; mentoring</p>
+                <h2 id="teaching-title">Making difficult ideas travel</h2>
+                <p class="section-deck" style="margin-top:1.4rem;">In the classroom, in doctoral supervision, and through open computational tools, Sara treats teaching as another form of method-building.</p>
+                <div class="action-row"><a class="text-action" href="/leadership#public">See public engagement <span aria-hidden="true">→</span></a></div>
+            </div>
+            <div class="course-list">
+                <article class="course-item">
+                    <small>EPFL · CH-452</small>
+                    <h3>Computational Methods in Molecular Quantum Mechanics</h3>
+                    <p>Quantum time-dependent properties, density functional theory, and nuclear quantum effects.</p>
+                </article>
+                <article class="course-item">
+                    <small>EPFL · PHYS-729</small>
+                    <h3>Non-equilibrium Statistical Mechanics Simulations</h3>
+                    <p>Formal results, computational algorithms, coding exercises, and the physics of open systems.</p>
+                </article>
+                <article class="course-item">
+                    <small>Doctoral supervision</small>
+                    <h3>Mentoring the next generation of researchers</h3>
+                    <p>Doctoral work connects method development, physical application, and the confidence to ask an original question.</p>
+                </article>
+            </div>
+        </div>
+        {% include '@theme/scientific-ornament.twig' with {
+            ornament_kind: 'poiseuille',
+            ornament_class: 'science-ornament--teaching',
+            ornament_title: 'Plane Poiseuille flow',
+            ornament_formula: 'u/Umax = 1 − (y/H)²',
+            ornament_description: 'Pressure-driven laminar channel flow is fastest at the centre and vanishes at both walls.'
+        } %}
+    </section>
+
+    <section class="section section--field" aria-labelledby="selected-title">
         <div class="shell">
             <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">03 / SELECTED EVIDENCE</p>
-                    <h2 id="evidence-title">Recent papers / leadership now</h2>
-                </div>
-                <p class="section-deck">A deliberately short readout: current scholarship alongside the scientific networks where Bonella serves, advises, and coordinates.</p>
+                <div><p class="eyebrow">A few places to begin</p><h2 id="selected-title">Selected recent work</h2></div>
+                <p class="section-deck">Three papers that connect molecular-scale physics, numerical method development, and scientific computing.</p>
             </div>
-
-            <div class="evidence-grid">
-                <section class="evidence-band" aria-labelledby="selected-papers-title">
-                    <p class="eyebrow">03A / PUBLICATIONS</p>
-                    <h3 id="selected-papers-title">Selected papers</h3>
-                    <div class="publication-line">
-                        <span class="year">2025</span>
-                        <div><strong>Electrically driven first-order phase transition of a 2D ionic crystal</strong><small>PNAS · Angiolari, Coretti, Salanne &amp; Bonella</small></div>
-                        <a href="https://doi.org/10.1073/pnas.2520026122" target="_blank" rel="noopener">DOI ↗</a>
-                    </div>
-                    <div class="publication-line">
-                        <span class="year">2024</span>
-                        <div><strong>Jupyter widgets and extensions for education and research</strong><small>Computer Physics Communications · Dou et al.</small></div>
-                        <a href="https://doi.org/10.1016/j.cpc.2024.109353" target="_blank" rel="noopener">DOI ↗</a>
-                    </div>
-                    <div class="publication-line">
-                        <span class="year">2023</span>
-                        <div><strong>Inferring free-energy barriers and kinetic rates from molecular dynamics</strong><small>Journal of Chemical Physics · Girardier et al.</small></div>
-                        <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">DOI ↗</a>
-                    </div>
-                    <a class="text-action" href="/publications">Read the selected record</a>
-                </section>
-
-                <section class="evidence-band" aria-labelledby="leadership-now-title">
-                    <p class="eyebrow">03B / NETWORKS</p>
-                    <h3 id="leadership-now-title">Leadership now</h3>
-                    <div class="publication-line">
-                        <span class="year">2014—</span>
-                        <div><strong>CECAM Deputy Director</strong><small>Scientific programme, network activity, research infrastructure, and international representation</small></div>
-                        <a href="https://www.cecam.org/" target="_blank" rel="noopener">CECAM ↗</a>
-                    </div>
-                    <div class="publication-line">
-                        <span class="year">2021—</span>
-                        <div><strong>LUMI Scientific Advisory Group</strong><small>European flagship supercomputing infrastructure</small></div>
-                        <a href="/leadership#networks">Context →</a>
-                    </div>
-                    <div class="publication-line">
-                        <span class="year">2025—</span>
-                        <div><strong>Invited professor, University of Rwanda</strong><small>Statistical mechanics and international scientific training</small></div>
-                        <a href="/leadership#teaching">Teaching →</a>
-                    </div>
-                    <a class="text-action" href="/leadership">Follow the leadership trajectory</a>
-                </section>
+            <div class="selected-work">
+                <article class="selected-paper">
+                    <time>2025</time>
+                    <div><h3>Electrically driven first-order phase transition of a 2D ionic crystal at the electrode/electrolyte interface</h3><p>Electrochemical interfaces · Proceedings of the National Academy of Sciences</p></div>
+                    <a href="https://doi.org/10.1073/pnas.2520026122" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+                <article class="selected-paper">
+                    <time>2025</time>
+                    <div><h3>mass-zero constrained molecular dynamics for electrostatic interactions</h3><p>Scalable real-space electrostatics · Journal of Chemical Physics</p></div>
+                    <a href="https://doi.org/10.1063/5.0283356" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+                <article class="selected-paper">
+                    <time>2025</time>
+                    <div><h3>A tale of two codes: CUDA vs OpenACC for mass-zero constrained dynamics</h3><p>High-performance scientific software · International Journal of High Performance Computing Applications</p></div>
+                    <a href="https://doi.org/10.1177/10943420251331673" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
             </div>
+            <div class="action-row"><a class="button" href="/publications">Browse selected publications</a><a class="text-action" href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Open ORCID <span aria-hidden="true">↗</span></a></div>
         </div>
     </section>
 
-    <section class="section section--large" aria-labelledby="invitation-title">
-        <div class="shell">
-            <div class="invitation-panel">
-                <div>
-                    <p class="eyebrow">04 / OPEN CHANNEL</p>
-                    <h2 id="invitation-title">A strong collaboration begins with a precise question.</h2>
-                    <p class="section-deck">Research partnership, invited speaking, supervision, teaching, or scientific-programme work—start with the context and the point of connection.</p>
-                    <div class="action-row" style="margin-top:2rem;">
-                        <a class="button" href="/contact">Choose an enquiry route <span class="arrow-glyph" aria-hidden="true">↗</span></a>
-                    </div>
-                </div>
-                <span class="sticker" aria-hidden="true">
-                    <svg viewBox="0 0 120 120">
-                        <defs><path id="home-sticker-ring" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs>
-                        <circle cx="60" cy="60" r="53" fill="#070A18" stroke="currentColor" stroke-width="2"/>
-                        <text font-size="10" letter-spacing="1.8"><textPath href="#home-sticker-ring">COLLABORATE • COLLABORATE • </textPath></text>
-                        <text x="60" y="68" text-anchor="middle" font-size="24" font-weight="700">↗</text>
-                    </svg>
-                </span>
+    <section class="section personal-coda" aria-labelledby="personal-title">
+        <div class="personal-coda__grid shell">
+            <div><p class="eyebrow">Beyond the equations</p><h2 class="personal-coda__line" id="personal-title">Rome, mountain paths, opera trains—and stories with a little magic.</h2></div>
+            <dl class="personal-notes">
+                <div><dt>At the opera</dt><dd><em>Simon Boccanegra</em> and <em>Così fan tutte</em></dd></div>
+                <div><dt>On the trail</dt><dd>Hiking whenever the mountains call</dd></div>
+                <div><dt>On the shelf</dt><dd>The world of Harry Potter</dd></div>
+            </dl>
+        </div>
+    </section>
+
+    <section class="contact-invitation" aria-labelledby="contact-title">
+        <div class="contact-invitation__grid shell">
+            <div>
+                <p class="eyebrow">Start a conversation</p>
+                <h2 id="contact-title">A good collaboration begins with a good question.</h2>
+                <p>Research, speaking, supervision, teaching, or scientific-community work—share the context and the idea you would like to explore.</p>
             </div>
+            <a class="button" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">Write to Sara</a>
         </div>
     </section>
 {% endblock %}

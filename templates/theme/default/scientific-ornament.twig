@@ -1,0 +1,39 @@
+<figure class="science-ornament science-ornament--{{ ornament_kind }} {{ ornament_class|default('') }}" data-science-ornament="{{ ornament_kind }}">
+    <div class="science-ornament__stage">
+{% if ornament_kind == 'phase' %}
+        <svg class="science-ornament__fallback" viewBox="0 0 320 220" aria-hidden="true">
+            <g fill="none" stroke="#416974" stroke-width="1" opacity=".38">
+                <path d="M28 110H292M160 24V196"/>
+                <path d="M50 110C50 57 92 42 125 68C146 84 146 136 125 152C92 178 50 163 50 110Z"/>
+                <path d="M270 110C270 57 228 42 195 68C174 84 174 136 195 152C228 178 270 163 270 110Z"/>
+                <path d="M39 110C66 22 134 35 160 110C186 35 254 22 281 110C254 198 186 185 160 110C134 185 66 198 39 110Z" stroke="#7d303b"/>
+            </g>
+            <g fill="#7d303b"><circle cx="92" cy="69" r="3"/><circle cx="228" cy="151" r="3"/><circle cx="163" cy="102" r="2.5"/></g>
+        </svg>
+{% elseif ornament_kind == 'vortex' %}
+        <svg class="science-ornament__fallback" viewBox="0 0 320 220" aria-hidden="true">
+            <g fill="none" stroke="#416974" stroke-width="1.2" opacity=".48">
+                <path d="M22 110C22 54 82 33 128 61C163 82 156 133 121 150C82 169 48 143 56 106C63 75 101 71 113 95"/>
+                <path d="M298 110C298 166 238 187 192 159C157 138 164 87 199 70C238 51 272 77 264 114C257 145 219 149 207 125"/>
+            </g>
+            <path d="M160 28V192" stroke="#b9b3a9" stroke-width="1" stroke-dasharray="3 7"/>
+            <g fill="#7d303b"><circle cx="74" cy="78" r="3"/><circle cx="113" cy="139" r="2.5"/><circle cx="214" cy="80" r="2.5"/><circle cx="249" cy="145" r="3"/></g>
+        </svg>
+{% else %}
+        <svg class="science-ornament__fallback" viewBox="0 0 320 220" aria-hidden="true">
+            <path d="M18 42H302M18 178H302" stroke="#416974" stroke-width="1.2"/>
+            <path d="M44 178Q152 110 44 42" fill="none" stroke="#7d303b" stroke-width="1.2" opacity=".72"/>
+            <g stroke="#8d998d" stroke-width="1" opacity=".64">
+                <path d="M69 62H117M69 86H148M69 110H166M69 134H148M69 158H117"/>
+            </g>
+            <g fill="#416974"><circle cx="102" cy="62" r="2.5"/><circle cx="174" cy="86" r="3"/><circle cx="238" cy="110" r="3"/><circle cx="151" cy="134" r="2.5"/><circle cx="89" cy="158" r="2.5"/></g>
+        </svg>
+{% endif %}
+        <canvas class="science-ornament__canvas" aria-hidden="true"></canvas>
+    </div>
+    <figcaption>
+        <strong>{{ ornament_title }}</strong>
+        <span class="science-ornament__formula">{{ ornament_formula }}</span>
+        <small>{{ ornament_description }}</small>
+    </figcaption>
+</figure>

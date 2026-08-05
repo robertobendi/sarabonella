@@ -1,17 +1,13 @@
 {% extends '@theme/layout.twig' %}
 {% set page_title = entry.field('title') ~ ' — Sara Bonella' %}
-{% set meta_description = entry.field('excerpt')|default('An editorial note from Sara Bonella.', true) %}
+{% set meta_description = entry.field('excerpt')|default('A note from Sara Bonella.', true) %}
 {% set og_title = page_title %}
 {% set og_description = meta_description %}
 {% set body_class = 'page-default' %}
 
 {% block content %}
 <article class="article-shell">
-    <figure class="halftone-media" style="margin-bottom:3rem;">
-        <img src="/uploads/home-lab/co2_sunrise__4071453149__jpg.jpg" alt="Global carbon dioxide simulation visualization used as scientific-computing context">
-        <figcaption>Scientific-computing context image.</figcaption>
-    </figure>
-    <p class="eyebrow">EDITORIAL NOTE / {{ (entry.publishAt ?? entry.createdAt)|date('Y.m.d') }}</p>
+    <p class="eyebrow">Note · {{ (entry.publishAt ?? entry.createdAt)|date('F Y') }}</p>
     <h1>{{ entry.field('title') }}</h1>
     {% if entry.field('excerpt') %}<p class="lede" style="margin-top:1.5rem;">{{ entry.field('excerpt') }}</p>{% endif %}
     <div class="article-body" style="margin-top:3rem;">{{ entry.field('body')|markdown }}</div>

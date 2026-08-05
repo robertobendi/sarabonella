@@ -1,33 +1,30 @@
 {% extends '@theme/layout.twig' %}
-{% set page_title = 'Editorial notes — Sara Bonella' %}
-{% set meta_description = 'Occasional editorial notes on computational physics, teaching, and scientific communities from Sara Bonella.' %}
+{% set page_title = 'Notes — Sara Bonella' %}
+{% set meta_description = 'Occasional notes from Sara Bonella on computational physics, teaching, and scientific communities.' %}
 {% set og_title = page_title %}
 {% set og_description = meta_description %}
 {% set body_class = 'page-default' %}
 
 {% block content %}
-<section class="section section--large">
-    <div class="shell">
-        <figure class="halftone-media" style="max-width:720px;margin-bottom:4rem;">
-            <img src="/uploads/home-lab/co2_sunrise__4071453149__jpg.jpg" alt="Global carbon dioxide simulation visualization used as scientific-computing context">
-            <figcaption>Scientific-computing context image.</figcaption>
-        </figure>
-        <p class="eyebrow">EDITORIAL / OPTIONAL CHANNEL</p>
-        <h1>Editorial notes</h1>
-        {% if posts|length == 0 %}
-            <div class="thesis-panel" style="margin-top:3rem;"><h2>The public editorial channel is intentionally dormant.</h2><p>Current evidence lives in Research, Publications, Leadership &amp; teaching, and Outreach.</p><a class="text-action" href="/research">Continue to research</a></div>
-        {% else %}
-            <div class="evidence-grid" style="margin-top:3rem;">
+    <section class="section section--field" aria-labelledby="notes-title">
+        <div class="shell">
+            <div class="section-heading section-heading--split">
+                <div><p class="eyebrow">Notes</p><h1 id="notes-title">Occasional writing</h1></div>
+                <p class="section-deck">Reflections on physical questions, computational methods, teaching, and the institutions that help science happen.</p>
+            </div>
+{% if posts|length == 0 %}
+            <div class="thesis-panel"><h2>No public notes yet.</h2><p style="margin-top:1rem;">For current work, continue to Research or Publications.</p><div class="action-row"><a class="text-action" href="/research">Explore the research <span aria-hidden="true">→</span></a></div></div>
+{% else %}
+            <div class="selected-work">
                 {% for post in posts %}
-                    <article class="publication-card accent-{% if loop.index is even %}pink{% else %}cyan{% endif %}">
-                        <div class="card-meta"><span class="card-coordinate">{{ (post.publishAt ?? post.createdAt)|date('Y.m.d') }}</span><span>Note {{ '%02d'|format(loop.index) }}</span></div>
-                        <h3>{{ post.field('title', '(untitled)') }}</h3>
-                        {% if post.field('excerpt') %}<p>{{ post.field('excerpt') }}</p>{% endif %}
-                        <a class="card-link" href="/blog/{{ post.slug }}">Read note →</a>
+                    <article class="selected-paper">
+                        <time>{{ (post.publishAt ?? post.createdAt)|date('Y') }}</time>
+                        <div><h3>{{ post.field('title', '(untitled)') }}</h3>{% if post.field('excerpt') %}<p>{{ post.field('excerpt') }}</p>{% endif %}</div>
+                        <a href="/blog/{{ post.slug }}">Read →</a>
                     </article>
                 {% endfor %}
             </div>
-        {% endif %}
-    </div>
-</section>
+{% endif %}
+        </div>
+    </section>
 {% endblock %}

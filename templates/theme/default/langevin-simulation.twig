@@ -1,0 +1,35 @@
+<div class="langevin-model{% if simulation_compact|default(false) %} langevin-model--compact{% endif %}{% if simulation_full|default(false) %} langevin-model--full{% endif %}">
+    <div
+        class="langevin-model__stage"
+        data-langevin-stage
+        data-langevin-mode="{{ simulation_full|default(false) ? 'hero' : 'panel' }}"
+        role="region"
+        tabindex="-1"
+        aria-label="Static underdamped Langevin particle model in a double-well free-energy landscape."
+    >
+        <svg class="langevin-model__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+            <rect width="500" height="600" fill="#263338"/>
+            <g fill="none" stroke="#8d998d" stroke-width="1.2" opacity=".44">
+                <ellipse cx="156" cy="310" rx="48" ry="78"/>
+                <ellipse cx="156" cy="310" rx="82" ry="125"/>
+                <ellipse cx="344" cy="310" rx="48" ry="78"/>
+                <ellipse cx="344" cy="310" rx="82" ry="125"/>
+                <path d="M62 310C82 120 204 112 250 258C296 112 418 120 438 310C418 500 296 508 250 362C204 508 82 500 62 310Z"/>
+            </g>
+            <path d="M250 82V518" stroke="#f4f1eb" stroke-width="1" stroke-dasharray="3 9" opacity=".22"/>
+            <g fill="#86b2bb">
+                <circle cx="122" cy="282" r="4"/><circle cx="146" cy="338" r="3"/><circle cx="183" cy="296" r="4"/><circle cx="107" cy="356" r="2.5"/><circle cx="194" cy="368" r="3"/>
+            </g>
+            <g fill="#d8a6af">
+                <circle cx="318" cy="276" r="3"/><circle cx="354" cy="332" r="4"/><circle cx="386" cy="296" r="2.5"/><circle cx="326" cy="374" r="3"/><circle cx="399" cy="352" r="4"/>
+            </g>
+            <g fill="#d7ded2"><circle cx="242" cy="304" r="3"/><circle cx="268" cy="342" r="2.5"/></g>
+        </svg>
+        <canvas class="langevin-model__canvas" data-langevin aria-hidden="true"></canvas>
+        <div class="langevin-model__notation" aria-hidden="true">
+            <span>U(q,r) = a(q² − 1)² + br²</span>
+            <span>mẍ = −γẋ − ∇U + √(2γkT)η</span>
+        </div>
+        <div class="langevin-model__labels" aria-hidden="true"><span>state A</span><span>barrier</span><span>state B</span></div>
+    </div>
+</div>

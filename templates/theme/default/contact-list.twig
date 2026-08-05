@@ -1,127 +1,72 @@
 {% extends '@theme/layout.twig' %}
 {% set page_title = 'Contact — Sara Bonella' %}
-{% set meta_description = 'Contact Sara Bonella about research collaboration, invited speaking, supervision, teaching, or scientific-programme work.' %}
-{% set og_title = 'Contact — Collaborate, invite, supervise' %}
+{% set meta_description = 'Contact Sara Bonella about research, speaking, teaching, supervision, or scientific-community work at EPFL and CECAM.' %}
+{% set og_title = page_title %}
 {% set og_description = meta_description %}
 {% set body_class = 'page-contact' %}
 
 {% block content %}
     {% set hero_kind = 'contact' %}
-    {% set hero_ring_text = 'COLLABORATE • INVITE • SUPERVISE •' %}
-    {% set hero_image = '/uploads/contact-hero/panorama_depuis_l_avenue_du_l_man_lausanne_jpg.jpg' %}
-    {% set hero_alt = 'Lausanne rooftops, Lake Geneva, and the Alps viewed from Avenue du Léman' %}
-    {% set hero_caption = 'Lausanne and Lake Geneva context' %}
-    {% set hero_source_url = 'https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=Panorama%20depuis%20avenue%20du%20L%C3%A9man%20Lausanne' %}
-    {% set hero_eyebrow = '05 / DIRECT CHANNEL' %}
-    {% set hero_title = 'Start with the question and the context around it' %}
-    {% set hero_deck = 'Research, speaking, supervision, and institutional enquiries can all begin directly by email—no form, no hidden data collection, no dead submission.' %}
-    {% set hero_roles = ['Lausanne / Switzerland', 'Academic & institutional enquiries', 'Direct mailto / no site-side collection'] %}
+    {% set hero_canvas = true %}
+    {% set hero_ring_text = '' %}
+    {% set hero_image = '/uploads/portrait/sara-bonella-seated.jpg' %}
+    {% set hero_alt = 'Sara Bonella seated in front of a whiteboard covered with equations' %}
+    {% set hero_caption = 'Portrait from the NCCR MARVEL profile' %}
+    {% set hero_source_url = 'https://nccr-marvel.ch/outreach/equal-opportunities/women-profiles/sara-bonella' %}
+    {% set hero_eyebrow = 'Contact · Lausanne' %}
+    {% set hero_title = 'Start with the question you want to explore' %}
+    {% set hero_deck = 'Research, speaking, teaching, supervision, and scientific-community enquiries can begin directly by email.' %}
+    {% set hero_roles = ['Senior Scientist / EPFL', 'Deputy Director / CECAM', 'Direct email / no contact form'] %}
     {% set hero_primary_url = 'mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry' %}
     {% set hero_primary_label = 'Write to Sara' %}
-    {% set hero_secondary_url = '#enquiry-routes' %}
-    {% set hero_secondary_label = 'Choose an enquiry route' %}
-    {% set hero_nodes = [
-        {'label': 'Research', 'url': '#research-enquiry'},
-        {'label': 'Speaking', 'url': '#speaking-enquiry'},
-        {'label': 'Supervision', 'url': '#supervision-enquiry'},
-        {'label': 'Programmes', 'url': '#programme-enquiry'},
-        {'label': 'Direct email', 'url': '#direct-contact', 'lime': true}
-    ] %}
+    {% set hero_secondary_url = '#details' %}
+    {% set hero_secondary_label = 'Contact details' %}
+    {% set hero_nodes = [] %}
     {% include '@theme/orbital-hero.twig' %}
 
-    <section class="section section--large section--field" id="enquiry-routes" aria-labelledby="enquiry-routes-title">
+    <section class="section" id="details" aria-labelledby="details-title">
         <div class="shell">
             <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">06 / ENQUIRY ORBIT</p>
-                    <h2 id="enquiry-routes-title">Four routes / one useful first message</h2>
-                </div>
-                <p class="section-deck">A concise message is enough. Include the purpose, relevant scientific or institutional context, likely timing, and the next decision you need to make together.</p>
+                <div><p class="eyebrow">Direct contact</p><h2 id="details-title">One clear route</h2></div>
+                <p class="section-deck">A short message is enough. Include the purpose, the relevant scientific or institutional context, and the next decision you would like to make together.</p>
             </div>
-            <div class="enquiry-orbit">
-                <article class="instrument-card accent-cyan" id="research-enquiry">
-                    <div class="card-meta"><span class="card-coordinate">E.01 / RESEARCH</span><span>Collaborate</span></div>
-                    <h3>Research collaboration</h3>
-                    <p>Name the physical system or method, the point of conceptual overlap, the people involved, and the form of exchange you have in mind.</p>
-                    <a class="card-link" href="mailto:sara.bonella@epfl.ch?subject=Research%20collaboration">Address a research message →</a>
-                </article>
-                <article class="instrument-card accent-pink" id="speaking-enquiry">
-                    <div class="card-meta"><span class="card-coordinate">E.02 / SPEAKING</span><span>Invite</span></div>
-                    <h3>Invited speaking</h3>
-                    <p>Share the audience, format, location, date range, scientific theme, and whether the invitation includes a broader programme role.</p>
-                    <a class="card-link" href="mailto:sara.bonella@epfl.ch?subject=Invited%20speaking">Address a speaking invitation →</a>
-                </article>
-                <article class="instrument-card accent-lime" id="supervision-enquiry">
-                    <div class="card-meta"><span class="card-coordinate">E.03 / SUPERVISION</span><span>Learn</span></div>
-                    <h3>Supervision &amp; teaching</h3>
-                    <p>Introduce your current programme, research interests, methods background, timing, and the specific supervisory or teaching question.</p>
-                    <a class="card-link" href="mailto:sara.bonella@epfl.ch?subject=Supervision%20or%20teaching%20enquiry">Address a supervision enquiry →</a>
-                </article>
-                <article class="instrument-card accent-violet" id="programme-enquiry">
-                    <div class="card-meta"><span class="card-coordinate">E.04 / PROGRAMMES</span><span>Build</span></div>
-                    <h3>Institutional &amp; programme work</h3>
-                    <p>Set out the organisations, intended community, decision horizon, and the scientific capacity the programme needs to create.</p>
-                    <a class="card-link" href="mailto:sara.bonella@epfl.ch?subject=Institutional%20or%20programme%20enquiry">Address a programme message →</a>
-                </article>
-            </div>
-        </div>
-    </section>
 
-    <section class="section section--large section--plum" id="direct-contact" aria-labelledby="direct-contact-title">
-        <div class="shell">
-            <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">07 / DIRECT READOUT</p>
-                    <h2 id="direct-contact-title">Direct identifiers / institutional contact route</h2>
-                </div>
-                <p class="section-deck">The primary email is confirmed in EPFL’s public directory; ORCID, CECAM, address, and phone are transcribed from the supplied academic record.</p>
-            </div>
             <div class="contact-readout">
                 <div>
-                    <p class="eyebrow">EMAIL / PRIMARY CHANNEL</p>
+                    <p class="eyebrow">Email</p>
                     <a class="email-readout" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">sara.bonella@epfl.ch</a>
-                    <p class="source-note" style="margin-top:1rem;"><a href="https://people.epfl.ch/sara.bonella" target="_blank" rel="noopener">Confirmed in the EPFL directory ↗</a></p>
-                    <div class="action-row" style="margin-top:2rem;"><a class="button" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">Open an email <span class="arrow-glyph" aria-hidden="true">↗</span></a></div>
+                    <p class="source-note" style="margin-top:1rem;"><a href="https://people.epfl.ch/sara.bonella?lang=en" target="_blank" rel="noopener">Confirmed by the EPFL people directory →</a></p>
                 </div>
                 <dl class="contact-details">
-                    <div><dt>Phone</dt><dd><a href="tel:+41796215128">+41 79 621 51 28</a></dd></div>
-                    <div><dt>Postal</dt><dd>BCH 3201, EPFL<br>Avenue Forel 2<br>CH-1015 Lausanne, Switzerland</dd></div>
-                    <div><dt>ORCID</dt><dd><a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">0000-0003-4131-2513</a></dd></div>
-                    <div><dt>CECAM</dt><dd><a href="https://www.cecam.org/" target="_blank" rel="noopener">www.cecam.org</a></dd></div>
-                    <div><dt>Institution</dt><dd><a href="https://www.epfl.ch/" target="_blank" rel="noopener">EPFL</a></dd></div>
+                    <div><dt>Telephone</dt><dd><a href="tel:+41216931979">+41 21 693 19 79</a></dd></div>
+                    <div><dt>Office</dt><dd>BCH 3102 · EPFL</dd></div>
+                    <div><dt>Post</dt><dd>EPFL CECAM · BCH 3103<br>Avenue de Forel 3<br>CH-1015 Lausanne, Switzerland</dd></div>
+                    <div><dt>Profiles</dt><dd><a href="https://people.epfl.ch/sara.bonella?lang=en" target="_blank" rel="noopener">EPFL</a> · <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">ORCID</a> · <a href="https://www.cecam.org/lausanne-hq" target="_blank" rel="noopener">CECAM</a></dd></div>
                 </dl>
             </div>
         </div>
     </section>
 
-    <section class="section section--large" aria-labelledby="location-title">
-        <div class="shell">
-            <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">08 / LOCATION ORBIT</p>
-                    <h2 id="location-title">EPFL / Lausanne / international network</h2>
-                </div>
-                <p class="section-deck">No invented map or live geodata: the durable postal location sits inside an abstract orbit, with a direct route to a real mapping service.</p>
+    <section class="section section--field" aria-labelledby="context-title">
+        <div class="teaching-grid shell">
+            <div>
+                <p class="eyebrow">Helpful context</p>
+                <h2 id="context-title">What to include</h2>
+                <p class="section-deck" style="margin-top:1.4rem;">Choose the closest starting point. There is no special format and no information is collected by this website.</p>
             </div>
-            <div class="address-orbit">
-                <aside class="address-card">
-                    <p class="eyebrow">EPFL / LAUSANNE / SWITZERLAND</p>
-                    <h3>CECAM Headquarters at EPFL</h3>
-                    <address>BCH 3201, EPFL<br>Avenue Forel 2<br>CH-1015 Lausanne<br>Switzerland</address>
-                    <p style="margin-top:1rem;"><a href="https://www.openstreetmap.org/search?query=EPFL%20Avenue%20Forel%202%20Lausanne" target="_blank" rel="noopener">Open the address in OpenStreetMap →</a></p>
-                </aside>
+            <div class="course-list">
+                <article class="course-item"><small>Research</small><h3>The physical question and the computational challenge</h3></article>
+                <article class="course-item"><small>Speaking</small><h3>Audience, format, scientific theme, place, and likely date</h3></article>
+                <article class="course-item"><small>Teaching or supervision</small><h3>Your background, topic, timing, and the kind of guidance you seek</h3></article>
+                <article class="course-item"><small>Programmes and institutions</small><h3>The community, proposed role, and the decision the conversation should support</h3></article>
             </div>
         </div>
     </section>
 
-    <section class="section section--large section--field" aria-labelledby="privacy-title">
-        <div class="shell privacy-panel">
-            <div>
-                <p class="eyebrow">09 / PRIVACY &amp; NEXT STEP</p>
-                <h2 id="privacy-title">The site does not collect your enquiry.</h2>
-                <p class="section-deck" style="margin-top:1rem;">The email actions open your own mail application. No message content, contact detail, analytics identifier, or form submission is stored here.</p>
-            </div>
-            <a class="button" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">Write directly <span class="arrow-glyph" aria-hidden="true">↗</span></a>
+    <section class="contact-invitation" aria-labelledby="write-title">
+        <div class="contact-invitation__grid shell">
+            <div><p class="eyebrow">Correspondence</p><h2 id="write-title">Ready when the question is.</h2><p>Email actions open your own mail application. This site uses no contact form, cookies, or personal analytics identifiers.</p></div>
+            <a class="button" href="mailto:sara.bonella@epfl.ch?subject=Academic%20enquiry">Open an email</a>
         </div>
     </section>
 {% endblock %}

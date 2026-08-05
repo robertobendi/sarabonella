@@ -1,236 +1,104 @@
 {% extends '@theme/layout.twig' %}
 {% set page_title = 'Publications — Sara Bonella' %}
-{% set meta_description = 'A curated scholarly record from Sara Bonella across molecular simulation, statistical physics, quantum dynamics, and scientific computing.' %}
-{% set og_title = 'Publications — Selected, reviewed, connected' %}
+{% set meta_description = 'Selected publications by Sara Bonella in molecular simulation, statistical physics, quantum dynamics, electrochemistry, and scientific computing.' %}
+{% set og_title = 'Selected publications — Sara Bonella' %}
 {% set og_description = meta_description %}
 {% set body_class = 'page-publications' %}
 
 {% block content %}
     {% set hero_kind = 'publications' %}
-    {% set hero_ring_text = 'SELECTED • REVIEWED • CONNECTED •' %}
+    {% set hero_canvas = true %}
     {% set hero_image = '/uploads/publications-hero/the_philosophical_magazine__a_journal_of_theoretical__experi.jpg' %}
-    {% set hero_alt = 'Historic physics journal plate showing experimental apparatus diagrams' %}
-    {% set hero_caption = 'Historic journal plate — publishing context, not Bonella’s apparatus' %}
+    {% set hero_alt = 'A historic scientific journal plate with diagrams of experimental apparatus' %}
+    {% set hero_caption = 'A page from The Philosophical Magazine · historical publishing context' %}
     {% set hero_source_url = 'https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=The%20Philosophical%20Magazine%20journal%20theoretical%20experimental' %}
-    {% set hero_eyebrow = '02 / SCHOLARLY RECORD' %}
-    {% set hero_title = 'A research record built across methods and physical systems' %}
-    {% set hero_deck = 'Selected papers make the range legible without turning the page into a static CV: metadata stays precise, categories stay visible, and DOI routes remain direct.' %}
-    {% set hero_roles = ['70+ peer-reviewed articles / supplied CV', 'Selected record / editor-curated', 'Durable exits / DOI & ORCID'] %}
-    {% set hero_primary_url = '#featured-papers' %}
-    {% set hero_primary_label = 'Read featured papers' %}
+    {% set hero_eyebrow = 'Selected publications' %}
+    {% set hero_title = 'Ideas developed in company' %}
+    {% set hero_deck = 'Sara’s publication record follows long-running collaborations across molecular simulation, mathematical physics, electrochemistry, open tools, and high-performance computing.' %}
+    {% set hero_roles = ['Methods and physical applications', 'Collaborative, peer-reviewed work', 'Full record available through ORCID'] %}
+    {% set hero_primary_url = '#selected-papers' %}
+    {% set hero_primary_label = 'Read the selection' %}
     {% set hero_secondary_url = 'https://orcid.org/0000-0003-4131-2513' %}
     {% set hero_secondary_label = 'Open ORCID' %}
-    {% set hero_nodes = [
-        {'label': 'Statistical physics', 'url': '#pathways'},
-        {'label': 'Quantum dynamics', 'url': '#pathways'},
-        {'label': 'Molecular simulation', 'url': '#featured-papers'},
-        {'label': 'Scientific computing', 'url': '#featured-papers'},
-        {'label': 'Chronology', 'url': '#chronology', 'lime': true}
-    ] %}
     {% include '@theme/orbital-hero.twig' %}
 
-    <section class="section section--large section--field" id="featured-papers" aria-labelledby="featured-papers-title">
+    <section class="section section--field" id="selected-papers" aria-labelledby="selected-papers-title">
         <div class="shell">
             <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">03 / FEATURED PAPERS</p>
-                    <h2 id="featured-papers-title">Eight routes into the work</h2>
-                </div>
-                <p class="section-deck">These papers are selected for conceptual range and recent relevance. Publication metadata comes from the supplied academic record; DOI destinations were resolved against Crossref.</p>
+                <div><p class="eyebrow">A curated record</p><h2 id="selected-papers-title">Places to begin</h2></div>
+                <p class="section-deck">Selected for the way they trace recurring questions in Sara’s work—not as a ranking, but as an invitation into the research.</p>
             </div>
-
-            <div class="stagger-grid">
-                {% if entries|length > 0 %}
-                    {% for item in entries %}
-                        <article class="publication-card accent-{% if loop.index % 4 == 0 %}violet{% elseif loop.index % 3 == 0 %}lime{% elseif loop.index is even %}pink{% else %}cyan{% endif %}">
-                            <div class="card-meta"><span class="card-coordinate">{{ item.field('year') }} / {{ item.field('category') }}</span><span>P.{{ '%02d'|format(loop.index) }}</span></div>
-                            <h3>{{ item.field('title') }}</h3>
-                            <p class="paper-authors">{{ item.field('authors') }}</p>
-                            <p class="paper-venue">{{ item.field('venue') }}</p>
-                            {% if item.field('doi_url') %}<a class="card-link" href="{{ item.field('doi_url') }}" target="_blank" rel="noopener">Open DOI →</a>{% else %}<a class="card-link" href="/publications/{{ item.slug }}">Read publication note →</a>{% endif %}
-                        </article>
-                    {% endfor %}
-                {% else %}
-                    <article class="publication-card accent-lime">
-                        <div class="card-meta"><span class="card-coordinate">2025 / MOLECULAR</span><span>P.01</span></div>
-                        <h3>Electrically driven first-order phase transition of a 2D ionic crystal at the electrode/electrolyte interface</h3>
-                        <p class="paper-authors">F. Angiolari, A. Coretti, M. Salanne &amp; S. Bonella</p>
-                        <p class="paper-venue">Proceedings of the National Academy of Sciences 122</p>
-                        <a class="card-link" href="https://doi.org/10.1073/pnas.2520026122" target="_blank" rel="noopener">Open DOI →</a>
+            {% set selected_entries = entries|filter(item => item.field('featured')) %}
+            {% if selected_entries|length == 0 %}{% set selected_entries = entries|slice(0, 8) %}{% endif %}
+            <div class="selected-work">
+{% if selected_entries|length > 0 %}
+                {% for item in selected_entries %}
+                    <article class="selected-paper">
+                        <time>{{ item.field('year') }}</time>
+                        <div><h3>{{ item.field('title') }}</h3><p>{{ item.field('authors') }} · {{ item.field('venue') }}</p></div>
+                        {% if item.field('doi_url') %}<a href="{{ item.field('doi_url') }}" target="_blank" rel="noopener">DOI ↗</a>{% else %}<a href="/publications/{{ item.slug }}">Details →</a>{% endif %}
                     </article>
-
-                    <article class="publication-card accent-cyan">
-                        <div class="card-meta"><span class="card-coordinate">2025 / METHODS</span><span>P.02</span></div>
-                        <h3>Mass-zero constrained molecular dynamics for electrostatic interactions</h3>
-                        <p class="paper-authors">F. Troni, D. Grassano, J. Narayan, B. Roux &amp; S. Bonella</p>
-                        <p class="paper-venue">The Journal of Chemical Physics 163, 214106</p>
-                        <a class="card-link" href="https://doi.org/10.1063/5.0283356" target="_blank" rel="noopener">Open DOI →</a>
-                    </article>
-
-                    <article class="publication-card accent-pink">
-                        <div class="card-meta"><span class="card-coordinate">2024 / EDUCATION</span><span>P.03</span></div>
-                        <h3>Jupyter widgets and extensions for education and research in computational physics and chemistry</h3>
-                        <p class="paper-authors">D. Dou et al.</p>
-                        <p class="paper-venue">Computer Physics Communications 305, 109353</p>
-                        <a class="card-link" href="https://doi.org/10.1016/j.cpc.2024.109353" target="_blank" rel="noopener">Open DOI →</a>
-                    </article>
-
-                    <article class="publication-card accent-violet">
-                        <div class="card-meta"><span class="card-coordinate">2024 / INFRASTRUCTURE</span><span>P.04</span></div>
-                        <h3>Developments and applications of the OPTIMADE API for materials discovery, design, and data exchange</h3>
-                        <p class="paper-authors">M. Evans et al.</p>
-                        <p class="paper-venue">Digital Discovery 3, 1509–1533</p>
-                        <a class="card-link" href="https://doi.org/10.1039/D4DD00039K" target="_blank" rel="noopener">Open DOI →</a>
-                    </article>
-
-                    <article class="publication-card accent-cyan">
-                        <div class="card-meta"><span class="card-coordinate">2023 / OPEN SCIENCE</span><span>P.05</span></div>
-                        <h3>OSSCAR, an open platform for collaborative development of computational tools for education in science</h3>
-                        <p class="paper-authors">D. Du, T. J. Baird, S. Bonella &amp; G. Pizzi</p>
-                        <p class="paper-venue">Computer Physics Communications 282, 108546</p>
-                        <a class="card-link" href="https://doi.org/10.1016/j.cpc.2022.108546" target="_blank" rel="noopener">Open DOI →</a>
-                    </article>
-
-                    <article class="publication-card accent-pink">
-                        <div class="card-meta"><span class="card-coordinate">2023 / STATISTICAL</span><span>P.06</span></div>
-                        <h3>Inferring free-energy barriers and kinetic rates from molecular dynamics via underdamped Langevin models</h3>
-                        <p class="paper-authors">D. Girardier, H. Vroylandt, S. Bonella &amp; F. Pietrucci</p>
-                        <p class="paper-venue">The Journal of Chemical Physics 159, 164111</p>
-                        <a class="card-link" href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">Open DOI →</a>
-                    </article>
-
-                    <article class="publication-card accent-lime">
-                        <div class="card-meta"><span class="card-coordinate">2022 / ELECTROCHEMISTRY</span><span>P.07</span></div>
-                        <h3>MetalWalls: Simulating electrochemical interfaces between polarizable electrolytes and metallic electrodes</h3>
-                        <p class="paper-authors">A. Coretti et al.</p>
-                        <p class="paper-venue">The Journal of Chemical Physics 157, 184801</p>
-                        <a class="card-link" href="https://doi.org/10.1063/5.0101777" target="_blank" rel="noopener">Open DOI →</a>
-                    </article>
-
-                    <article class="publication-card accent-violet">
-                        <div class="card-meta"><span class="card-coordinate">2021 / NON-EQUILIBRIUM</span><span>P.08</span></div>
-                        <h3>Fluctuation relations for dissipative systems in a constant external magnetic field</h3>
-                        <p class="paper-authors">A. Coretti, L. Rondoni &amp; S. Bonella</p>
-                        <p class="paper-venue">Entropy 23, 146</p>
-                        <a class="card-link" href="https://doi.org/10.3390/e23020146" target="_blank" rel="noopener">Open DOI →</a>
-                    </article>
-                {% endif %}
+                {% endfor %}
+{% else %}
+                <article class="selected-paper">
+                    <time>2025</time>
+                    <div><h3>Electrically driven first-order phase transition of a 2D ionic crystal at the electrode/electrolyte interface</h3><p>F. Angiolari, A. Coretti, M. Salanne &amp; S. Bonella · PNAS 122</p></div>
+                    <a href="https://doi.org/10.1073/pnas.2520026122" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+                <article class="selected-paper">
+                    <time>2025</time>
+                    <div><h3>mass-zero constrained molecular dynamics for electrostatic interactions</h3><p>F. Troni, D. Grassano, J. Narayan, B. Roux &amp; S. Bonella · The Journal of Chemical Physics 163</p></div>
+                    <a href="https://doi.org/10.1063/5.0283356" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+                <article class="selected-paper">
+                    <time>2025</time>
+                    <div><h3>A tale of two codes: CUDA vs OpenACC for mass-zero constrained dynamics</h3><p>A. Vignolo et al. · International Journal of High Performance Computing Applications</p></div>
+                    <a href="https://doi.org/10.1177/10943420251331673" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+                <article class="selected-paper">
+                    <time>2024</time>
+                    <div><h3>Jupyter widgets and extensions for education and research in computational physics and chemistry</h3><p>D. Du et al. · Computer Physics Communications 305</p></div>
+                    <a href="https://doi.org/10.1016/j.cpc.2024.109353" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+                <article class="selected-paper">
+                    <time>2023</time>
+                    <div><h3>Inferring free-energy barriers and kinetic rates from molecular dynamics via underdamped Langevin models</h3><p>D. Girardier, H. Vroylandt, S. Bonella &amp; F. Pietrucci · The Journal of Chemical Physics 159</p></div>
+                    <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+                <article class="selected-paper">
+                    <time>2023</time>
+                    <div><h3>OSSCAR, an open platform for collaborative development of computational tools for education in science</h3><p>D. Du, T. J. Baird, S. Bonella &amp; G. Pizzi · Computer Physics Communications 282</p></div>
+                    <a href="https://doi.org/10.1016/j.cpc.2022.108546" target="_blank" rel="noopener">DOI ↗</a>
+                </article>
+{% endif %}
             </div>
         </div>
     </section>
 
-    <section class="section section--large section--plum" id="pathways" aria-labelledby="pathways-title">
-        <div class="shell">
-            <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">04 / RESEARCH PATHWAYS</p>
-                    <h2 id="pathways-title">From method to paper, without losing the connection</h2>
+    <section class="section" aria-labelledby="threads-title">
+        <div class="research-feature__grid shell">
+            <div>
+                <p class="eyebrow">Across the record</p>
+                <h2 id="threads-title">The questions travel between fields</h2>
+                <div class="question-list">
+                    <article class="question-row"><span>01</span><div><h3>Approximation with structure</h3><p>Quantum and classical descriptions meet through algorithms designed to preserve the physical relationships that matter.</p></div></article>
+                    <article class="question-row"><span>02</span><div><h3>Interfaces and non-equilibrium matter</h3><p>Charged surfaces, transport, rare events, and phase behaviour reveal how microscopic organisation creates macroscopic response.</p></div></article>
+                    <article class="question-row"><span>03</span><div><h3>Methods that other people can use</h3><p>Open computational tools, shared APIs, training, and scalable code extend a method beyond the paper that introduced it.</p></div></article>
                 </div>
-                <p class="section-deck">The citation map is an index, not a metric: three lines connect recurring research questions to representative publications.</p>
             </div>
-            <div class="pathway-map" aria-label="Research topics connected to representative papers">
-                <svg viewBox="0 0 1200 350" preserveAspectRatio="none" aria-hidden="true">
-                    <g class="trajectory" color="#00D9FF"><path d="M160 92 C310 70 340 230 520 230 S760 82 1000 105"/><circle cx="160" cy="92" r="7"/><circle cx="520" cy="230" r="7"/><circle cx="1000" cy="105" r="7"/></g>
-                    <g class="trajectory" color="#FF4FCB"><path d="M120 286 C340 260 405 110 650 142 S910 292 1110 248"/><circle cx="120" cy="286" r="5"/><circle cx="650" cy="142" r="5"/><circle cx="1110" cy="248" r="5"/></g>
-                </svg>
-                <span class="pathway-label">Constrained dynamics / P.02</span>
-                <span class="pathway-label">Open computational tools / P.05</span>
-                <span class="pathway-label">Non-equilibrium physics / P.08</span>
-            </div>
+            <aside class="research-study" aria-labelledby="record-title">
+                <p class="eyebrow">Full scholarly record</p>
+                <h3 id="record-title">ORCID 0000-0003-4131-2513</h3>
+                <p class="section-deck" style="margin-top:1rem;">For the complete and evolving bibliography, use Sara’s persistent researcher identifier.</p>
+                <div class="action-row"><a class="button" href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Open ORCID</a></div>
+            </aside>
         </div>
     </section>
 
-    <section class="section section--large" id="chronology" aria-labelledby="chronology-title">
-        <div class="shell">
-            <div class="section-heading section-heading--split">
-                <div>
-                    <p class="eyebrow">05 / CHRONOLOGY</p>
-                    <h2 id="chronology-title">Recent record / year by year</h2>
-                </div>
-                <p class="section-deck">The supplied CV contains a 77-item publication record extending to 1996. This recent chronology preserves titles and venues; ORCID below provides the durable external continuation.</p>
-            </div>
-
-            <div class="chronology">
-                <section class="year-group" aria-labelledby="year-2026">
-                    <h3 class="year-numeral" id="year-2026">2026</h3>
-                    <div class="year-papers">
-                        <p class="year-paper"><strong>Anharmonic phonons via quantum thermal bath simulations</strong><span>Baird, Vuilleumier &amp; Bonella · The Journal of Physical Chemistry 165, 014109</span></p>
-                        <p class="year-paper"><strong>Correcting systematic parametrization errors in underdamped Langevin models of molecular dynamics trajectories</strong><span>Girardier, Vroylandt, Bonella &amp; Pietrucci · Physical Review Letters 136, 097101</span></p>
-                        <p class="year-paper"><strong>Perspective on a challenge: predicting the photochemistry of cyclobutanone</strong><span>Curchod, Bonella, Martinez, Worth et al. · The Journal of Physical Chemistry 165, 020902</span></p>
-                    </div>
-                </section>
-
-                <section class="year-group" aria-labelledby="year-2025">
-                    <h3 class="year-numeral" id="year-2025">2025</h3>
-                    <div class="year-papers">
-                        <p class="year-paper"><strong>Electrically driven first-order phase transition of a 2D ionic crystal at the electrode/electrolyte interface</strong><span>Angiolari, Coretti, Salanne &amp; Bonella · PNAS 122</span></p>
-                        <p class="year-paper"><strong>Mass-zero constrained molecular dynamics for electrostatic interactions</strong><span>Troni, Grassano, Narayan, Roux &amp; Bonella · JCP 163, 214106</span></p>
-                        <p class="year-paper"><strong>A tale of two codes: CUDA vs OpenACC for Mass-Zero constrained dynamics</strong><span>Vignolo et al. · International Journal of High Performance Computing Applications</span></p>
-                    </div>
-                </section>
-
-                <section class="year-group" aria-labelledby="year-2024">
-                    <h3 class="year-numeral" id="year-2024">2024</h3>
-                    <div class="year-papers">
-                        <p class="year-paper"><strong>Jupyter widgets and extensions for education and research in computational physics and chemistry</strong><span>Dou et al. · Computer Physics Communications 305, 109353</span></p>
-                        <p class="year-paper"><strong>Developments and applications of the OPTIMADE API for materials discovery, design, and data exchange</strong><span>Evans et al. · Digital Discovery 3, 1509–1533</span></p>
-                    </div>
-                </section>
-
-                <section class="year-group" aria-labelledby="year-2023">
-                    <h3 class="year-numeral" id="year-2023">2023</h3>
-                    <div class="year-papers">
-                        <p class="year-paper"><strong>Continuum mechanics from molecular dynamics via adiabatic time and length scale separation</strong><span>Dicarlo, Bonella, Ferrario &amp; Ciccotti · Letters in Mathematical Physics 113</span></p>
-                        <p class="year-paper"><strong>OSSCAR, an open platform for collaborative development of computational tools for education in science</strong><span>Du, Baird, Bonella &amp; Pizzi · Computer Physics Communications 282, 108546</span></p>
-                        <p class="year-paper"><strong>Inferring free-energy barriers and kinetic rates from molecular dynamics</strong><span>Girardier, Vroylandt, Bonella &amp; Pietrucci · JCP 159, 164111</span></p>
-                    </div>
-                </section>
-
-                <section class="year-group" aria-labelledby="year-2022">
-                    <h3 class="year-numeral" id="year-2022">2022</h3>
-                    <div class="year-papers">
-                        <p class="year-paper"><strong>Mass-zero constrained dynamics for simulations based on orbital-free density functional theory</strong><span>Coretti, Baird, Vuilleumier &amp; Bonella · JCP 157, 214110</span></p>
-                        <p class="year-paper"><strong>MetalWalls: Simulating electrochemical interfaces between polarizable electrolytes and metallic electrodes</strong><span>Coretti et al. · JCP 157, 184801</span></p>
-                        <p class="year-paper"><strong>Simulation of Nuclear Quantum Effects in Condensed Matter Systems via Quantum Baths</strong><span>Huppert, Plé, Bonella, Depondt &amp; Finocchi · Applied Sciences 12</span></p>
-                    </div>
-                </section>
-
-                <section class="year-group" aria-labelledby="year-2021">
-                    <h3 class="year-numeral" id="year-2021">2021</h3>
-                    <div class="year-papers">
-                        <p class="year-paper"><strong>Fluctuation relations for dissipative systems in constant external magnetic field</strong><span>Coretti, Rondoni &amp; Bonella · Entropy 23</span></p>
-                        <p class="year-paper"><strong>Mass-Zero constrained dynamics and statistics for the shell model in magnetic field</strong><span>Girardier, Coretti, Ciccotti &amp; Bonella · European Physical Journal B 94</span></p>
-                        <p class="year-paper"><strong>Nuclear Quantum Effects in Liquid Water at Near Classical Computational Cost</strong><span>Mauger et al. · Journal of Physical Chemistry Letters 12</span></p>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </section>
-
-    <section class="section section--large section--plum" aria-labelledby="external-record-title">
-        <div class="shell">
-            <p class="eyebrow">06 / EXTERNAL RECORD</p>
-            <h2 id="external-record-title" style="margin-bottom:2rem;">A durable scholarly identifier</h2>
-            <div class="record-readout">
-                <span class="record-light" aria-hidden="true"></span>
-                <div><strong>ORCID / 0000-0003-4131-2513</strong><br><span class="microcopy">Persistent researcher identifier from the supplied record</span></div>
-                <a class="button" href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Open ORCID <span class="arrow-glyph" aria-hidden="true">↗</span></a>
-            </div>
-            <p class="source-note" style="margin-top:1rem;">A Google Scholar destination is intentionally not published until its exact profile URL is verified.</p>
-        </div>
-    </section>
-
-    <section class="section section--large" aria-labelledby="publication-contact-title">
-        <div class="shell">
-            <div class="invitation-panel">
-                <div>
-                    <p class="eyebrow">07 / CONTINUE THE THREAD</p>
-                    <h2 id="publication-contact-title">A paper can be the start of a seminar or a shared method.</h2>
-                    <p class="section-deck">Name the result, method, or research question you want to discuss, and the context in which the conversation would be useful.</p>
-                    <div class="action-row" style="margin-top:2rem;"><a class="button" href="mailto:sara.bonella@epfl.ch?subject=Publication%20or%20seminar%20enquiry">Discuss the work <span class="arrow-glyph" aria-hidden="true">↗</span></a></div>
-                </div>
-                <span class="sticker" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="publication-seal-ring" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs><circle cx="60" cy="60" r="53" fill="#070A18" stroke="currentColor" stroke-width="2"/><text font-size="10" letter-spacing="1.8"><textPath href="#publication-seal-ring">READ • DISCUSS • CONNECT • </textPath></text><text x="60" y="68" text-anchor="middle" font-size="24" font-weight="700">DOI</text></svg></span>
-            </div>
+    <section class="contact-invitation" aria-labelledby="publication-contact-title">
+        <div class="contact-invitation__grid shell">
+            <div><p class="eyebrow">Continue the work</p><h2 id="publication-contact-title">A paper can begin a new conversation.</h2><p>Name the result, method, or physical question you would like to discuss, and the context in which the exchange would be useful.</p></div>
+            <a class="button" href="mailto:sara.bonella@epfl.ch?subject=Publication%20or%20seminar%20enquiry">Write to Sara</a>
         </div>
     </section>
 {% endblock %}

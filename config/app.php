@@ -2,7 +2,7 @@
 
 return [
     'app' => [
-        'name'  => 'Pebblestack',
+        'name'  => 'Sara Bonella',
         'theme' => 'default',
         'debug' => false,
     ],

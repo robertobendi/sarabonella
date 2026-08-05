@@ -1,49 +1,44 @@
 {% extends '@theme/layout.twig' %}
 {% set page_title = entry.field('title') ~ ' — Publication — Sara Bonella' %}
-{% set meta_description = entry.field('abstract')|default('Publication by Sara Bonella and collaborators.', true) %}
+{% set meta_description = entry.field('abstract')|default('A publication by Sara Bonella and collaborators.', true) %}
 {% set og_title = page_title %}
 {% set og_description = meta_description %}
 {% set body_class = 'page-publications' %}
 
 {% block content %}
-    {% set hero_kind = 'publication-detail' %}
-    {% set hero_ring_text = 'SELECTED • REVIEWED • ' ~ entry.field('year') ~ ' •' %}
+    {% set hero_kind = 'publications' %}
+    {% set hero_canvas = true %}
     {% set hero_image = '/uploads/publications-hero/the_philosophical_magazine__a_journal_of_theoretical__experi.jpg' %}
-    {% set hero_alt = 'Historic physics journal plate used as publication context' %}
-    {% set hero_caption = 'Historic journal plate — publication context' %}
+    {% set hero_alt = 'A historic scientific journal plate with diagrams of experimental apparatus' %}
+    {% set hero_caption = 'A page from The Philosophical Magazine · historical publishing context' %}
     {% set hero_source_url = '' %}
-    {% set hero_eyebrow = 'PUBLICATION / ' ~ entry.field('year') %}
+    {% set hero_eyebrow = 'Publication · ' ~ entry.field('year') %}
     {% set hero_title = entry.field('title') %}
     {% set hero_deck = entry.field('authors') %}
     {% set hero_roles = [entry.field('venue')|default('Peer-reviewed publication', true), entry.field('category')|default('Computational physics', true)] %}
     {% set hero_primary_url = entry.field('doi_url')|default('/publications', true) %}
-    {% set hero_primary_label = entry.field('doi_url') ? 'Open DOI' : 'View publications' %}
+    {% set hero_primary_label = entry.field('doi_url') ? 'Open the paper' : 'Selected publications' %}
     {% set hero_secondary_url = '/publications' %}
-    {% set hero_secondary_label = 'Back to the selected record' %}
-    {% set hero_nodes = [
-        {'label': 'Paper metadata', 'url': '#paper-metadata'},
-        {'label': 'Abstract', 'url': '#paper-abstract'},
-        {'label': 'Research map', 'url': '/research'},
-        {'label': 'Chronology', 'url': '/publications#chronology'},
-        {'label': 'ORCID', 'url': 'https://orcid.org/0000-0003-4131-2513', 'lime': true}
-    ] %}
+    {% set hero_secondary_label = 'Back to publications' %}
     {% include '@theme/orbital-hero.twig' %}
 
     <article class="article-shell">
-        <section id="paper-metadata" class="evidence-band" aria-labelledby="paper-metadata-title">
-            <p class="eyebrow">01 / PAPER METADATA</p>
-            <h2 id="paper-metadata-title">Citation readout</h2>
+        <section aria-labelledby="paper-details-title">
+            <p class="eyebrow">About this paper</p>
+            <h2 id="paper-details-title">Publication details</h2>
             <dl class="contact-details" style="margin-top:2rem;">
                 <div><dt>Authors</dt><dd>{{ entry.field('authors') }}</dd></div>
                 <div><dt>Venue</dt><dd>{{ entry.field('venue') }}</dd></div>
                 <div><dt>Year</dt><dd>{{ entry.field('year') }}</dd></div>
-                <div><dt>Category</dt><dd>{{ entry.field('category') }}</dd></div>
+                {% if entry.field('category') %}<div><dt>Research area</dt><dd>{{ entry.field('category') }}</dd></div>{% endif %}
             </dl>
         </section>
-        <section id="paper-abstract" class="article-body" style="margin-top:4rem;" aria-labelledby="paper-abstract-title">
-            <p class="eyebrow">02 / ABSTRACT</p>
-            <h2 id="paper-abstract-title">Research summary</h2>
-            <p>{{ entry.field('abstract') }}</p>
-        </section>
+        {% if entry.field('abstract') %}
+            <section class="article-body" style="margin-top:4rem;" aria-labelledby="paper-summary-title">
+                <p class="eyebrow">Summary</p>
+                <h2 id="paper-summary-title">Research abstract</h2>
+                <p>{{ entry.field('abstract') }}</p>
+            </section>
+        {% endif %}
     </article>
 {% endblock %}
