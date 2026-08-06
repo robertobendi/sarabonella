@@ -9,7 +9,8 @@
     {% set hero_kind = 'research' %}
     {% set hero_canvas = true %}
     {% set hero_field = 'wavepacket' %}
-    {% set hero_simulation_caption = 'A Gaussian wavepacket meeting a barrier close to its own energy: part tunnels through, part reflects' %}
+    {% set hero_simulation_title = 'Quantum wavepacket' %}
+    {% set hero_simulation_caption = 'A wavepacket meets a barrier near its own energy; part goes through, part comes back. Move the pointer to change the barrier height.' %}
     {% set hero_simulation_source_url = 'https://orcid.org/0000-0003-4131-2513' %}
     {% set hero_simulation_source_label = 'Full record' %}
     {% set hero_eyebrow = 'Research' %}
@@ -67,7 +68,7 @@
         </div>
     </section>
 
-    <section class="section" aria-labelledby="methods-title">
+    <section class="section section--ornamented" aria-labelledby="methods-title">
         <div class="teaching-grid shell">
             <div>
                 <p class="eyebrow">Methods &amp; systems</p>
@@ -81,6 +82,13 @@
                 <article class="course-item"><small>Interfaces</small><h3>Condensed phases and electrochemistry</h3><p>Molecular organisation and phase behaviour where electrolytes meet metallic electrodes.</p></article>
             </div>
         </div>
+        {% include '@theme/scientific-ornament.twig' with {
+            ornament_kind: 'poiseuille',
+            ornament_class: 'science-ornament--right',
+            ornament_title: 'Poiseuille profile',
+            ornament_formula: 'u(r) = u₀(1 − r²/R²)',
+            ornament_description: 'Steady flow between two plates: the velocity profile is parabolic across the channel.'
+        } %}
     </section>
 
 {% if entries|length > 0 %}

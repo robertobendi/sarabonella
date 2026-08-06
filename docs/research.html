@@ -449,6 +449,17 @@
         }
         .sim-field__stage.is-ready .sim-field__readout { opacity: 1; }
         .sim-field__readout:empty { display: none; }
+        /* Full-bleed heroes put the copy in the top-left, so the readout moves to
+           the free corner above the notation instead of sitting behind the headline. */
+        .hero-simulation .sim-field__readout {
+            top: auto;
+            left: auto;
+            right: .9rem;
+            bottom: 3.9rem;
+            max-width: 42ch;
+            background: none;
+            text-align: right;
+        }
         /* The wave grid reads better in a squarer frame than the 4:5 default. */
         .sim-field--ripple .sim-field__stage,
         .sim-field--synchrony .sim-field__stage { aspect-ratio: 1 / 1; }
@@ -492,10 +503,37 @@
         .science-ornament figcaption small { color: var(--muted); font-size: .75rem; line-height: 1.45; }
         .section--about,
         .research-feature,
-        .teaching-section { isolation: isolate; overflow: clip; }
+        .teaching-section,
+        .section--ornamented { isolation: isolate; overflow: clip; }
         .section--about > .shell,
         .research-feature > .shell,
-        .teaching-section > .shell { position: relative; z-index: 2; }
+        .teaching-section > .shell,
+        .section--ornamented > .shell { position: relative; z-index: 2; }
+        /* Reusable placements so any section can carry a blended ornament, rather
+           than each one needing its own bespoke offsets and mask. */
+        .section--ornamented { padding-bottom: calc(var(--section) + 4rem); }
+        .science-ornament--left {
+            --ornament-offset: max(-12rem, calc((100vw - var(--max)) / 2 - 6rem));
+            left: var(--ornament-offset);
+            bottom: clamp(1.5rem, 3vw, 3.75rem);
+            width: clamp(40rem, 58vw, 60rem);
+        }
+        .science-ornament--left .science-ornament__stage {
+            -webkit-mask-image: radial-gradient(ellipse 76% 70% at 24% 78%, #000 0 30%, rgba(0,0,0,.78) 48%, rgba(0,0,0,.2) 68%, transparent 94%);
+            mask-image: radial-gradient(ellipse 76% 70% at 24% 78%, #000 0 30%, rgba(0,0,0,.78) 48%, rgba(0,0,0,.2) 68%, transparent 94%);
+        }
+        .science-ornament--left figcaption { left: calc(var(--section-edge) - var(--ornament-offset)); bottom: 1rem; }
+        .science-ornament--right {
+            --ornament-offset: max(-13rem, calc((100vw - var(--max)) / 2 - 7rem));
+            right: var(--ornament-offset);
+            bottom: clamp(1.5rem, 3vw, 3.75rem);
+            width: clamp(42rem, 62vw, 66rem);
+        }
+        .science-ornament--right .science-ornament__stage {
+            -webkit-mask-image: radial-gradient(ellipse 74% 74% at 76% 76%, #000 0 30%, rgba(0,0,0,.78) 48%, rgba(0,0,0,.2) 68%, transparent 95%);
+            mask-image: radial-gradient(ellipse 74% 74% at 76% 76%, #000 0 30%, rgba(0,0,0,.78) 48%, rgba(0,0,0,.2) 68%, transparent 95%);
+        }
+        .science-ornament--right figcaption { right: calc(var(--section-edge) - var(--ornament-offset)); bottom: 1rem; justify-items: end; text-align: right; }
         .science-ornament--about {
             --ornament-offset: max(-10rem, calc((100vw - var(--max)) / 2 - 5.5rem));
             top: clamp(10rem, 14vw, 14rem);
@@ -697,6 +735,58 @@
         .page-intro__media figcaption { padding-top: .75rem; color: var(--muted); font-size: .74rem; line-height: 1.45; }
         .page-intro__media figcaption a { color: inherit; }
 
+        /* Immersive variant: the live field runs full-bleed behind the copy, as on
+           the home page, instead of sitting in a panel beside it. */
+        .page-intro--immersive {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            color: var(--white);
+            background: var(--deep);
+            border-bottom: 1px solid rgba(255,254,250,.18);
+            touch-action: pan-y;
+        }
+        .page-intro--immersive::before {
+            content: '';
+            position: absolute;
+            z-index: 2;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(25,35,39,.96) 0%, rgba(38,51,56,.84) 40%, rgba(38,51,56,.28) 70%, rgba(38,51,56,.04) 100%),
+                linear-gradient(0deg, rgba(26,37,41,.66), transparent 40%);
+        }
+        .page-intro--immersive:has(.sim-field__stage:focus-visible)::after {
+            content: '';
+            position: absolute;
+            z-index: 5;
+            inset: .55rem;
+            border: 3px solid var(--rose);
+            pointer-events: none;
+        }
+        .page-intro--immersive .page-intro__grid {
+            position: relative;
+            z-index: 3;
+            display: grid;
+            align-content: center;
+            grid-template-columns: minmax(0, 1fr);
+            min-height: calc(100vh - var(--header-h));
+            min-height: max(38rem, calc(100svh - var(--header-h)));
+            padding-block: clamp(4rem, 7vw, 6.5rem);
+        }
+        .page-intro--immersive .hero-panel { max-width: 44rem; }
+        .page-intro--immersive .eyebrow { color: var(--rose); }
+        .page-intro--immersive h1 { color: var(--white); }
+        .page-intro--immersive .hero-deck { color: rgba(255,254,250,.8); }
+        .page-intro--immersive .role-lines { border-block-color: rgba(255,254,250,.22); color: rgba(255,254,250,.68); }
+        .page-intro--immersive .role-lines li::before { color: var(--rose); }
+        .page-intro--immersive .button { color: var(--deep); background: var(--paper); border-color: var(--paper); }
+        .page-intro--immersive .button:hover { color: var(--deep); background: var(--rose); border-color: var(--rose); }
+        .page-intro--immersive .text-action { color: var(--rose); text-decoration-color: rgba(232,201,206,.45); }
+        .page-intro--immersive .text-action:hover { color: var(--white); text-decoration-color: currentColor; }
+        .page-intro--immersive a:focus-visible,
+        .page-intro--immersive [tabindex]:focus-visible { outline-color: var(--white); }
+
         /* Detail templates (research notes, single papers, markdown pages) reuse the
            card + article system below; the list pages are their entry points. */
         .area-orbit {
@@ -753,7 +843,7 @@
 
         @media (max-width: 1050px) {
             .personal-hero__grid { grid-template-columns: minmax(0, 7fr) minmax(13rem, 3fr); gap: 3rem; }
-            .page-intro__grid { grid-template-columns: minmax(0, 6fr) minmax(20rem, 5fr); gap: 3rem; }
+            .page-intro:not(.page-intro--immersive) .page-intro__grid { grid-template-columns: minmax(0, 6fr) minmax(20rem, 5fr); gap: 3rem; }
             .brand-name { font-size: 1.02rem; }
             .primary-nav { gap: .9rem; }
         }
@@ -769,12 +859,17 @@
             .personal-hero__grid, .page-intro__grid, .philosophy-grid, .bio-grid, .research-feature__grid,
             .collective-grid, .teaching-grid, .personal-coda__grid, .section-heading--split,
             .contact-readout { grid-template-columns: 1fr; }
-            .page-intro__grid { min-height: auto; }
+            .page-intro:not(.page-intro--immersive) .page-intro__grid { min-height: auto; }
+            .page-intro--immersive .page-intro__grid { min-height: max(34rem, calc(100svh - var(--header-h))); }
             .personal-hero__grid { display: block; min-height: inherit; padding-top: clamp(16rem, 39svh, 22rem); padding-bottom: 6.5rem; }
             .personal-hero__copy { max-width: 44rem; }
             .page-intro__media { width: min(100%, 580px); justify-self: start; }
-            .page-intro__media .sim-field__stage { aspect-ratio: 5 / 4; }
             .hero-simulation > figcaption { top: auto; right: var(--gutter); bottom: 1.25rem; left: var(--gutter); max-width: 38ch; padding: .55rem 0 0; border-top: 1px solid rgba(255,254,250,.28); border-left: 0; background: transparent; backdrop-filter: none; }
+            /* The caption takes the bottom of the frame here, so the live readout
+               moves to the free strip above the headline and the axis labels go. */
+            .hero-simulation .sim-field__readout { top: .7rem; right: var(--gutter); bottom: auto; left: auto; }
+            .page-intro--immersive .sim-field__labels,
+            .page-intro--immersive .sim-field__notation { display: none; }
             .personal-portrait { position: absolute; top: 1.4rem; right: var(--gutter); width: clamp(8rem, 29vw, 10rem); margin: 0; }
             .bio-lead, .research-study { position: static; }
             .research-study { width: min(100%, 520px); }
@@ -782,6 +877,25 @@
             .section--about { padding-bottom: calc(var(--section) + 7rem); }
             .research-feature,
             .teaching-section { padding-bottom: calc(var(--section) + 7rem); }
+            .section--ornamented { padding-bottom: calc(var(--section) + 6rem); }
+            .science-ornament--left {
+                --ornament-offset: -10rem;
+                bottom: 1.25rem;
+                width: clamp(31rem, 78vw, 42rem);
+            }
+            .science-ornament--left .science-ornament__stage {
+                -webkit-mask-image: radial-gradient(ellipse 74% 64% at 14% 92%, #000 0 24%, rgba(0,0,0,.7) 43%, rgba(0,0,0,.17) 62%, transparent 86%);
+                mask-image: radial-gradient(ellipse 74% 64% at 14% 92%, #000 0 24%, rgba(0,0,0,.7) 43%, rgba(0,0,0,.17) 62%, transparent 86%);
+            }
+            .science-ornament--right {
+                --ornament-offset: -12rem;
+                bottom: 1.25rem;
+                width: clamp(34rem, 86vw, 46rem);
+            }
+            .science-ornament--right .science-ornament__stage {
+                -webkit-mask-image: radial-gradient(ellipse 74% 66% at 88% 92%, #000 0 24%, rgba(0,0,0,.72) 44%, rgba(0,0,0,.18) 63%, transparent 87%);
+                mask-image: radial-gradient(ellipse 74% 66% at 88% 92%, #000 0 24%, rgba(0,0,0,.72) 44%, rgba(0,0,0,.18) 63%, transparent 87%);
+            }
             .science-ornament--about {
                 --ornament-offset: -8rem;
                 top: auto;
@@ -855,7 +969,7 @@
             :root { --gutter: 1.15rem; --section: 4.5rem; --header-h: 68px; }
             .brand-mark { width: 36px; height: 36px; flex-basis: 36px; }
             .brand-name { font-size: .98rem; }
-            .page-intro__grid { padding-block: 2.8rem; }
+            .page-intro:not(.page-intro--immersive) .page-intro__grid { padding-block: 2.8rem; }
             .personal-hero__grid { min-height: inherit; padding-top: clamp(14rem, 35svh, 18rem); padding-bottom: 6rem; }
             .personal-hero h1 { font-size: clamp(4rem, 20vw, 5.2rem); }
             .personal-role { max-width: 16ch; margin-block: 1.15rem; font-size: 1.82rem; }
@@ -904,6 +1018,9 @@
             .science-ornament--about { --ornament-offset: -8rem; width: 29rem; }
             .science-ornament--research { --ornament-offset: -12rem; width: 34rem; }
             .science-ornament--teaching { --ornament-offset: -10rem; width: 31rem; }
+            .section--ornamented { padding-bottom: calc(var(--section) + 6.5rem); }
+            .science-ornament--left { --ornament-offset: -10rem; width: 31rem; }
+            .science-ornament--right { --ornament-offset: -12rem; width: 34rem; }
         }
 
         @media (max-width: 900px) and (max-height: 520px) and (orientation: landscape) {
@@ -924,20 +1041,18 @@
         }
 
         @media (min-width: 640px) and (max-width: 900px) and (max-height: 650px) and (orientation: landscape) {
-            .page-intro__grid {
+            .page-intro:not(.page-intro--immersive) .page-intro__grid {
                 grid-template-columns: minmax(0, 6fr) minmax(15rem, 4fr);
                 gap: clamp(2rem, 5vw, 3.5rem);
                 min-height: auto;
                 padding-block: 2.5rem;
             }
+            .page-intro--immersive .page-intro__grid { min-height: max(26rem, calc(100svh - var(--header-h))); padding-block: 2.4rem; }
             .page-intro .hero-panel h1 { max-width: 10ch; font-size: clamp(3.2rem, 7vw, 4.75rem); }
             .page-intro .hero-deck { margin-top: 1rem; font-size: 1rem; line-height: 1.5; }
             .page-intro .role-lines { margin-top: 1rem; padding-block: .7rem; font-size: .74rem; }
             .page-intro .action-row { margin-top: 1.25rem; }
             .page-intro__media { width: 100%; justify-self: end; }
-            .page-intro__media .sim-field__stage { aspect-ratio: 1 / 1; }
-            .page-intro__media .sim-field__notation { display: none; }
-            .page-intro__media .sim-field__labels { left: .7rem; right: .7rem; bottom: .6rem; padding-right: 0; font-size: .64rem; }
             .page-intro__media figcaption { font-size: .7rem; }
         }
 
@@ -955,7 +1070,6 @@
             html, body { background: #fff; color: #000; font-size: 10.5pt; }
             .site-header, .menu-toggle, .primary-nav, .skip-link,
             .hero-simulation, .science-ornament, .sim-field,
-            .page-intro__media--simulation,
             .footer-wordmark, .career-timeline__toggle,
             .action-row, .text-action, .button { display: none !important; }
             .personal-hero::before, .personal-hero:has(.sim-field__stage:focus-visible)::after { content: none !important; }
@@ -1047,7 +1161,7 @@
     </header>
 
     <main id="main">
-                                                            <section class="page-intro hero--research" data-langevin-surface aria-labelledby="hero-title-research">
+                                                            <section class="page-intro hero--research page-intro--immersive" data-langevin-surface aria-labelledby="hero-title-research">
     <div class="page-intro__grid shell">
         <div class="hero-panel">
             <p class="eyebrow">Research</p>
@@ -1062,8 +1176,10 @@
                 <a class="text-action" href="/sarabonella/publications">Selected publications <span aria-hidden="true">→</span></a>            </div>
         </div>
 
-        <figure class="page-intro__media page-intro__media--simulation">
-                        <div class="sim-field sim-field--wavepacket">
+    </div>
+
+    <figure class="hero-simulation">
+        <div class="sim-field sim-field--wavepacket">
     <div
         class="sim-field__stage"
         data-hero-field="wavepacket"
@@ -1097,12 +1213,12 @@
         <p class="sim-field__readout" data-hero-field-readout aria-hidden="true"></p>
     </div>
 </div>
-            <figcaption>
-                A Gaussian wavepacket meeting a barrier close to its own energy: part tunnels through, part reflects
-                 · <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Full record</a>
-            </figcaption>
-        </figure>
-    </div>
+        <figcaption>
+            <span>Quantum wavepacket</span>
+            A wavepacket meets a barrier near its own energy; part goes through, part comes back. Move the pointer to change the barrier height.
+             · <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Full record</a>
+        </figcaption>
+    </figure>
 </section>
 
     <section class="section" aria-labelledby="approach-title">
@@ -1148,7 +1264,7 @@
         </div>
     </section>
 
-    <section class="section" aria-labelledby="methods-title">
+    <section class="section section--ornamented" aria-labelledby="methods-title">
         <div class="teaching-grid shell">
             <div>
                 <p class="eyebrow">Methods &amp; systems</p>
@@ -1162,7 +1278,25 @@
                 <article class="course-item"><small>Interfaces</small><h3>Condensed phases and electrochemistry</h3><p>Molecular organisation and phase behaviour where electrolytes meet metallic electrodes.</p></article>
             </div>
         </div>
-    </section>
+            <figure class="science-ornament science-ornament--poiseuille science-ornament--right" data-science-ornament="poiseuille">
+    <div class="science-ornament__stage">
+<svg class="science-ornament__fallback" viewBox="0 0 320 220" aria-hidden="true">
+            <path d="M18 42H302M18 178H302" stroke="#416974" stroke-width="1.2"/>
+            <path d="M44 178Q152 110 44 42" fill="none" stroke="#7d303b" stroke-width="1.2" opacity=".72"/>
+            <g stroke="#8d998d" stroke-width="1" opacity=".64">
+                <path d="M69 62H117M69 86H148M69 110H166M69 134H148M69 158H117"/>
+            </g>
+            <g fill="#416974"><circle cx="102" cy="62" r="2.5"/><circle cx="174" cy="86" r="3"/><circle cx="238" cy="110" r="3"/><circle cx="151" cy="134" r="2.5"/><circle cx="89" cy="158" r="2.5"/></g>
+        </svg>
+        <canvas class="science-ornament__canvas" aria-hidden="true"></canvas>
+    </div>
+    <figcaption>
+        <strong>Poiseuille profile</strong>
+        <span class="science-ornament__formula">u(r) = u₀(1 − r²/R²)</span>
+        <small>Steady flow between two plates: the velocity profile is parabolic across the channel.</small>
+    </figcaption>
+</figure>
+</section>
 
 
     <section class="section section--field" aria-labelledby="starting-points-title">
@@ -1894,11 +2028,11 @@
                    the point of the experiment and a fair picture of a publication
                    record. */
                 interference: {
-                    warmup: 7,            // a record only means something once it has accumulated
+                    warmup: 9,            // a record only means something once it has accumulated
                     init(env) {
                         return {
                             dots: [],
-                            max: env.compact ? 900 : 1600,
+                            max: Math.round(Math.max(700, Math.min(3200, env.area / 460))),
                             separation: 1,
                             slitWidth: .16,
                             arrivals: 0,
@@ -1920,7 +2054,7 @@
                         s.separation += (target - s.separation) * (1 - Math.exp(-3 * dt));
 
                         // Rejection-sample the intensity: each accepted y is one detection.
-                        const wanted = Math.min(26, Math.max(1, Math.round(dt * 150)));
+                        const wanted = Math.min(48, Math.max(1, Math.round(dt * s.max / 5.5)));
                         for (let i = 0; i < wanted; i++) {
                             for (let attempt = 0; attempt < 24; attempt++) {
                                 const y = env.random() * 2 - 1;
@@ -1940,17 +2074,19 @@
                         ctx.strokeStyle = env.rgba(colours.sage, .26);
                         ctx.lineWidth = 1;
                         ctx.beginPath();
-                        ctx.moveTo(width * .04, height * .06);
-                        ctx.lineTo(width * .04, height * .94);
+                        ctx.moveTo(env.wide ? width * .965 : width * .04, height * .06);
+                        ctx.lineTo(env.wide ? width * .965 : width * .04, height * .94);
                         ctx.stroke();
 
                         // The predicted profile lives in its own gutter so it reads as a
                         // reference rather than getting tangled in the detections.
+                        const gutter = env.wide ? width * .965 : width * .04;
+                        const lobe = env.wide ? -1 : 1;
                         ctx.strokeStyle = env.rgba(colours.lakeLight, .32);
                         ctx.beginPath();
                         for (let i = 0; i <= 420; i++) {
                             const y = -1 + 2 * i / 420;
-                            const px = width * .04 + this.intensity(s, y) * width * .13;
+                            const px = gutter + lobe * this.intensity(s, y) * width * (env.wide ? .09 : .13);
                             const py = (y * .5 + .5) * height;
                             if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
                         }
@@ -1958,12 +2094,12 @@
 
                         // Fresh arrivals glow; older ones settle into the accumulated record.
                         for (const dot of s.dots) {
-                            const px = width * (.26 + dot.x * .7);
+                            const px = width * (env.wide ? .04 + dot.x * .89 : .26 + dot.x * .7);
                             const py = (dot.y * .5 + .5) * height;
                             const fresh = Math.max(0, 1 - dot.age / 1.4);
-                            ctx.fillStyle = env.rgba(fresh > .05 ? colours.rose : colours.sageLight, .46 + fresh * .48);
+                            ctx.fillStyle = env.rgba(fresh > .05 ? colours.rose : colours.sageLight, .56 + fresh * .4);
                             ctx.beginPath();
-                            ctx.arc(px, py, 1.15 + fresh * 2.2, 0, Math.PI * 2);
+                            ctx.arc(px, py, 1.35 + fresh * 2.1, 0, Math.PI * 2);
                             ctx.fill();
                         }
                     }
@@ -2082,7 +2218,8 @@
                         return {
                             pulses: [{ t: 0 }],
                             clock: 0,
-                            sourceX: .5, sourceY: .5,
+                            // Off-centre by default so the source clears the hero copy.
+                            sourceX: .68, sourceY: .5,
                             since: 0, interval: 3.1,
                             speed: .165,               // panel widths per second
                             wavelength: .16,
@@ -2124,7 +2261,7 @@
                     },
                     draw(s, ctx, env) {
                         const { width, height, colours } = env;
-                        const spacing = env.compact ? 12 : 15;
+                        const spacing = env.compact ? 12 : env.wide ? 17 : 15;
                         const cols = Math.ceil(width / spacing);
                         const rows = Math.ceil(height / spacing);
                         const unit = Math.min(width, height);
@@ -2157,46 +2294,57 @@
                     }
                 },
 
-                /* A biased random walk next to the straight line it was supposed to
-                   follow — the 404 page, drawn honestly. */
+                /* An ensemble of random walks beside the straight line they were
+                   supposed to follow. One is highlighted; the rest are the other
+                   paths the same process could have taken, which is what the
+                   mean-square displacement in the notation is actually about. */
                 wander: {
-                    warmup: 3,            // enough trail to read as a path
+                    warmup: 3.5,          // enough trail to read as a set of paths
                     init(env) {
-                        return {
-                            x: .12, y: .84, vx: .06, vy: -.05,
-                            trail: [{ x: .12, y: .84 }],
-                            distance: 0
-                        };
+                        const count = env.wide ? 16 : env.compact ? 6 : 10;
+                        // Each walk starts with its own kick, and only the highlighted one
+                        // is pulled firmly back to the route, so the ensemble spreads.
+                        const make = index => ({
+                            x: .12, y: .84,
+                            vx: .06 + env.gaussian() * .05,
+                            vy: -.05 + env.gaussian() * .05,
+                            pull: index === 0 ? .28 : .1,
+                            trail: [{ x: .12, y: .84 }]
+                        });
+                        return { walkers: Array.from({ length: count }, (_, index) => make(index)), distance: 0 };
+                    },
+                    step(s, w, dt, env, steer) {
+                        let ax = 0, ay = 0;
+                        if (steer && env.pointer.influence > .02) {
+                            ax += (env.pointer.x - w.x) * env.pointer.influence * 1.6;
+                            ay += (env.pointer.y - w.y) * env.pointer.influence * 1.6;
+                        }
+                        // Foot of the perpendicular onto the intended route: the walk is
+                        // pulled back weakly, so it strays without simply leaving.
+                        const t = Math.max(0, Math.min(1, ((w.x - .12) * .76 + (w.y - .84) * -.68) / (.76 * .76 + .68 * .68)));
+                        const footX = .12 + .76 * t, footY = .84 - .68 * t;
+                        w.distance = Math.hypot(w.x - footX, w.y - footY);
+                        ax += (footX - w.x) * w.pull + .12;
+                        ay += (footY - w.y) * w.pull - .11;
+
+                        w.vx += (ax + env.gaussian() * 7.5) * dt;
+                        w.vy += (ay + env.gaussian() * 7.5) * dt;
+                        w.vx *= .93; w.vy *= .93;
+                        w.x += w.vx * dt; w.y += w.vy * dt;
+                        w.trail.push({ x: w.x, y: w.y });
+                        if (w.trail.length > 240) w.trail.shift();
+
+                        if (w.x < -.1 || w.x > 1.1 || w.y < -.1 || w.y > 1.1) {
+                            w.x = .12; w.y = .84; w.vx = .06; w.vy = -.05;
+                            w.trail.length = 0;
+                            w.trail.push({ x: w.x, y: w.y });
+                        }
                     },
                     update(s, dt, env) {
                         const step = Math.min(.05, dt);
-                        let ax = 0, ay = 0;
-                        if (env.pointer.influence > .02) {
-                            ax += (env.pointer.x - s.x) * env.pointer.influence * 1.6;
-                            ay += (env.pointer.y - s.y) * env.pointer.influence * 1.6;
-                        }
-                        // Distance from the line joining start and destination, and the
-                        // foot of that perpendicular — the walk is pulled weakly back
-                        // towards the route so it strays without simply leaving.
-                        const t = Math.max(0, Math.min(1, ((s.x - .12) * .76 + (s.y - .84) * -.68) / (.76 * .76 + .68 * .68)));
-                        const footX = .12 + .76 * t, footY = .84 - .68 * t;
-                        s.distance = Math.hypot(s.x - footX, s.y - footY);
-                        ax += (footX - s.x) * .28 + .12;
-                        ay += (footY - s.y) * .28 - .11;
-
-                        s.vx += (ax + env.gaussian() * 7.5) * step;
-                        s.vy += (ay + env.gaussian() * 7.5) * step;
-                        s.vx *= .93; s.vy *= .93;
-                        s.x += s.vx * step; s.y += s.vy * step;
-                        s.trail.push({ x: s.x, y: s.y });
-                        if (s.trail.length > 260) s.trail.shift();
-
-                        if (s.x < -.1 || s.x > 1.1 || s.y < -.1 || s.y > 1.1) {
-                            s.x = .12; s.y = .84; s.vx = .06; s.vy = -.05;
-                            s.trail.length = 0;
-                            s.trail.push({ x: s.x, y: s.y });
-                        }
-                        env.readout = `off route by ${(s.distance * 100).toFixed(0)}%`;
+                        s.walkers.forEach((w, index) => this.step(s, w, step, env, index === 0));
+                        s.distance = s.walkers[0].distance;
+                        env.readout = `off route by ${(s.distance * 100).toFixed(0)}%  ·  ${s.walkers.length} walks`;
                     },
                     draw(s, ctx, env) {
                         const { width, height, colours } = env;
@@ -2209,16 +2357,25 @@
                         ctx.stroke();
                         ctx.setLineDash([]);
 
-                        // Drawn in segments so the trail fades into where it has been.
-                        ctx.lineWidth = 1.5;
-                        for (let i = 1; i < s.trail.length; i++) {
-                            const a = s.trail[i - 1], b = s.trail[i];
-                            ctx.strokeStyle = env.rgba(colours.rose, .06 + .62 * (i / s.trail.length) ** 2);
+                        s.walkers.forEach((w, index) => {
+                            const lead = index === 0;
+                            const colour = lead ? colours.rose : colours.sageLight;
+                            const peak = lead ? .68 : .3;
+                            // Drawn in segments so each trail fades into where it has been.
+                            ctx.lineWidth = lead ? 1.6 : 1;
+                            for (let i = 1; i < w.trail.length; i++) {
+                                const a = w.trail[i - 1], b = w.trail[i];
+                                ctx.strokeStyle = env.rgba(colour, .03 + peak * (i / w.trail.length) ** 2);
+                                ctx.beginPath();
+                                ctx.moveTo(a.x * width, a.y * height);
+                                ctx.lineTo(b.x * width, b.y * height);
+                                ctx.stroke();
+                            }
+                            ctx.fillStyle = env.rgba(colour, lead ? .95 : .55);
                             ctx.beginPath();
-                            ctx.moveTo(a.x * width, a.y * height);
-                            ctx.lineTo(b.x * width, b.y * height);
-                            ctx.stroke();
-                        }
+                            ctx.arc(w.x * width, w.y * height, lead ? 4.4 : 2.2, 0, Math.PI * 2);
+                            ctx.fill();
+                        });
 
                         ctx.fillStyle = env.rgba(colours.lakeLight, .9);
                         ctx.beginPath();
@@ -2229,10 +2386,6 @@
                         ctx.beginPath();
                         ctx.arc(.88 * width, .16 * height, 5, 0, Math.PI * 2);
                         ctx.stroke();
-                        ctx.fillStyle = env.rgba(colours.rose, .95);
-                        ctx.beginPath();
-                        ctx.arc(s.x * width, s.y * height, 4.4, 0, Math.PI * 2);
-                        ctx.fill();
                     }
                 }
             };
@@ -2292,6 +2445,10 @@
                     env.width = Math.max(2, rect.width);
                     env.height = Math.max(2, rect.height);
                     env.compact = env.width < 620;
+                    // Full-bleed heroes are far wider than the old side panel; fields
+                    // that fill an area need to know, so they can scale with it.
+                    env.wide = env.width / env.height > 1.5;
+                    env.area = env.width * env.height;
                     pixelRatio = Math.min(2, window.devicePixelRatio || 1);
                     canvas.width = Math.round(env.width * pixelRatio);
                     canvas.height = Math.round(env.height * pixelRatio);
@@ -2300,7 +2457,7 @@
                     // changed, so a scrollbar appearing doesn't restart the model.
                     const shape = kind.resetOnResize
                         ? `${Math.round(env.width / 48)}x${Math.round(env.height / 48)}|${env.compact}`
-                        : `${env.compact}`;
+                        : `${env.compact}|${env.wide}|${Math.round(env.area / 120000)}`;
                     if (!state || shape !== env.shape) {
                         env.shape = shape;
                         state = kind.init(env);

@@ -9,7 +9,8 @@
     {% set hero_kind = 'contact' %}
     {% set hero_canvas = true %}
     {% set hero_field = 'ripple' %}
-    {% set hero_simulation_caption = 'A damped wave leaving a single source — move the pointer to place it, tap or press Enter to send another' %}
+    {% set hero_simulation_title = 'Wave from a source' %}
+    {% set hero_simulation_caption = 'A wave spreading from one point. Move the pointer to place the source; tap or press Enter to send another.' %}
     {% set hero_ring_text = '' %}
     {% set hero_image = '/uploads/portrait/sara-bonella-seated.jpg' %}
     {% set hero_alt = 'Sara Bonella seated in front of a whiteboard covered with equations' %}
@@ -49,7 +50,7 @@
         </div>
     </section>
 
-    <section class="section section--field" aria-labelledby="context-title">
+    <section class="section section--field section--ornamented" aria-labelledby="context-title">
         <div class="teaching-grid shell">
             <div>
                 <p class="eyebrow">Helpful context</p>
@@ -63,6 +64,13 @@
                 <article class="course-item"><small>Programmes and institutions</small><h3>The community, proposed role, and the decision the conversation should support</h3></article>
             </div>
         </div>
+        {% include '@theme/scientific-ornament.twig' with {
+            ornament_kind: 'vortex',
+            ornament_class: 'science-ornament--right',
+            ornament_title: 'Taylor–Green vortices',
+            ornament_formula: '∇·u = 0',
+            ornament_description: 'Passive tracers circulate through a periodic incompressible velocity field.'
+        } %}
     </section>
 
     <section class="contact-invitation" aria-labelledby="write-title">

@@ -9,7 +9,8 @@
     {% set hero_kind = 'leadership' %}
     {% set hero_canvas = true %}
     {% set hero_field = 'synchrony' %}
-    {% set hero_simulation_caption = 'Coupled oscillators finding a common rhythm as the coupling rises, and losing it again as it falls' %}
+    {% set hero_simulation_title = 'Coupled oscillators' %}
+    {% set hero_simulation_caption = 'Oscillators fall into step as the coupling rises and drift apart as it falls. Move the pointer to couple the ones nearby.' %}
     {% set hero_simulation_source_url = 'https://www.cecam.org/lausanne-hq' %}
     {% set hero_simulation_source_label = 'CECAM, Lausanne' %}
     {% set hero_ring_text = '' %}
@@ -71,7 +72,7 @@
         </div>
     </section>
 
-    <section class="section" id="public" aria-labelledby="public-title">
+    <section class="section section--ornamented" id="public" aria-labelledby="public-title">
         <div class="shell">
             <div class="section-heading section-heading--split">
                 <div><p class="eyebrow">Open tools &amp; public science</p><h2 id="public-title">Making complex ideas travel</h2></div>
@@ -83,6 +84,13 @@
                 <article class="selected-paper"><time>03</time><div><h3>Science in comics</h3><p>Stories about simulation, high-performance computing, and women’s participation in science for readers beyond the field.</p></div><a href="mailto:sara.bonella@epfl.ch?subject=Science%20communication%20enquiry">Ask Sara →</a></article>
             </div>
         </div>
+        {% include '@theme/scientific-ornament.twig' with {
+            ornament_kind: 'phase',
+            ornament_class: 'science-ornament--left',
+            ornament_title: 'Conservative Duffing portrait',
+            ornament_formula: 'H(q,p) = const.',
+            ornament_description: 'Closed trajectories follow a conserved Hamiltonian around two stable centres and a central saddle.'
+        } %}
     </section>
 
     <section class="contact-invitation" aria-labelledby="invite-title">

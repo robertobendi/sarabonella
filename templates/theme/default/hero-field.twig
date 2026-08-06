@@ -14,7 +14,7 @@
     interference: {
         label: 'two-slit interference pattern accumulating one detection at a time',
         interaction: 'Move the pointer left and right, or focus the field and use the arrow keys, to change the slit separation and watch the fringe spacing respond.',
-        notation: ['I(y) ∝ cos²(πdy/λD) · sinc²(πay/λD)', 'one quantum per detection'],
+        notation: ['I(y) ∝ cos²(πdy/λD) · sinc²(πay/λD)', 'd = slit separation, a = slit width'],
         labels: ['single detections', 'fringe spacing ∝ λD/d']
     },
     synchrony: {
@@ -26,13 +26,13 @@
     ripple: {
         label: 'a damped wave spreading outward from a single source',
         interaction: 'Move the pointer across the field, or focus it and use the arrow keys, to move the source; press Enter or tap to send a new pulse.',
-        notation: ['∂²u/∂t² = c²∇²u − γ ∂u/∂t', 'one source, one message'],
+        notation: ['∂²u/∂t² = c²∇²u − γ ∂u/∂t', 'amplitude ∝ 1/√r'],
         labels: ['source', 'wavefront']
     },
     wander: {
         label: 'a random walk drifting away from the route it was expected to take',
         interaction: 'Move the pointer across the field, or focus it and use the arrow keys, to apply a drift and steer the walk back.',
-        notation: ['⟨Δx²⟩ = 2Dt', 'the path is lost, not the destination'],
+        notation: ['⟨Δx²⟩ = 2Dt'],
         labels: ['expected route', 'observed path']
     }
 } %}

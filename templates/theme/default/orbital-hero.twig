@@ -1,5 +1,10 @@
 {% set hero_uses_simulation = hero_canvas|default(false) %}
-<section class="page-intro hero--{{ hero_kind }}"{% if hero_uses_simulation %} data-langevin-surface{% endif %} aria-labelledby="hero-title-{{ hero_kind }}">
+{#
+    With a live field the hero runs full-bleed behind the copy, the way the home
+    page does; with a still image it keeps the two-column layout, since a
+    photograph needs its own frame and caption.
+#}
+<section class="page-intro hero--{{ hero_kind }}{% if hero_uses_simulation %} page-intro--immersive{% endif %}"{% if hero_uses_simulation %} data-langevin-surface{% endif %} aria-labelledby="hero-title-{{ hero_kind }}">
     <div class="page-intro__grid shell">
         <div class="hero-panel">
             <p class="eyebrow">{{ hero_eyebrow }}</p>
@@ -18,21 +23,25 @@
             </div>
         </div>
 
-        <figure class="page-intro__media{% if hero_uses_simulation %} page-intro__media--simulation{% endif %}">
-{% if hero_uses_simulation %}
-            {% include '@theme/hero-field.twig' with { field_kind: hero_field|default('wavepacket') } %}
-{% else %}
+{% if not hero_uses_simulation %}
+        <figure class="page-intro__media">
             <img src="{{ hero_image }}" alt="{{ hero_alt }}">
-{% endif %}
             <figcaption>
-{% if hero_uses_simulation %}
-                {{ hero_simulation_caption }}
-                {% if hero_simulation_source_url %} · <a href="{{ hero_simulation_source_url }}" target="_blank" rel="noopener">{{ hero_simulation_source_label|default('Research basis') }}</a>{% endif %}
-{% else %}
                 {{ hero_caption }}
                 {% if hero_source_url %} · <a href="{{ hero_source_url }}" target="_blank" rel="noopener">Image source</a>{% endif %}
-{% endif %}
             </figcaption>
         </figure>
+{% endif %}
     </div>
+{% if hero_uses_simulation %}
+
+    <figure class="hero-simulation">
+        {% include '@theme/hero-field.twig' with { field_kind: hero_field|default('wavepacket') } %}
+        <figcaption>
+            <span>{{ hero_simulation_title|default('Live model') }}</span>
+            {{ hero_simulation_caption }}
+            {% if hero_simulation_source_url %} · <a href="{{ hero_simulation_source_url }}" target="_blank" rel="noopener">{{ hero_simulation_source_label|default('Research basis') }}</a>{% endif %}
+        </figcaption>
+    </figure>
+{% endif %}
 </section>
