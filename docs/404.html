@@ -273,7 +273,7 @@
             border-bottom: 1px solid rgba(255,254,250,.18);
             touch-action: pan-y;
         }
-        .personal-hero:has(.langevin-model__stage:focus-visible)::after {
+        .personal-hero:has(.sim-field__stage:focus-visible)::after {
             content: '';
             position: absolute;
             z-index: 5;
@@ -339,10 +339,10 @@
             width: 100%;
             height: 100%;
         }
-        .hero-simulation .langevin-model,
-        .hero-simulation .langevin-model__stage { width: 100%; height: 100%; }
-        .hero-simulation .langevin-model__stage { aspect-ratio: auto; border: 0; box-shadow: none; }
-        .hero-simulation .langevin-model__stage:focus-visible { outline: 3px solid var(--rose); outline-offset: -8px; }
+        .hero-simulation .sim-field,
+        .hero-simulation .sim-field__stage { width: 100%; height: 100%; }
+        .hero-simulation .sim-field__stage { aspect-ratio: auto; border: 0; box-shadow: none; }
+        .hero-simulation .sim-field__stage:focus-visible { outline: 3px solid var(--rose); outline-offset: -8px; }
         .hero-simulation > figcaption {
             position: absolute;
             z-index: 3;
@@ -387,8 +387,8 @@
         }
         .personal-portrait figcaption a { color: var(--rose); }
 
-        .langevin-model { width: 100%; }
-        .langevin-model__stage {
+        .sim-field { width: 100%; }
+        .sim-field__stage {
             position: relative;
             isolation: isolate;
             overflow: hidden;
@@ -400,16 +400,16 @@
             box-shadow: 0 18px 45px rgba(32,37,34,.1);
             cursor: default;
         }
-        .langevin-model__stage.is-interactive { cursor: crosshair; }
-        .langevin-model__stage:focus-visible { outline-color: var(--oxblood); outline-offset: 5px; }
-        .langevin-model__fallback,
-        .langevin-model__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-        .langevin-model__fallback { z-index: 1; transition: opacity .25s ease; }
-        .langevin-model__canvas { z-index: 2; opacity: 0; transition: opacity .25s ease; }
-        .langevin-model__stage.is-ready .langevin-model__fallback { opacity: 0; }
-        .langevin-model__stage.is-ready .langevin-model__canvas { opacity: 1; }
-        .langevin-model__notation,
-        .langevin-model__labels {
+        .sim-field__stage.is-interactive { cursor: crosshair; }
+        .sim-field__stage:focus-visible { outline-color: var(--oxblood); outline-offset: 5px; }
+        .sim-field__fallback,
+        .sim-field__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .sim-field__fallback { z-index: 1; transition: opacity .25s ease; }
+        .sim-field__canvas { z-index: 2; opacity: 0; transition: opacity .25s ease; }
+        .sim-field__stage.is-ready .sim-field__fallback { opacity: 0; }
+        .sim-field__stage.is-ready .sim-field__canvas { opacity: 1; }
+        .sim-field__notation,
+        .sim-field__labels {
             position: absolute;
             z-index: 3;
             display: flex;
@@ -418,16 +418,41 @@
             font: 500 .64rem/1.35 var(--font-body);
             letter-spacing: .035em;
         }
-        .langevin-model__notation {
+        .sim-field__notation {
             right: .9rem;
             bottom: .85rem;
             align-items: flex-end;
             flex-direction: column;
         }
-        .langevin-model__labels { left: 1rem; right: 1rem; bottom: .85rem; justify-content: space-between; text-transform: uppercase; }
-        .langevin-model__labels span:nth-child(2) { opacity: .58; }
-        .langevin-model__notation + .langevin-model__labels { padding-right: 10.5rem; }
-        .page-intro__media .langevin-model__stage { box-shadow: none; }
+        .sim-field__labels { left: 1rem; right: 1rem; bottom: .85rem; justify-content: space-between; text-transform: uppercase; }
+        .sim-field__labels span:nth-child(2) { opacity: .58; }
+        .sim-field__notation + .sim-field__labels { padding-right: 10.5rem; }
+        .page-intro__media .sim-field__stage { box-shadow: none; }
+        /* Live measurement from the model itself — transmission, order parameter,
+           detection count. It sits opposite the notation so the two never collide. */
+        .sim-field__readout {
+            position: absolute;
+            z-index: 3;
+            top: .85rem;
+            left: 1rem;
+            max-width: calc(100% - 2rem);
+            margin: 0;
+            padding: .25rem .5rem;
+            color: var(--rose);
+            background: rgba(25, 35, 39, .58);
+            font: 600 .64rem/1.3 var(--font-body);
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .25s ease;
+        }
+        .sim-field__stage.is-ready .sim-field__readout { opacity: 1; }
+        .sim-field__readout:empty { display: none; }
+        /* The wave grid reads better in a squarer frame than the 4:5 default. */
+        .sim-field--ripple .sim-field__stage,
+        .sim-field--synchrony .sim-field__stage { aspect-ratio: 1 / 1; }
+        .sim-field--wavepacket .sim-field__stage { aspect-ratio: 5 / 4; }
 
         .science-ornament {
             --section-edge: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
@@ -748,7 +773,7 @@
             .personal-hero__grid { display: block; min-height: inherit; padding-top: clamp(16rem, 39svh, 22rem); padding-bottom: 6.5rem; }
             .personal-hero__copy { max-width: 44rem; }
             .page-intro__media { width: min(100%, 580px); justify-self: start; }
-            .page-intro__media .langevin-model__stage { aspect-ratio: 5 / 4; }
+            .page-intro__media .sim-field__stage { aspect-ratio: 5 / 4; }
             .hero-simulation > figcaption { top: auto; right: var(--gutter); bottom: 1.25rem; left: var(--gutter); max-width: 38ch; padding: .55rem 0 0; border-top: 1px solid rgba(255,254,250,.28); border-left: 0; background: transparent; backdrop-filter: none; }
             .personal-portrait { position: absolute; top: 1.4rem; right: var(--gutter); width: clamp(8rem, 29vw, 10rem); margin: 0; }
             .bio-lead, .research-study { position: static; }
@@ -840,9 +865,9 @@
             .personal-portrait img { border-width: 6px; box-shadow: 7px 7px 0 var(--oxblood), 0 16px 40px rgba(10,18,21,.3); }
             .personal-portrait figcaption { max-width: 22ch; padding-top: .55rem; font-size: .68rem; }
             .hero-simulation > figcaption { right: var(--gutter); bottom: .85rem; left: var(--gutter); max-width: none; padding: .45rem .55rem; font-size: .72rem; }
-            .langevin-model__notation { display: none; }
-            .langevin-model__labels { left: .7rem; right: .7rem; bottom: .6rem; padding-right: 0 !important; font-size: .66rem; }
-            .personal-hero .langevin-model__labels { display: none; }
+            .sim-field__notation { display: none; }
+            .sim-field__labels { left: .7rem; right: .7rem; bottom: .6rem; padding-right: 0 !important; font-size: .66rem; }
+            .personal-hero .sim-field__labels { display: none; }
             .page-intro h1, .article-shell h1 { max-width: 100%; font-size: clamp(2.65rem, 13vw, 3.8rem); }
             .page-intro h1 { overflow-wrap: anywhere; hyphens: manual; text-wrap: balance; }
             .article-shell h1 { overflow-wrap: break-word; hyphens: auto; }
@@ -910,9 +935,9 @@
             .page-intro .role-lines { margin-top: 1rem; padding-block: .7rem; font-size: .74rem; }
             .page-intro .action-row { margin-top: 1.25rem; }
             .page-intro__media { width: 100%; justify-self: end; }
-            .page-intro__media .langevin-model__stage { aspect-ratio: 1 / 1; }
-            .page-intro__media .langevin-model__notation { display: none; }
-            .page-intro__media .langevin-model__labels { left: .7rem; right: .7rem; bottom: .6rem; padding-right: 0; font-size: .64rem; }
+            .page-intro__media .sim-field__stage { aspect-ratio: 1 / 1; }
+            .page-intro__media .sim-field__notation { display: none; }
+            .page-intro__media .sim-field__labels { left: .7rem; right: .7rem; bottom: .6rem; padding-right: 0; font-size: .64rem; }
             .page-intro__media figcaption { font-size: .7rem; }
         }
 
@@ -929,11 +954,11 @@
             @page { margin: 16mm 14mm; }
             html, body { background: #fff; color: #000; font-size: 10.5pt; }
             .site-header, .menu-toggle, .primary-nav, .skip-link,
-            .hero-simulation, .science-ornament, .langevin-model,
+            .hero-simulation, .science-ornament, .sim-field,
             .page-intro__media--simulation,
             .footer-wordmark, .career-timeline__toggle,
             .action-row, .text-action, .button { display: none !important; }
-            .personal-hero::before, .personal-hero:has(.langevin-model__stage:focus-visible)::after { content: none !important; }
+            .personal-hero::before, .personal-hero:has(.sim-field__stage:focus-visible)::after { content: none !important; }
 
             /* Every dark or tinted band becomes plain paper, with all of its text
                (including inherited rgba whites) forced back to ink. */
@@ -1037,33 +1062,38 @@
         </div>
 
         <figure class="page-intro__media page-intro__media--simulation">
-            <div class="langevin-model langevin-model--compact">
-                <div
-                    class="langevin-model__stage"
-                    data-langevin-stage
-                    data-langevin-mode="panel"
-                    role="region"
-                    tabindex="-1"
-                    aria-label="Static underdamped Langevin particle model in a double-well free-energy landscape."
-                >
-                    <svg class="langevin-model__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-                        <rect width="500" height="600" fill="#263338"/>
-                        <g fill="none" stroke="#8d998d" stroke-width="1.2" opacity=".44">
-                            <ellipse cx="156" cy="310" rx="48" ry="78"/><ellipse cx="156" cy="310" rx="82" ry="125"/>
-                            <ellipse cx="344" cy="310" rx="48" ry="78"/><ellipse cx="344" cy="310" rx="82" ry="125"/>
-                            <path d="M62 310C82 120 204 112 250 258C296 112 418 120 438 310C418 500 296 508 250 362C204 508 82 500 62 310Z"/>
-                        </g>
-                        <path d="M250 82V518" stroke="#f4f1eb" stroke-width="1" stroke-dasharray="3 9" opacity=".22"/>
-                        <g fill="#86b2bb"><circle cx="122" cy="282" r="4"/><circle cx="146" cy="338" r="3"/><circle cx="183" cy="296" r="4"/><circle cx="107" cy="356" r="2.5"/><circle cx="194" cy="368" r="3"/></g>
-                        <g fill="#d8a6af"><circle cx="318" cy="276" r="3"/><circle cx="354" cy="332" r="4"/><circle cx="386" cy="296" r="2.5"/><circle cx="326" cy="374" r="3"/><circle cx="399" cy="352" r="4"/></g>
-                        <g fill="#d7ded2"><circle cx="242" cy="304" r="3"/><circle cx="268" cy="342" r="2.5"/></g>
-                    </svg>
-                    <canvas class="langevin-model__canvas" data-langevin aria-hidden="true"></canvas>
-                    <div class="langevin-model__notation" aria-hidden="true"><span>U(q,r) = a(q² − 1)² + br²</span><span>mẍ = −γẋ − ∇U + √(2γkT)η</span></div>
-                    <div class="langevin-model__labels" aria-hidden="true"><span>state A</span><span>barrier</span><span>state B</span></div>
-                </div>
-            </div>
-            <figcaption>Underdamped Langevin particles crossing a double-well free-energy landscape · <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">Research basis</a></figcaption>
+            <div class="sim-field sim-field--wander">
+    <div
+        class="sim-field__stage"
+        data-hero-field="wander"
+        data-hero-field-hint="Move the pointer across the field, or focus it and use the arrow keys, to apply a drift and steer the walk back."
+        role="region"
+        tabindex="-1"
+        aria-label="Static diagram: a random walk drifting away from the route it was expected to take."
+    >
+        <svg class="sim-field__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+            <rect width="500" height="600" fill="#263338"/>
+
+            <path d="M96 470L404 154" stroke="#8d998d" stroke-width="1" stroke-dasharray="4 10" opacity=".42"/>
+            <path d="M96 470C132 430 118 386 156 364C194 342 176 300 214 288C252 276 232 240 274 218C316 196 300 156 342 142C368 133 392 150 414 128"
+                  fill="none" stroke="#d8a6af" stroke-width="1.6" opacity=".7"/>
+            <circle cx="96" cy="470" r="6" fill="#86b2bb"/>
+            <circle cx="404" cy="154" r="6" fill="none" stroke="#8d998d" stroke-width="1.4" opacity=".6"/>
+            <circle cx="414" cy="128" r="7" fill="#d8a6af"/>
+        </svg>
+        <canvas class="sim-field__canvas" aria-hidden="true"></canvas>
+        <div class="sim-field__notation" aria-hidden="true">
+            <span>⟨Δx²⟩ = 2Dt</span>
+            <span>the path is lost, not the destination</span>
+        </div>
+        <div class="sim-field__labels" aria-hidden="true"><span>expected route</span><span>observed path</span>
+        </div>
+        <p class="sim-field__readout" data-hero-field-readout aria-hidden="true"></p>
+    </div>
+</div>
+            <figcaption>
+                A random walk drifting away from the straight route it was meant to take
+            </figcaption>
         </figure>
     </div>
 </section>
@@ -1542,6 +1572,776 @@
                 };
                 const resizeObserver = window.ResizeObserver ? new ResizeObserver(queueResize) : null;
                 if (resizeObserver) resizeObserver.observe(stage);
+                else window.addEventListener('resize', queueResize, { passive: true });
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden && animationFrame) { cancelAnimationFrame(animationFrame); animationFrame = 0; }
+                    else start();
+                });
+            });
+
+            /* ----------------------------------------------------------------
+               Hero fields: one model per page, so Research, Publications,
+               Teaching and Contact each open on a different piece of physics.
+               Every kind supplies init/update/draw plus an optional pointer
+               response; the harness below owns sizing, visibility, motion
+               preference and the keyboard affordance for all of them.
+               ---------------------------------------------------------------- */
+
+            // Iterative radix-2 FFT, in place, used by the wavepacket split-step.
+            const fft = (re, im, inverse) => {
+                const n = re.length;
+                for (let i = 1, j = 0; i < n; i++) {
+                    let bit = n >> 1;
+                    for (; j & bit; bit >>= 1) j ^= bit;
+                    j ^= bit;
+                    if (i < j) {
+                        let t = re[i]; re[i] = re[j]; re[j] = t;
+                        t = im[i]; im[i] = im[j]; im[j] = t;
+                    }
+                }
+                for (let len = 2; len <= n; len <<= 1) {
+                    const angle = (inverse ? 2 : -2) * Math.PI / len;
+                    const wr = Math.cos(angle), wi = Math.sin(angle);
+                    for (let i = 0; i < n; i += len) {
+                        let cr = 1, ci = 0;
+                        for (let k = 0; k < len / 2; k++) {
+                            const ar = re[i + k], ai = im[i + k];
+                            const br = re[i + k + len / 2] * cr - im[i + k + len / 2] * ci;
+                            const bi = re[i + k + len / 2] * ci + im[i + k + len / 2] * cr;
+                            re[i + k] = ar + br; im[i + k] = ai + bi;
+                            re[i + k + len / 2] = ar - br; im[i + k + len / 2] = ai - bi;
+                            const nr = cr * wr - ci * wi;
+                            ci = cr * wi + ci * wr; cr = nr;
+                        }
+                    }
+                }
+                if (inverse) for (let i = 0; i < n; i++) { re[i] /= n; im[i] /= n; }
+            };
+
+            const heroFieldKinds = {
+                /* Split-step solution of the time-dependent Schrödinger equation.
+                   A Gaussian packet runs at a barrier tuned near its own energy, so
+                   part tunnels through and part reflects — the transmission readout
+                   is measured from the wavefunction, not scripted. */
+                wavepacket: {
+                    warmup: 2.6,          // the packet needs ~1.6s to reach the barrier
+                    init(env) {
+                        const n = env.compact ? 128 : 256;
+                        const s = {
+                            n,
+                            re: new Float64Array(n),
+                            im: new Float64Array(n),
+                            v: new Float64Array(n),
+                            k2: new Float64Array(n),
+                            dt: 2e-5,
+                            barrier: 1,
+                            width: .035,
+                            k0: 13 * Math.PI,
+                            elapsed: 0,
+                            transmitted: 0
+                        };
+                        s.energy = s.k0 * s.k0 / 2;
+                        for (let i = 0; i < n; i++) {
+                            const j = i < n / 2 ? i : i - n;
+                            const k = 2 * Math.PI * j / 2;             // box length L = 2
+                            s.k2[i] = k * k;
+                        }
+                        s.launch = () => {
+                            const sigma = .075;
+                            let norm = 0;
+                            for (let i = 0; i < n; i++) {
+                                const x = -1 + 2 * i / n;
+                                const envelope = Math.exp(-((x + .55) ** 2) / (2 * sigma * sigma));
+                                s.re[i] = envelope * Math.cos(s.k0 * x);
+                                s.im[i] = envelope * Math.sin(s.k0 * x);
+                                norm += envelope * envelope;
+                            }
+                            s.launchNorm = norm;
+                            s.elapsed = 0;
+                        };
+                        s.launch();
+                        return s;
+                    },
+                    update(s, dt, env) {
+                        // Pointer height sets the barrier between 0.55x and 1.5x the packet energy.
+                        const target = env.pointer.influence > .02
+                            ? .55 + 1.05 * (1 - Math.max(0, Math.min(1, env.pointer.y)))
+                            : 1;
+                        s.barrier += (target - s.barrier) * (1 - Math.exp(-3.2 * dt));
+                        const v0 = s.energy * s.barrier;
+                        for (let i = 0; i < s.n; i++) {
+                            const x = -1 + 2 * i / s.n;
+                            s.v[i] = v0 * Math.exp(-(x * x) / (2 * s.width * s.width));
+                        }
+
+                        const steps = Math.max(1, Math.min(10, Math.round(dt / .0025)));
+                        for (let step = 0; step < steps; step++) {
+                            for (let i = 0; i < s.n; i++) {
+                                const phase = -s.v[i] * s.dt / 2;
+                                const c = Math.cos(phase), sn = Math.sin(phase);
+                                const r = s.re[i], m = s.im[i];
+                                s.re[i] = r * c - m * sn;
+                                s.im[i] = r * sn + m * c;
+                            }
+                            fft(s.re, s.im, false);
+                            for (let i = 0; i < s.n; i++) {
+                                const phase = -s.k2[i] * s.dt / 2;
+                                const c = Math.cos(phase), sn = Math.sin(phase);
+                                const r = s.re[i], m = s.im[i];
+                                s.re[i] = r * c - m * sn;
+                                s.im[i] = r * sn + m * c;
+                            }
+                            fft(s.re, s.im, true);
+                            for (let i = 0; i < s.n; i++) {
+                                const phase = -s.v[i] * s.dt / 2;
+                                const c = Math.cos(phase), sn = Math.sin(phase);
+                                const r = s.re[i], m = s.im[i];
+                                s.re[i] = r * c - m * sn;
+                                s.im[i] = r * sn + m * c;
+                                // Absorbing edges: without them the packet wraps around the box.
+                                const x = Math.abs(-1 + 2 * i / s.n);
+                                if (x > .8) {
+                                    const damp = 1 - .06 * ((x - .8) / .2) ** 2;
+                                    s.re[i] *= damp; s.im[i] *= damp;
+                                }
+                            }
+                            s.elapsed += s.dt;
+                        }
+
+                        let left = 0, right = 0;
+                        for (let i = 0; i < s.n; i++) {
+                            const p = s.re[i] * s.re[i] + s.im[i] * s.im[i];
+                            if (-1 + 2 * i / s.n > .06) right += p; else left += p;
+                        }
+                        const total = left + right;
+                        if (total > 1e-9) s.transmitted += (right / total - s.transmitted) * (1 - Math.exp(-2.4 * dt));
+                        // Relaunch once the absorbing edges have eaten most of the packet.
+                        if (total < s.launchNorm * .3 || s.elapsed > .09) s.launch();
+                        env.readout = `transmission ≈ ${Math.round(s.transmitted * 100)}%  ·  V₀ ≈ ${s.barrier.toFixed(2)} E`;
+                    },
+                    draw(s, ctx, env) {
+                        const { width, height, colours } = env;
+                        const base = height * .74;
+                        const span = height * .5;
+                        let peak = 1e-9;
+                        for (let i = 0; i < s.n; i++) peak = Math.max(peak, s.re[i] ** 2 + s.im[i] ** 2);
+
+                        // The barrier is drawn straight from V(x), so raising it with the
+                        // pointer visibly changes the same curve the solver integrates.
+                        const bx = width * .5;
+                        ctx.beginPath();
+                        ctx.moveTo(0, base);
+                        for (let i = 0; i < s.n; i++) {
+                            const x = -1 + 2 * i / s.n;
+                            const v = Math.exp(-(x * x) / (2 * s.width * s.width)) * s.barrier;
+                            ctx.lineTo(i / (s.n - 1) * width, base - v * span * .82);
+                        }
+                        ctx.lineTo(width, base);
+                        ctx.closePath();
+                        // Neutral, so the barrier never competes with the two packets.
+                        ctx.fillStyle = env.rgba(colours.sageLight, .13);
+                        ctx.fill();
+                        ctx.strokeStyle = env.rgba(colours.sageLight, .5);
+                        ctx.lineWidth = 1.2;
+                        ctx.stroke();
+
+                        // Packet energy: where it sits against the barrier top is the story.
+                        ctx.setLineDash([3, 7]);
+                        ctx.strokeStyle = env.rgba(colours.paper, .28);
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(0, base - span * .82);
+                        ctx.lineTo(width, base - span * .82);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+                        ctx.fillStyle = env.rgba(colours.paper, .5);
+                        ctx.font = `500 ${Math.max(9, Math.min(12, width * .022))}px ${getComputedStyle(document.body).fontFamily}`;
+                        ctx.fillText('E', 6, base - span * .82 - 5);
+
+                        ctx.strokeStyle = env.rgba(colours.sage, .34);
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(0, base); ctx.lineTo(width, base);
+                        ctx.stroke();
+
+                        // Real part underneath: the oscillation that makes it a wave.
+                        ctx.strokeStyle = env.rgba(colours.paper, .16);
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        for (let i = 0; i < s.n; i++) {
+                            const x = i / (s.n - 1) * width;
+                            const y = base - s.re[i] / Math.sqrt(peak) * span * .2;
+                            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                        }
+                        ctx.stroke();
+
+                        // |psi|^2, split at the barrier so each side carries its own colour.
+                        for (const side of [-1, 1]) {
+                            ctx.beginPath();
+                            ctx.moveTo(side < 0 ? 0 : bx, base);
+                            for (let i = 0; i < s.n; i++) {
+                                const x = i / (s.n - 1) * width;
+                                if (side < 0 ? x > bx : x < bx) continue;
+                                const p = (s.re[i] ** 2 + s.im[i] ** 2) / peak;
+                                ctx.lineTo(x, base - p * span);
+                            }
+                            ctx.lineTo(side < 0 ? bx : width, base);
+                            ctx.closePath();
+                            const colour = side < 0 ? colours.lake : colours.oxblood;
+                            const fill = ctx.createLinearGradient(0, base - span, 0, base);
+                            fill.addColorStop(0, env.rgba(colour, side < 0 ? .74 : .8));
+                            fill.addColorStop(1, env.rgba(colour, .06));
+                            ctx.fillStyle = fill;
+                            ctx.fill();
+                            ctx.strokeStyle = env.rgba(side < 0 ? colours.lakeLight : colours.rose, .9);
+                            ctx.lineWidth = 1.4;
+                            ctx.stroke();
+                        }
+                    }
+                },
+
+                /* Two-slit intensity, sampled one detection at a time. The fringes
+                   are not drawn — they emerge from the accumulating dots, which is
+                   the point of the experiment and a fair picture of a publication
+                   record. */
+                interference: {
+                    warmup: 7,            // a record only means something once it has accumulated
+                    init(env) {
+                        return {
+                            dots: [],
+                            max: env.compact ? 900 : 1600,
+                            separation: 1,
+                            slitWidth: .16,
+                            arrivals: 0,
+                            row: 0
+                        };
+                    },
+                    intensity(s, y) {
+                        // Few enough fringes that the bands are legible at hero size.
+                        const d = 5.2 * s.separation;
+                        const a = 1.15;
+                        const u = Math.PI * a * y;
+                        const envelope = u === 0 ? 1 : (Math.sin(u) / u) ** 2;
+                        return Math.cos(Math.PI * d * y) ** 2 * envelope;
+                    },
+                    update(s, dt, env) {
+                        const target = env.pointer.influence > .02
+                            ? .55 + 1.1 * Math.max(0, Math.min(1, env.pointer.x))
+                            : 1;
+                        s.separation += (target - s.separation) * (1 - Math.exp(-3 * dt));
+
+                        // Rejection-sample the intensity: each accepted y is one detection.
+                        const wanted = Math.min(26, Math.max(1, Math.round(dt * 150)));
+                        for (let i = 0; i < wanted; i++) {
+                            for (let attempt = 0; attempt < 24; attempt++) {
+                                const y = env.random() * 2 - 1;
+                                if (env.random() < this.intensity(s, y)) {
+                                    s.dots.push({ x: env.random(), y, age: 0 });
+                                    s.arrivals++;
+                                    break;
+                                }
+                            }
+                        }
+                        while (s.dots.length > s.max) s.dots.shift();
+                        for (const dot of s.dots) dot.age += dt;
+                        env.readout = `${s.arrivals.toLocaleString('en-GB')} detections  ·  d ≈ ${(s.separation).toFixed(2)} d₀`;
+                    },
+                    draw(s, ctx, env) {
+                        const { width, height, colours } = env;
+                        ctx.strokeStyle = env.rgba(colours.sage, .26);
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(width * .04, height * .06);
+                        ctx.lineTo(width * .04, height * .94);
+                        ctx.stroke();
+
+                        // The predicted profile lives in its own gutter so it reads as a
+                        // reference rather than getting tangled in the detections.
+                        ctx.strokeStyle = env.rgba(colours.lakeLight, .32);
+                        ctx.beginPath();
+                        for (let i = 0; i <= 420; i++) {
+                            const y = -1 + 2 * i / 420;
+                            const px = width * .04 + this.intensity(s, y) * width * .13;
+                            const py = (y * .5 + .5) * height;
+                            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                        }
+                        ctx.stroke();
+
+                        // Fresh arrivals glow; older ones settle into the accumulated record.
+                        for (const dot of s.dots) {
+                            const px = width * (.26 + dot.x * .7);
+                            const py = (dot.y * .5 + .5) * height;
+                            const fresh = Math.max(0, 1 - dot.age / 1.4);
+                            ctx.fillStyle = env.rgba(fresh > .05 ? colours.rose : colours.sageLight, .46 + fresh * .48);
+                            ctx.beginPath();
+                            ctx.arc(px, py, 1.15 + fresh * 2.2, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+                },
+
+                /* Kuramoto oscillators. The coupling is swept up and back down so the
+                   transition into collective rhythm happens on its own; the order
+                   parameter r is measured from the population each frame. */
+                synchrony: {
+                    warmup: 3.5,          // far enough up the coupling sweep to show structure
+                    init(env) {
+                        const count = env.compact ? 42 : 64;
+                        const nodes = [];
+                        const columns = Math.round(Math.sqrt(count * .78));
+                        for (let i = 0; i < count; i++) {
+                            const col = i % columns, row = Math.floor(i / columns);
+                            const rows = Math.ceil(count / columns);
+                            nodes.push({
+                                x: (col + .5) / columns + (env.random() - .5) * .1,
+                                y: (row + .5) / rows + (env.random() - .5) * .12,
+                                phase: env.random() * Math.PI * 2,
+                                omega: 2.1 + env.gaussian() * .9
+                            });
+                        }
+                        // Start partway up the sweep so the field is already interesting
+                        // for someone who only looks at the hero for a few seconds.
+                        return { nodes, coupling: 0, sweep: 1.15, order: 0, meanPhase: 0 };
+                    },
+                    update(s, dt, env) {
+                        s.sweep += dt * .33;
+                        // 0 -> 1 -> 0, so the field keeps crossing the synchronisation threshold.
+                        s.coupling = 4.6 * (.5 - .5 * Math.cos(s.sweep));
+
+                        let sumSin = 0, sumCos = 0;
+                        for (const node of s.nodes) { sumSin += Math.sin(node.phase); sumCos += Math.cos(node.phase); }
+                        const n = s.nodes.length;
+                        s.order = Math.hypot(sumSin / n, sumCos / n);
+                        s.meanPhase = Math.atan2(sumSin / n, sumCos / n);
+
+                        for (const node of s.nodes) {
+                            let k = s.coupling;
+                            if (env.pointer.influence > .02) {
+                                const distance = Math.hypot(node.x - env.pointer.x, node.y - env.pointer.y);
+                                k += env.pointer.influence * 7.5 * Math.exp(-(distance * distance) / .045);
+                            }
+                            node.phase += (node.omega + k * s.order * Math.sin(s.meanPhase - node.phase)) * dt;
+                            if (node.phase > Math.PI * 2) node.phase -= Math.PI * 2;
+                        }
+                        env.readout = `order r = ${s.order.toFixed(2)}  ·  K = ${s.coupling.toFixed(1)}`;
+                    },
+                    draw(s, ctx, env) {
+                        const { width, height, colours } = env;
+                        const px = node => node.x * width;
+                        const py = node => node.y * height;
+
+                        // Links appear only between near neighbours that are genuinely in
+                        // step, and stay faint — at r ≈ 1 a denser web just becomes a wall.
+                        ctx.lineWidth = .8;
+                        for (let i = 0; i < s.nodes.length; i++) {
+                            for (let j = i + 1; j < s.nodes.length; j++) {
+                                const a = s.nodes[i], b = s.nodes[j];
+                                const distance = Math.hypot(a.x - b.x, a.y - b.y);
+                                if (distance > .24) continue;
+                                const agreement = (Math.cos(a.phase - b.phase) + 1) / 2;
+                                if (agreement < .8) continue;
+                                ctx.strokeStyle = env.rgba(colours.sageLight, (agreement - .8) * 2.1 * (1 - distance / .24));
+                                ctx.beginPath();
+                                ctx.moveTo(px(a), py(a));
+                                ctx.lineTo(px(b), py(b));
+                                ctx.stroke();
+                            }
+                        }
+
+                        for (const node of s.nodes) {
+                            const beat = (Math.cos(node.phase) + 1) / 2;
+                            const colour = env.mix(colours.lakeLight, colours.rose, beat);
+                            // A background-coloured disc first, so nodes stay legible
+                            // wherever links cross behind them.
+                            ctx.fillStyle = env.rgba(colours.deep, .85);
+                            ctx.beginPath();
+                            ctx.arc(px(node), py(node), 4.4 + beat * 3.2, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.fillStyle = env.rgba(colour, .55 + beat * .45);
+                            ctx.beginPath();
+                            ctx.arc(px(node), py(node), 2.3 + beat * 3, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+
+                        // Order-parameter dial: direction is the mean phase, length is r.
+                        const cx = width * .5, cy = height * .5;
+                        const radius = Math.min(width, height) * .3;
+                        ctx.strokeStyle = env.rgba(colours.paper, .12);
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.strokeStyle = env.rgba(colours.rose, .28 + s.order * .55);
+                        ctx.lineWidth = 1.8;
+                        ctx.beginPath();
+                        ctx.moveTo(cx, cy);
+                        ctx.lineTo(cx + Math.cos(s.meanPhase) * radius * s.order, cy + Math.sin(s.meanPhase) * radius * s.order);
+                        ctx.stroke();
+                    }
+                },
+
+                /* Outgoing circular waves from a source. Solved analytically rather
+                   than on a grid: at the resolution a hero panel affords, a finite
+                   difference stencil runs measurably faster along the diagonals and
+                   the rings come out as squares. The closed form is exactly circular,
+                   never reflects off the panel edge, and lets pulses superpose — so
+                   sending a second one while the first is still travelling shows real
+                   interference rather than a reset. */
+                ripple: {
+                    warmup: 1.7,          // one ring already crossing the panel
+                    init(env) {
+                        return {
+                            pulses: [{ t: 0 }],
+                            clock: 0,
+                            sourceX: .5, sourceY: .5,
+                            since: 0, interval: 3.1,
+                            speed: .165,               // panel widths per second
+                            wavelength: .16,
+                            packet: .075               // radial width of each ring group
+                        };
+                    },
+                    pulse(s) {
+                        s.pulses.push({ t: s.clock });
+                        s.since = 0;
+                    },
+                    update(s, dt, env) {
+                        s.clock += dt;
+                        if (env.pointer.influence > .02) {
+                            s.sourceX += (env.pointer.x - s.sourceX) * (1 - Math.exp(-4 * dt));
+                            s.sourceY += (env.pointer.y - s.sourceY) * (1 - Math.exp(-4 * dt));
+                        }
+                        s.since += dt;
+                        if (s.since >= s.interval) this.pulse(s);
+                        // A pulse is spent once its ring has left the panel and faded.
+                        s.pulses = s.pulses.filter(p => s.clock - p.t < 5.4).slice(-3);
+                        env.readout = `${s.pulses.length} wave${s.pulses.length === 1 ? '' : 's'} travelling  ·  source (${s.sourceX.toFixed(2)}, ${(1 - s.sourceY).toFixed(2)})`;
+                    },
+                    amplitude(s, r) {
+                        let total = 0;
+                        for (const p of s.pulses) {
+                            const age = s.clock - p.t;
+                            if (age < 0) continue;
+                            const front = age * s.speed;
+                            const offset = r - front;
+                            if (Math.abs(offset) > s.packet * 2.4) continue;
+                            const packet = Math.exp(-(offset * offset) / (2 * s.packet * s.packet));
+                            const phase = Math.sin(2 * Math.PI * offset / s.wavelength);
+                            // 1/sqrt(r) is the spreading of a cylindrical wave; the extra
+                            // exponential is the damping term in the notation.
+                            const spread = 1 / Math.sqrt(Math.max(.18, r));
+                            total += phase * packet * spread * Math.exp(-age * .2);
+                        }
+                        return total;
+                    },
+                    draw(s, ctx, env) {
+                        const { width, height, colours } = env;
+                        const spacing = env.compact ? 12 : 15;
+                        const cols = Math.ceil(width / spacing);
+                        const rows = Math.ceil(height / spacing);
+                        const unit = Math.min(width, height);
+                        const sx = s.sourceX * width, sy = s.sourceY * height;
+
+                        for (let j = 0; j <= rows; j++) {
+                            for (let i = 0; i <= cols; i++) {
+                                const px = i * spacing, py = j * spacing;
+                                const r = Math.hypot(px - sx, py - sy) / unit;
+                                const value = this.amplitude(s, r);
+                                const magnitude = Math.abs(value);
+                                if (magnitude < .17) continue;
+                                const strength = Math.min(1, magnitude / 1.25);
+                                ctx.fillStyle = env.rgba(value > 0 ? colours.lakeLight : colours.rose, .12 + strength * .8);
+                                ctx.beginPath();
+                                ctx.arc(px, py, .6 + strength * 2.9, 0, Math.PI * 2);
+                                ctx.fill();
+                            }
+                        }
+
+                        ctx.strokeStyle = env.rgba(colours.paper, .5);
+                        ctx.lineWidth = 1.2;
+                        ctx.beginPath();
+                        ctx.arc(sx, sy, 5.5, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.fillStyle = env.rgba(colours.paper, .82);
+                        ctx.beginPath();
+                        ctx.arc(sx, sy, 1.9, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                },
+
+                /* A biased random walk next to the straight line it was supposed to
+                   follow — the 404 page, drawn honestly. */
+                wander: {
+                    warmup: 3,            // enough trail to read as a path
+                    init(env) {
+                        return {
+                            x: .12, y: .84, vx: .06, vy: -.05,
+                            trail: [{ x: .12, y: .84 }],
+                            distance: 0
+                        };
+                    },
+                    update(s, dt, env) {
+                        const step = Math.min(.05, dt);
+                        let ax = 0, ay = 0;
+                        if (env.pointer.influence > .02) {
+                            ax += (env.pointer.x - s.x) * env.pointer.influence * 1.6;
+                            ay += (env.pointer.y - s.y) * env.pointer.influence * 1.6;
+                        }
+                        // Distance from the line joining start and destination, and the
+                        // foot of that perpendicular — the walk is pulled weakly back
+                        // towards the route so it strays without simply leaving.
+                        const t = Math.max(0, Math.min(1, ((s.x - .12) * .76 + (s.y - .84) * -.68) / (.76 * .76 + .68 * .68)));
+                        const footX = .12 + .76 * t, footY = .84 - .68 * t;
+                        s.distance = Math.hypot(s.x - footX, s.y - footY);
+                        ax += (footX - s.x) * .28 + .12;
+                        ay += (footY - s.y) * .28 - .11;
+
+                        s.vx += (ax + env.gaussian() * 7.5) * step;
+                        s.vy += (ay + env.gaussian() * 7.5) * step;
+                        s.vx *= .93; s.vy *= .93;
+                        s.x += s.vx * step; s.y += s.vy * step;
+                        s.trail.push({ x: s.x, y: s.y });
+                        if (s.trail.length > 260) s.trail.shift();
+
+                        if (s.x < -.1 || s.x > 1.1 || s.y < -.1 || s.y > 1.1) {
+                            s.x = .12; s.y = .84; s.vx = .06; s.vy = -.05;
+                            s.trail.length = 0;
+                            s.trail.push({ x: s.x, y: s.y });
+                        }
+                        env.readout = `off route by ${(s.distance * 100).toFixed(0)}%`;
+                    },
+                    draw(s, ctx, env) {
+                        const { width, height, colours } = env;
+                        ctx.setLineDash([4, 10]);
+                        ctx.strokeStyle = env.rgba(colours.sage, .42);
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(.12 * width, .84 * height);
+                        ctx.lineTo(.88 * width, .16 * height);
+                        ctx.stroke();
+                        ctx.setLineDash([]);
+
+                        // Drawn in segments so the trail fades into where it has been.
+                        ctx.lineWidth = 1.5;
+                        for (let i = 1; i < s.trail.length; i++) {
+                            const a = s.trail[i - 1], b = s.trail[i];
+                            ctx.strokeStyle = env.rgba(colours.rose, .06 + .62 * (i / s.trail.length) ** 2);
+                            ctx.beginPath();
+                            ctx.moveTo(a.x * width, a.y * height);
+                            ctx.lineTo(b.x * width, b.y * height);
+                            ctx.stroke();
+                        }
+
+                        ctx.fillStyle = env.rgba(colours.lakeLight, .9);
+                        ctx.beginPath();
+                        ctx.arc(.12 * width, .84 * height, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.strokeStyle = env.rgba(colours.sage, .7);
+                        ctx.lineWidth = 1.4;
+                        ctx.beginPath();
+                        ctx.arc(.88 * width, .16 * height, 5, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.fillStyle = env.rgba(colours.rose, .95);
+                        ctx.beginPath();
+                        ctx.arc(s.x * width, s.y * height, 4.4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            };
+
+            document.querySelectorAll('[data-hero-field]').forEach((stage, stageIndex) => {
+                const kind = heroFieldKinds[stage.dataset.heroField];
+                const canvas = stage.querySelector('.sim-field__canvas');
+                const readoutNode = stage.querySelector('[data-hero-field-readout]');
+                const context = canvas && canvas.getContext('2d', { alpha: false });
+                if (!kind || !context) return;
+                const surface = stage.closest('[data-langevin-surface]') || stage;
+
+                let seed = (0x2545f491 + stageIndex * 374761393) >>> 0;
+                const random = () => {
+                    seed += 0x6d2b79f5;
+                    let value = seed;
+                    value = Math.imul(value ^ value >>> 15, value | 1);
+                    value ^= value + Math.imul(value ^ value >>> 7, value | 61);
+                    return ((value ^ value >>> 14) >>> 0) / 4294967296;
+                };
+                const gaussian = () => Math.sqrt(-2 * Math.log(Math.max(1e-7, random()))) * Math.cos(2 * Math.PI * random());
+
+                // mix() returns an rgb() string, which rgba() cannot parse — feeding one
+                // into the other yields an invalid colour that canvas silently ignores,
+                // leaving the previous fill in place. Everything here stays hex.
+                const mixHex = (a, b, amount) => {
+                    const first = parseHex(a), second = parseHex(b);
+                    return '#' + first
+                        .map((value, index) => Math.max(0, Math.min(255, Math.round(value + (second[index] - value) * amount))))
+                        .map(channel => channel.toString(16).padStart(2, '0'))
+                        .join('');
+                };
+
+                const palette = {
+                    deep: readColour('--deep'),
+                    deepSoft: readColour('--deep-soft'),
+                    lake: readColour('--lake'),
+                    oxblood: readColour('--oxblood'),
+                    sage: readColour('--sage'),
+                    paper: readColour('--paper'),
+                    rose: readColour('--rose')
+                };
+                palette.lakeLight = mixHex(palette.lake, palette.paper, .5);
+                palette.sageLight = mixHex(palette.sage, palette.paper, .4);
+
+                const env = {
+                    width: 1, height: 1, compact: false,
+                    colours: palette, rgba, mix: mixHex, random, gaussian,
+                    pointer: { x: .5, y: .5, influence: 0, target: 0, inside: false, keyboard: false },
+                    readout: ''
+                };
+
+                let state = null, animationFrame = 0, resizeFrame = 0, lastTime = 0, visible = true, pixelRatio = 1;
+
+                const resize = () => {
+                    const rect = stage.getBoundingClientRect();
+                    env.width = Math.max(2, rect.width);
+                    env.height = Math.max(2, rect.height);
+                    env.compact = env.width < 620;
+                    pixelRatio = Math.min(2, window.devicePixelRatio || 1);
+                    canvas.width = Math.round(env.width * pixelRatio);
+                    canvas.height = Math.round(env.height * pixelRatio);
+                    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+                    // Only rebuild state when the geometry it was sized for actually
+                    // changed, so a scrollbar appearing doesn't restart the model.
+                    const shape = kind.resetOnResize
+                        ? `${Math.round(env.width / 48)}x${Math.round(env.height / 48)}|${env.compact}`
+                        : `${env.compact}`;
+                    if (!state || shape !== env.shape) {
+                        env.shape = shape;
+                        state = kind.init(env);
+                        // Fast-forward so the first painted frame is already representative
+                        // — and so readers who prefer reduced motion get a still that shows
+                        // the model's behaviour rather than its first tick.
+                        for (let t = 0; t < (kind.warmup || 0); t += 1 / 60) kind.update(state, 1 / 60, env);
+                    }
+                };
+
+                const draw = () => {
+                    const background = context.createLinearGradient(0, 0, env.width, env.height);
+                    background.addColorStop(0, palette.deep);
+                    background.addColorStop(1, palette.deepSoft);
+                    context.fillStyle = background;
+                    context.fillRect(0, 0, env.width, env.height);
+                    kind.draw(state, context, env);
+                    if (readoutNode && env.readout !== readoutNode.textContent) readoutNode.textContent = env.readout;
+                };
+
+                const loop = now => {
+                    animationFrame = 0;
+                    if (!visible || document.hidden || reducedMotion.matches) return;
+                    const frameInterval = env.compact ? 1000 / 40 : 1000 / 60;
+                    if (lastTime && now - lastTime < frameInterval - .5) {
+                        animationFrame = requestAnimationFrame(loop);
+                        return;
+                    }
+                    const delta = lastTime ? Math.min(.05, (now - lastTime) / 1000) : 1 / 60;
+                    lastTime = now;
+                    const ease = 1 - Math.exp(-5.2 * delta);
+                    env.pointer.influence += (env.pointer.target - env.pointer.influence) * ease;
+                    kind.update(state, delta, env);
+                    draw();
+                    animationFrame = requestAnimationFrame(loop);
+                };
+                const start = () => {
+                    if (!animationFrame && visible && !document.hidden && !reducedMotion.matches) {
+                        lastTime = 0;
+                        animationFrame = requestAnimationFrame(loop);
+                    }
+                };
+
+                const setPointer = event => {
+                    const rect = stage.getBoundingClientRect();
+                    env.pointer.x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+                    env.pointer.y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+                };
+                surface.addEventListener('pointermove', event => {
+                    if (reducedMotion.matches || event.pointerType === 'touch') return;
+                    setPointer(event);
+                    env.pointer.inside = true;
+                    env.pointer.target = 1;
+                }, { passive: true });
+                surface.addEventListener('pointerdown', event => {
+                    if (reducedMotion.matches || event.target.closest('a, button')) return;
+                    setPointer(event);
+                    env.pointer.inside = true;
+                    env.pointer.target = event.pointerType === 'touch' ? .8 : 1;
+                    if (kind.pulse) kind.pulse(state);
+                }, { passive: true });
+                const release = event => {
+                    if (event.pointerType === 'touch' || event.type === 'pointerleave') {
+                        env.pointer.inside = false;
+                        if (!env.pointer.keyboard) env.pointer.target = 0;
+                    }
+                };
+                surface.addEventListener('pointerup', release, { passive: true });
+                surface.addEventListener('pointercancel', release, { passive: true });
+                surface.addEventListener('pointerleave', release, { passive: true });
+
+                stage.addEventListener('blur', () => {
+                    env.pointer.keyboard = false;
+                    if (!env.pointer.inside) env.pointer.target = 0;
+                });
+                stage.addEventListener('keydown', event => {
+                    if (reducedMotion.matches) return;
+                    const amount = event.shiftKey ? .12 : .06;
+                    if (event.key === 'ArrowLeft') env.pointer.x -= amount;
+                    else if (event.key === 'ArrowRight') env.pointer.x += amount;
+                    else if (event.key === 'ArrowUp') env.pointer.y -= amount;
+                    else if (event.key === 'ArrowDown') env.pointer.y += amount;
+                    else if (event.key === 'Enter' || event.key === ' ') { if (kind.pulse) kind.pulse(state); else return; }
+                    else if (event.key === 'Escape') { env.pointer.keyboard = false; env.pointer.target = env.pointer.inside ? 1 : 0; stage.blur(); return; }
+                    else return;
+                    event.preventDefault();
+                    env.pointer.keyboard = true;
+                    env.pointer.x = Math.max(0, Math.min(1, env.pointer.x));
+                    env.pointer.y = Math.max(0, Math.min(1, env.pointer.y));
+                    env.pointer.target = 1;
+                });
+
+                resize();
+                kind.update(state, 1 / 60, env);
+                draw();
+                stage.classList.add('is-ready');
+
+                const baseLabel = stage.getAttribute('aria-label');
+                const liveLabel = baseLabel.replace('Static diagram:', 'Interactive diagram:') + ' ' + (stage.dataset.heroFieldHint || '');
+                const syncMotionPreference = () => {
+                    const isStatic = reducedMotion.matches;
+                    stage.tabIndex = isStatic ? -1 : 0;
+                    stage.classList.toggle('is-interactive', !isStatic);
+                    stage.setAttribute('aria-label', isStatic ? baseLabel : liveLabel.trim());
+                    if (isStatic) {
+                        if (animationFrame) cancelAnimationFrame(animationFrame);
+                        animationFrame = 0;
+                        env.pointer.keyboard = env.pointer.inside = false;
+                        env.pointer.target = env.pointer.influence = 0;
+                        if (document.activeElement === stage) stage.blur();
+                        draw();
+                    } else {
+                        start();
+                    }
+                };
+                syncMotionPreference();
+                if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', syncMotionPreference);
+                else if (reducedMotion.addListener) reducedMotion.addListener(syncMotionPreference);
+
+                new IntersectionObserver(entries => {
+                    visible = entries[0].isIntersecting;
+                    if (!visible && animationFrame) { cancelAnimationFrame(animationFrame); animationFrame = 0; }
+                    if (visible) start();
+                }, { threshold: .02 }).observe(stage);
+
+                const queueResize = () => {
+                    if (resizeFrame) return;
+                    resizeFrame = requestAnimationFrame(() => { resizeFrame = 0; resize(); draw(); });
+                };
+                if (window.ResizeObserver) new ResizeObserver(queueResize).observe(stage);
                 else window.addEventListener('resize', queueResize, { passive: true });
                 document.addEventListener('visibilitychange', () => {
                     if (document.hidden && animationFrame) { cancelAnimationFrame(animationFrame); animationFrame = 0; }

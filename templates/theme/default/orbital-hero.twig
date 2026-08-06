@@ -20,16 +20,14 @@
 
         <figure class="page-intro__media{% if hero_uses_simulation %} page-intro__media--simulation{% endif %}">
 {% if hero_uses_simulation %}
-            {% set simulation_compact = true %}
-            {% set simulation_full = false %}
-            {% include '@theme/langevin-simulation.twig' %}
+            {% include '@theme/hero-field.twig' with { field_kind: hero_field|default('wavepacket') } %}
 {% else %}
             <img src="{{ hero_image }}" alt="{{ hero_alt }}">
 {% endif %}
             <figcaption>
 {% if hero_uses_simulation %}
-                {{ hero_simulation_caption|default('Underdamped Langevin particles crossing a double-well free-energy landscape') }}
-                · <a href="{{ hero_simulation_source_url|default('https://doi.org/10.1063/5.0169050') }}" target="_blank" rel="noopener">Research basis</a>
+                {{ hero_simulation_caption }}
+                {% if hero_simulation_source_url %} · <a href="{{ hero_simulation_source_url }}" target="_blank" rel="noopener">{{ hero_simulation_source_label|default('Research basis') }}</a>{% endif %}
 {% else %}
                 {{ hero_caption }}
                 {% if hero_source_url %} · <a href="{{ hero_source_url }}" target="_blank" rel="noopener">Image source</a>{% endif %}

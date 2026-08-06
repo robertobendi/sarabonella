@@ -1,13 +1,13 @@
-<div class="langevin-model{% if simulation_compact|default(false) %} langevin-model--compact{% endif %}{% if simulation_full|default(false) %} langevin-model--full{% endif %}">
+<div class="sim-field{% if simulation_compact|default(false) %} sim-field--compact{% endif %}{% if simulation_full|default(false) %} sim-field--full{% endif %}">
     <div
-        class="langevin-model__stage"
+        class="sim-field__stage"
         data-langevin-stage
         data-langevin-mode="{{ simulation_full|default(false) ? 'hero' : 'panel' }}"
         role="region"
         tabindex="-1"
         aria-label="Static underdamped Langevin particle model in a double-well free-energy landscape."
     >
-        <svg class="langevin-model__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <svg class="sim-field__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
             <rect width="500" height="600" fill="#263338"/>
             <g fill="none" stroke="#8d998d" stroke-width="1.2" opacity=".44">
                 <ellipse cx="156" cy="310" rx="48" ry="78"/>
@@ -25,11 +25,11 @@
             </g>
             <g fill="#d7ded2"><circle cx="242" cy="304" r="3"/><circle cx="268" cy="342" r="2.5"/></g>
         </svg>
-        <canvas class="langevin-model__canvas" data-langevin aria-hidden="true"></canvas>
-        <div class="langevin-model__notation" aria-hidden="true">
+        <canvas class="sim-field__canvas" data-langevin aria-hidden="true"></canvas>
+        <div class="sim-field__notation" aria-hidden="true">
             <span>U(q,r) = a(q² − 1)² + br²</span>
             <span>mẍ = −γẋ − ∇U + √(2γkT)η</span>
         </div>
-        <div class="langevin-model__labels" aria-hidden="true"><span>state A</span><span>barrier</span><span>state B</span></div>
+        <div class="sim-field__labels" aria-hidden="true"><span>state A</span><span>barrier</span><span>state B</span></div>
     </div>
 </div>

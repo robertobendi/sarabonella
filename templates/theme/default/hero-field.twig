@@ -1,0 +1,121 @@
+{#
+    One interactive physics field per page hero. Each `field_kind` is a real model
+    from an area Sara works in, so the pages read as different pieces of science
+    rather than the same ornament recoloured. Every kind ships an inline SVG that
+    stands in before the canvas is ready and stays put with JS disabled.
+#}
+{% set field_meta = {
+    wavepacket: {
+        label: 'quantum wavepacket scattering off a potential barrier',
+        interaction: 'Move the pointer up and down, or focus the field and use the arrow keys, to raise and lower the barrier and change how much of the packet gets through.',
+        notation: ['iħ ∂ψ/∂t = −(ħ²/2m) ∂²ψ/∂x² + V(x)ψ', 'V(x) = V₀ exp(−x²/2w²)'],
+        labels: ['incident', 'barrier', 'transmitted']
+    },
+    interference: {
+        label: 'two-slit interference pattern accumulating one detection at a time',
+        interaction: 'Move the pointer left and right, or focus the field and use the arrow keys, to change the slit separation and watch the fringe spacing respond.',
+        notation: ['I(y) ∝ cos²(πdy/λD) · sinc²(πay/λD)', 'one quantum per detection'],
+        labels: ['single detections', 'fringe spacing ∝ λD/d']
+    },
+    synchrony: {
+        label: 'coupled phase oscillators moving between independence and collective synchrony',
+        interaction: 'Move the pointer across the field, or focus it and use the arrow keys, to strengthen the coupling near your cursor and pull nearby oscillators into phase.',
+        notation: ['θ̇ᵢ = ωᵢ + (K/N) Σⱼ sin(θⱼ − θᵢ)', 'r = |(1/N) Σⱼ exp(iθⱼ)|'],
+        labels: ['independent', 'coupled']
+    },
+    ripple: {
+        label: 'a damped wave spreading outward from a single source',
+        interaction: 'Move the pointer across the field, or focus it and use the arrow keys, to move the source; press Enter or tap to send a new pulse.',
+        notation: ['∂²u/∂t² = c²∇²u − γ ∂u/∂t', 'one source, one message'],
+        labels: ['source', 'wavefront']
+    },
+    wander: {
+        label: 'a random walk drifting away from the route it was expected to take',
+        interaction: 'Move the pointer across the field, or focus it and use the arrow keys, to apply a drift and steer the walk back.',
+        notation: ['⟨Δx²⟩ = 2Dt', 'the path is lost, not the destination'],
+        labels: ['expected route', 'observed path']
+    }
+} %}
+{% set field = field_meta[field_kind] %}
+
+<div class="sim-field sim-field--{{ field_kind }}">
+    <div
+        class="sim-field__stage"
+        data-hero-field="{{ field_kind }}"
+        data-hero-field-hint="{{ field.interaction }}"
+        role="region"
+        tabindex="-1"
+        aria-label="Static diagram: {{ field.label }}."
+    >
+        <svg class="sim-field__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+            <rect width="500" height="600" fill="#263338"/>
+{% if field_kind == 'wavepacket' %}
+            <path d="M40 470H460" stroke="#8d998d" stroke-width="1" opacity=".4"/>
+            <path d="M250 150V470" stroke="#d8a6af" stroke-width="14" opacity=".16"/>
+            <path d="M250 150V470" stroke="#d8a6af" stroke-width="1.4" opacity=".5"/>
+            <path d="M40 470C86 470 96 318 132 318C168 318 178 470 224 470Z" fill="#86b2bb" opacity=".5"/>
+            <path d="M262 470C296 470 306 404 336 404C366 404 376 470 410 470Z" fill="#d8a6af" opacity=".42"/>
+            <g fill="none" stroke="#86b2bb" stroke-width="1.1" opacity=".55">
+                <path d="M56 402C72 372 88 432 104 402C120 372 136 432 152 402C168 372 184 432 200 402"/>
+            </g>
+            <g fill="none" stroke="#d8a6af" stroke-width="1.1" opacity=".45">
+                <path d="M292 438C308 420 324 456 340 438C356 420 372 456 388 438"/>
+            </g>
+{% elseif field_kind == 'interference' %}
+            <path d="M60 96V504" stroke="#8d998d" stroke-width="1" opacity=".34"/>
+            <g fill="#d7ded2" opacity=".8">
+                <circle cx="112" cy="188" r="2.4"/><circle cx="168" cy="214" r="2"/><circle cx="141" cy="300" r="2.6"/>
+                <circle cx="205" cy="182" r="2.2"/><circle cx="122" cy="404" r="2"/><circle cx="186" cy="392" r="2.4"/>
+            </g>
+            <g fill="#86b2bb">
+                <circle cx="286" cy="176" r="2.6"/><circle cx="322" cy="196" r="2.2"/><circle cx="298" cy="214" r="2.4"/>
+                <circle cx="284" cy="300" r="3"/><circle cx="330" cy="288" r="2.6"/><circle cx="306" cy="318" r="2.4"/>
+                <circle cx="292" cy="418" r="2.6"/><circle cx="336" cy="404" r="2.2"/><circle cx="310" cy="436" r="2.4"/>
+            </g>
+            <g fill="#d8a6af">
+                <circle cx="396" cy="182" r="2.6"/><circle cx="432" cy="208" r="2.2"/><circle cx="410" cy="192" r="2.4"/>
+                <circle cx="398" cy="296" r="3"/><circle cx="438" cy="310" r="2.6"/><circle cx="416" cy="284" r="2.4"/>
+                <circle cx="402" cy="412" r="2.6"/><circle cx="440" cy="424" r="2.2"/><circle cx="420" cy="398" r="2.4"/>
+            </g>
+            <path d="M62 300C120 300 120 186 178 186C236 186 236 300 294 300C352 300 352 186 410 186C444 186 452 236 460 262"
+                  fill="none" stroke="#f4f1eb" stroke-width="1" opacity=".22"/>
+{% elseif field_kind == 'synchrony' %}
+            <g stroke="#8d998d" stroke-width="1" opacity=".3" fill="none">
+                <path d="M148 196L246 168L352 210M148 196L182 314M246 168L268 300M352 210L332 322M182 314L268 300L332 322M182 314L214 430M332 322L306 438M214 430L306 438"/>
+            </g>
+            <g fill="#86b2bb">
+                <circle cx="148" cy="196" r="9"/><circle cx="246" cy="168" r="10"/><circle cx="182" cy="314" r="9"/><circle cx="268" cy="300" r="11"/>
+            </g>
+            <g fill="#d8a6af">
+                <circle cx="352" cy="210" r="10"/><circle cx="332" cy="322" r="9"/><circle cx="214" cy="430" r="10"/><circle cx="306" cy="438" r="9"/>
+            </g>
+            <circle cx="250" cy="300" r="150" fill="none" stroke="#f4f1eb" stroke-width="1" opacity=".14"/>
+            <path d="M250 300L340 226" stroke="#d8a6af" stroke-width="1.6" opacity=".62"/>
+{% elseif field_kind == 'ripple' %}
+            <g fill="none" stroke="#86b2bb" stroke-width="1.2">
+                <circle cx="250" cy="300" r="44" opacity=".62"/><circle cx="250" cy="300" r="92" opacity=".46"/>
+                <circle cx="250" cy="300" r="140" opacity=".32"/><circle cx="250" cy="300" r="188" opacity=".2"/>
+            </g>
+            <g fill="none" stroke="#d8a6af" stroke-width="1.2">
+                <circle cx="250" cy="300" r="68" opacity=".4"/><circle cx="250" cy="300" r="116" opacity=".28"/><circle cx="250" cy="300" r="164" opacity=".18"/>
+            </g>
+            <circle cx="250" cy="300" r="7" fill="#f4f1eb" opacity=".9"/>
+{% else %}
+            <path d="M96 470L404 154" stroke="#8d998d" stroke-width="1" stroke-dasharray="4 10" opacity=".42"/>
+            <path d="M96 470C132 430 118 386 156 364C194 342 176 300 214 288C252 276 232 240 274 218C316 196 300 156 342 142C368 133 392 150 414 128"
+                  fill="none" stroke="#d8a6af" stroke-width="1.6" opacity=".7"/>
+            <circle cx="96" cy="470" r="6" fill="#86b2bb"/>
+            <circle cx="404" cy="154" r="6" fill="none" stroke="#8d998d" stroke-width="1.4" opacity=".6"/>
+            <circle cx="414" cy="128" r="7" fill="#d8a6af"/>
+{% endif %}
+        </svg>
+        <canvas class="sim-field__canvas" aria-hidden="true"></canvas>
+        <div class="sim-field__notation" aria-hidden="true">
+{% for line in field.notation %}            <span>{{ line }}</span>
+{% endfor %}        </div>
+        <div class="sim-field__labels" aria-hidden="true">
+{% for text in field.labels %}<span>{{ text }}</span>{% endfor %}
+        </div>
+        <p class="sim-field__readout" data-hero-field-readout aria-hidden="true"></p>
+    </div>
+</div>
