@@ -17,8 +17,8 @@
     {% set hero_alt = 'A historic scientific journal plate with diagrams of experimental apparatus' %}
     {% set hero_caption = 'A page from The Philosophical Magazine · historical publishing context' %}
     {% set hero_source_url = 'https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=The%20Philosophical%20Magazine%20journal%20theoretical%20experimental' %}
-    {% set hero_eyebrow = 'Selected publications' %}
-    {% set hero_title = 'Ideas developed in company' %}
+    {% set hero_eyebrow = 'Publications' %}
+    {% set hero_title = 'Selected papers and collaborations' %}
     {% set hero_deck = 'Sara’s publication record follows long-running collaborations across molecular simulation, mathematical physics, electrochemistry, open tools, and high-performance computing.' %}
     {% set hero_roles = ['Methods and physical applications', 'Collaborative, peer-reviewed work', 'Full record available through ORCID'] %}
     {% set hero_primary_url = '#selected-papers' %}
@@ -30,7 +30,7 @@
     <section class="section section--field" id="selected-papers" aria-labelledby="selected-papers-title">
         <div class="shell">
             <div class="section-heading section-heading--split">
-                <div><p class="eyebrow">A curated record</p><h2 id="selected-papers-title">Places to begin</h2></div>
+                <div><p class="eyebrow">Selection</p><h2 id="selected-papers-title">Where to start</h2></div>
                 <p class="section-deck">Selected for the way they trace recurring questions in Sara’s work—not as a ranking, but as an invitation into the research.</p>
             </div>
             {% set selected_entries = entries|filter(item => item.field('featured')) %}
@@ -84,7 +84,7 @@
         <div class="research-feature__grid shell">
             <div>
                 <p class="eyebrow">Across the record</p>
-                <h2 id="threads-title">The questions travel between fields</h2>
+                <h2 id="threads-title">Recurring themes</h2>
                 <div class="question-list">
                     <article class="question-row"><span>01</span><div><h3>Approximation with structure</h3><p>Quantum and classical descriptions meet through algorithms designed to preserve the physical relationships that matter.</p></div></article>
                     <article class="question-row"><span>02</span><div><h3>Interfaces and non-equilibrium matter</h3><p>Charged surfaces, transport, rare events, and phase behaviour reveal how microscopic organisation creates macroscopic response.</p></div></article>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <aside class="research-study" aria-labelledby="record-title">
-                <p class="eyebrow">Full scholarly record</p>
+                <p class="eyebrow">Full record</p>
                 <h3 id="record-title">ORCID 0000-0003-4131-2513</h3>
                 <p class="section-deck" style="margin-top:1rem;">For the complete and evolving bibliography, use Sara’s persistent researcher identifier.</p>
                 <div class="action-row"><a class="button" href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Open ORCID</a></div>
@@ -109,7 +109,7 @@
 
     <section class="contact-invitation" aria-labelledby="publication-contact-title">
         <div class="contact-invitation__grid shell">
-            <div><p class="eyebrow">Continue the work</p><h2 id="publication-contact-title">A paper can begin a new conversation.</h2><p>Name the result, method, or physical question you would like to discuss, and the context in which the exchange would be useful.</p></div>
+            <div><p class="eyebrow">Contact</p><h2 id="publication-contact-title">Get in touch</h2><p>Name the result, method, or physical question you would like to discuss, and the context in which the exchange would be useful.</p></div>
             <a class="button" href="mailto:sara.bonella@epfl.ch?subject=Publication%20or%20seminar%20enquiry">Write to Sara</a>
         </div>
     </section>
