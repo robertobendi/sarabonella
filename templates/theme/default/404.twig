@@ -5,6 +5,11 @@
 {% set og_description = meta_description %}
 {% set body_class = 'page-not-found' %}
 
+{% block head %}
+{# An error page should never be indexed or offered as a search result. #}
+<meta name="robots" content="noindex, follow">
+{% endblock %}
+
 {% block content %}
     {% set hero_kind = 'not-found' %}
     {% set hero_canvas = true %}

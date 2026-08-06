@@ -17,6 +17,9 @@
 !/uploads/.htaccess
 !/uploads/portrait/
 !/uploads/portrait/sara-bonella-seated.jpg
+# The link-preview card is part of the design, not user-uploaded content.
+!/uploads/social/
+!/uploads/social/sara-bonella-card.jpg
 
 # Editor / OS clutter.
 .DS_Store

@@ -10,6 +10,12 @@
     <meta property="og:title" content="Selected publications — Sara Bonella">
     <meta property="og:description" content="Selected publications by Sara Bonella in molecular simulation, statistical physics, quantum dynamics, electrochemistry, and scientific computing.">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Sara Bonella — computational physicist, Senior Scientist at EPFL and Deputy Director of CECAM.">
+    <meta name="twitter:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
     <meta name="theme-color" content="#f4f1eb">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f4f1eb' stroke='%23202522' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='serif' font-size='24' font-weight='600' fill='%237d303b'%3ESB%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,10 +58,14 @@
             --section: clamp(5rem, 9vw, 8.5rem);
             --max: 1440px;
             --measure: 66ch;
+            /* Single source of truth for the sticky header: anchor offsets, the mobile
+               menu panel, the hero's viewport maths and every sticky column read it. */
+            --header-h: 76px;
+            --sticky-top: calc(var(--header-h) + 2.1rem);
         }
 
         *, *::before, *::after { box-sizing: border-box; }
-        html { margin: 0; background: var(--paper); scroll-behavior: smooth; scroll-padding-top: 84px; }
+        html { margin: 0; background: var(--paper); scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + .5rem); }
         body {
             margin: 0;
             min-width: 320px;
@@ -117,13 +127,12 @@
             white-space: nowrap !important;
             border: 0 !important;
         }
-        .grain { display: none; }
 
         .site-header {
             position: sticky;
             top: 0;
             z-index: 900;
-            height: 76px;
+            height: var(--header-h);
             background: rgba(251, 250, 247, .96);
             border-bottom: 1px solid var(--line);
             backdrop-filter: blur(14px);
@@ -200,7 +209,6 @@
         main { display: block; min-width: 0; }
         .shell { width: min(100%, var(--max)); margin-inline: auto; padding-inline: var(--gutter); min-width: 0; }
         .section { position: relative; padding-block: var(--section); }
-        .section--large { padding-block: var(--section); }
         .section--field { background: var(--field); border-block: 1px solid var(--line); }
         .section--plum { color: rgba(255, 254, 250, .82); background: var(--deep); }
         .section--plum h2, .section--plum h3, .section--plum h4 { color: var(--white); }
@@ -222,7 +230,6 @@
         .section--plum .eyebrow, .footer-heading, .contact-invitation .eyebrow { color: var(--rose); }
         .section-deck, .lede { max-width: 43rem; color: var(--ink-soft); font-size: clamp(1.12rem, 1.5vw, 1.35rem); line-height: 1.55; }
         .microcopy, .source-note { color: var(--muted); font-size: .8rem; line-height: 1.5; }
-        .split-5-7 { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: clamp(3rem, 7vw, 8rem); }
 
         .button {
             display: inline-flex;
@@ -255,7 +262,6 @@
         }
         .text-action:hover, .card-link:hover { color: var(--lake); text-decoration-color: currentColor; }
         .action-row { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem 1.5rem; margin-top: 2rem; }
-        .arrow-glyph { font-size: 1rem; }
 
         /* Home: a personal introduction inside the scientific model */
         .personal-hero {
@@ -292,8 +298,8 @@
             grid-template-columns: minmax(0, 8fr) minmax(15rem, 4fr);
             align-items: end;
             gap: clamp(3rem, 7vw, 8rem);
-            min-height: calc(100vh - 76px);
-            min-height: max(46rem, calc(100svh - 76px));
+            min-height: calc(100vh - var(--header-h));
+            min-height: max(46rem, calc(100svh - var(--header-h)));
             padding-block: clamp(4rem, 7vw, 6.5rem);
         }
         .personal-hero__copy { align-self: center; max-width: 52rem; }
@@ -514,7 +520,7 @@
 
         .section--about { background: linear-gradient(180deg, var(--paper), var(--rose-wash) 145%); }
         .bio-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(3rem, 8vw, 9rem); align-items: start; }
-        .bio-lead { position: sticky; top: 110px; }
+        .bio-lead { position: sticky; top: var(--sticky-top); }
         .bio-copy { max-width: var(--measure); }
         .bio-copy > p:first-child::first-letter {
             float: left;
@@ -593,7 +599,7 @@
         .question-row > span { color: var(--oxblood); font: 500 1.25rem/1 var(--font-display); }
         .question-row h3 { margin-bottom: .45rem; font-size: clamp(1.5rem, 2vw, 1.95rem); }
         .question-row p { margin: 0; color: var(--ink-soft); }
-        .research-study { position: sticky; top: 110px; }
+        .research-study { position: sticky; top: var(--sticky-top); }
         .research-study { padding: clamp(1.5rem, 3vw, 2.7rem); border-left: 3px solid var(--lake); background: rgba(251,250,247,.72); }
 
         .collective-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr); gap: clamp(3rem, 8vw, 9rem); align-items: end; }
@@ -666,22 +672,15 @@
         .page-intro__media figcaption { padding-top: .75rem; color: var(--muted); font-size: .74rem; line-height: 1.45; }
         .page-intro__media figcaption a { color: inherit; }
 
-        /* Existing content templates, simplified into one editorial system */
-        .marquee { background: var(--surface); border-bottom: 1px solid var(--line); }
-        .marquee__track { display: none; }
-        .marquee__static { width: min(100%, var(--max)); margin: 0 auto; padding: 1.8rem var(--gutter); display: grid; grid-template-columns: repeat(3, 1fr); }
-        .marquee__static span { display: grid; gap: .2rem; padding: .25rem 2rem; border-right: 1px solid var(--line); color: var(--muted); font-size: .72rem; text-align: center; text-transform: uppercase; letter-spacing: .045em; }
-        .marquee__static span:last-child { border-right: 0; }
-        .marquee__static strong { color: var(--ink); font: 500 2.5rem/1 var(--font-display); }
-        .marquee-sources { display: none; }
-        .trajectory, .sticker, .hero-exit-trajectory { display: none; }
-        .constellation-grid, .area-orbit, .evidence-grid, .network-orbit, .stagger-grid, .enquiry-orbit {
+        /* Detail templates (research notes, single papers, markdown pages) reuse the
+           card + article system below; the list pages are their entry points. */
+        .area-orbit {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: clamp(1.2rem, 2.5vw, 2.2rem);
         }
-        .constellation-grid > *, .area-orbit > * { grid-column: auto !important; margin: 0 !important; }
-        .research-card, .publication-card, .instrument-card, .evidence-band, .thesis-block, .method-chip {
+        .area-orbit > * { grid-column: auto !important; margin: 0 !important; }
+        .research-card {
             position: relative;
             min-width: 0;
             padding: clamp(1.5rem, 3vw, 2.4rem);
@@ -689,11 +688,8 @@
             border-top: 1px solid var(--line-dark);
             border-bottom: 1px solid var(--line);
         }
-        .section--plum .research-card, .section--plum .publication-card, .section--plum .instrument-card, .section--plum .evidence-band {
-            color: var(--ink);
-            background: var(--white);
-        }
-        .research-card::before, .publication-card::before, .instrument-card::before {
+        .section--plum .research-card { color: var(--ink); background: var(--white); }
+        .research-card::before {
             content: '';
             position: absolute;
             top: -1px;
@@ -701,71 +697,9 @@
             width: 3rem;
             border-top: 3px solid var(--oxblood);
         }
-        .accent-cyan::before { border-color: var(--lake); }
-        .accent-pink::before { border-color: var(--oxblood); }
-        .accent-lime::before { border-color: var(--sage); }
-        .accent-violet::before { border-color: var(--ink); }
-        .card-meta { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1.7rem; color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; }
-        .card-coordinate { color: var(--oxblood); }
-        .research-card h3, .publication-card h3, .instrument-card h3, .evidence-band h3 { margin-bottom: .85rem; }
-        .research-card p, .publication-card p, .instrument-card p { color: var(--ink-soft); }
-        .halftone-media, .network-photo-band { background: var(--surface); border: 1px solid var(--line); }
-        .halftone-media img, .network-photo-band img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: saturate(.7) contrast(1.03); }
-        .network-photo-band img { aspect-ratio: 21 / 8; }
-        .halftone-media figcaption, .network-photo-band figcaption { padding: .75rem; color: var(--muted); font-size: .74rem; }
-        .thesis-pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); }
-        .thesis-block { border: 0; }
+        .research-card h3 { margin-bottom: .85rem; }
+        .research-card p { color: var(--ink-soft); }
         .thesis-panel { max-width: 70rem; padding: clamp(2rem, 5vw, 4.5rem); background: var(--surface); border-left: 4px solid var(--oxblood); }
-        .publication-line { display: grid; grid-template-columns: 4rem minmax(0, 1fr) auto; align-items: start; gap: 1rem; padding: 1.25rem 0; border-top: 1px solid var(--line); }
-        .publication-line .year { color: var(--oxblood); font: 500 1.2rem/1 var(--font-display); }
-        .publication-line strong { display: block; font-weight: 600; line-height: 1.35; }
-        .publication-line small { display: block; margin-top: .3rem; color: var(--muted); font-size: .78rem; }
-        .publication-line > a { font-size: .75rem; white-space: nowrap; }
-        .invitation-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 3rem; padding: clamp(2.5rem, 6vw, 5rem); background: var(--surface); border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); }
-        .question-method { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.2rem; }
-        .question-method p { padding-top: .8rem; border-top: 1px solid var(--line); }
-        .molecular-field { position: relative; overflow: hidden; min-height: 460px; padding: clamp(2rem, 5vw, 4.5rem); color: var(--white); background: var(--deep); }
-        .molecular-field > svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .2; }
-        .method-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255,255,255,.18); }
-        .method-chip { background: var(--deep); border: 0; }
-        .method-chip h3 { color: var(--white); }
-        .method-chip p { color: rgba(255,255,255,.68); }
-        .record-readout { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); }
-        .record-readout > * { padding: 2rem; border-right: 1px solid var(--line); }
-        .record-readout > *:last-child { border-right: 0; }
-        .record-light { display: block; width: .55rem; height: .55rem; margin-bottom: .8rem; border-radius: 50%; background: var(--oxblood); }
-        .year-group { display: grid; grid-template-columns: minmax(7rem, 2fr) minmax(0, 10fr); gap: clamp(2rem, 5vw, 6rem); padding-block: 3rem; border-top: 1px solid var(--line); }
-        .year-numeral { position: sticky; top: 110px; align-self: start; color: var(--oxblood); font: 500 clamp(3.5rem, 7vw, 6.5rem)/.85 var(--font-display); }
-        .year-papers { display: grid; gap: 1px; background: var(--line); }
-        .year-paper { padding: 1.6rem; background: var(--surface); }
-        .paper-venue, .paper-authors { color: var(--muted); font-size: .8rem; }
-        .paper-authors { margin-top: .5rem; }
-        .chronology { border-top: 1px solid var(--line); }
-        .timeline { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
-        .timeline-stop { padding: 1.7rem; border-right: 1px solid var(--line); }
-        .timeline-stop:last-child { border-right: 0; }
-        .timeline-stop time { color: var(--oxblood); font-size: .78rem; font-weight: 600; }
-        .network-node { padding: 1.7rem; background: var(--surface); border-top: 1px solid var(--line-dark); }
-        .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); }
-        .evidence-table { width: 100%; min-width: 780px; border-collapse: collapse; font-size: .94rem; }
-        .evidence-table th, .evidence-table td { padding: 1rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-        .evidence-table th { background: var(--deep); color: var(--white); font-size: .72rem; text-transform: uppercase; }
-        .verify-tag { color: var(--oxblood); font-size: .72rem; font-weight: 600; }
-        .course-orbit { border-top: 1px solid var(--line); }
-        .course-strip { display: grid; grid-template-columns: 7rem minmax(0, 1fr) minmax(12rem, auto); gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
-        .course-strip time { color: var(--oxblood); font-size: .78rem; font-weight: 600; }
-        .course-place { color: var(--muted); text-align: right; }
-        .participation-split { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2rem, 6vw, 7rem); align-items: start; }
-        .ticket-list { display: grid; gap: 1px; background: var(--line); }
-        .ticket { padding: 1.3rem; background: var(--surface); }
-        .program-sequence { border-top: 1px solid var(--line); }
-        .program-beat { padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
-        .comics-plate { padding: 1rem; background: var(--surface); border: 1px solid var(--line); }
-        .comics-plate svg { width: 100%; height: auto; }
-        .comics-plate figcaption { margin-top: .75rem; color: var(--muted); font-size: .75rem; }
-        .pathway-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-        .pathway-map > * { padding: 1.7rem; background: var(--surface); }
-        .pathway-label { color: var(--oxblood); font-size: .72rem; font-weight: 600; text-transform: uppercase; }
         .contact-readout { display: grid; grid-template-columns: 7fr 5fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
         .contact-readout > * { padding: clamp(2rem, 5vw, 4rem); background: var(--surface); }
         .email-readout { display: inline-block; max-width: 100%; font: 500 clamp(1.7rem, 3.5vw, 3rem)/1.05 var(--font-display); overflow-wrap: anywhere; }
@@ -773,10 +707,6 @@
         .contact-details > div { padding-bottom: .8rem; border-bottom: 1px solid var(--line); }
         .contact-details dt { color: var(--oxblood); font-size: .7rem; font-weight: 600; text-transform: uppercase; }
         .contact-details dd { margin: .2rem 0 0; }
-        .address-orbit { position: relative; min-height: 420px; display: grid; place-items: center; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
-        .address-orbit > svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .18; }
-        .address-card { position: relative; z-index: 2; max-width: 30rem; padding: 2.3rem; background: rgba(251,250,247,.96); border: 1px solid var(--line-dark); text-align: center; }
-        .privacy-panel { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
         .article-shell { width: min(100% - 2 * var(--gutter), 940px); margin: 0 auto; padding-block: var(--section); }
         .article-body { max-width: var(--measure); font-size: 1.08rem; }
         .article-body h2, .article-body h3 { margin: 2em 0 .7em; }
@@ -785,14 +715,12 @@
         .site-footer { color: rgba(255,254,250,.7); background: var(--deep); }
         .footer-inner { width: min(100%, var(--max)); margin: 0 auto; padding: clamp(4.5rem, 8vw, 7rem) var(--gutter) 2rem; }
         .footer-wordmark { margin: 0 0 3rem; color: var(--white); font: 500 clamp(3.2rem, 7vw, 7rem)/.9 var(--font-display); letter-spacing: -.035em; }
-        .footer-lockup { display: none; }
         .footer-grid { display: grid; grid-template-columns: 1.2fr .8fr 1fr; gap: clamp(2rem, 6vw, 7rem); padding-block: 2.5rem; border-block: 1px solid rgba(255,255,255,.18); }
         .footer-heading { color: var(--rose); font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
         .footer-links { margin: 0; padding: 0; list-style: none; }
         .footer-links li { margin-bottom: .5rem; }
         .footer-links a { color: rgba(255,254,250,.78); }
         .footer-links a:hover { color: var(--white); }
-        .footer-seal { display: none; }
         .footer-meta { display: flex; justify-content: space-between; gap: 1rem 2rem; padding-top: 1.3rem; color: rgba(255,254,250,.68); font-size: .78rem; }
         .section--plum a:focus-visible,
         .contact-invitation a:focus-visible,
@@ -807,15 +735,15 @@
 
         @media (max-width: 900px) {
             .personal-hero {
-                min-height: calc(100vh - 68px);
-                min-height: max(48rem, calc(100svh - 68px));
+                min-height: calc(100vh - var(--header-h));
+                min-height: max(48rem, calc(100svh - var(--header-h)));
             }
             .personal-hero::before {
                 background: linear-gradient(180deg, rgba(38,51,56,.05) 0%, rgba(38,51,56,.22) 28%, rgba(38,51,56,.88) 53%, rgba(27,38,42,.98) 100%);
             }
             .personal-hero__grid, .page-intro__grid, .philosophy-grid, .bio-grid, .research-feature__grid,
-            .collective-grid, .teaching-grid, .personal-coda__grid, .section-heading--split, .split-5-7,
-            .participation-split, .contact-readout { grid-template-columns: 1fr; }
+            .collective-grid, .teaching-grid, .personal-coda__grid, .section-heading--split,
+            .contact-readout { grid-template-columns: 1fr; }
             .page-intro__grid { min-height: auto; }
             .personal-hero__grid { display: block; min-height: inherit; padding-top: clamp(16rem, 39svh, 22rem); padding-bottom: 6.5rem; }
             .personal-hero__copy { max-width: 44rem; }
@@ -860,23 +788,23 @@
             .research-feature { background: var(--field); }
             .research-study { background: var(--lake-wash); }
             .section-heading--split .section-deck { justify-self: start; }
-            .timeline { grid-template-columns: repeat(2, 1fr); }
-            .timeline-stop:nth-child(2) { border-right: 0; }
-            .timeline-stop:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
             .contact-invitation__grid { grid-template-columns: 1fr; }
-            .pathway-map { grid-template-columns: 1fr; }
-            .privacy-panel { flex-direction: column; align-items: flex-start; }
         }
 
         @media (max-width: 800px) {
             .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
             .primary-nav {
                 position: absolute;
-                top: 75px;
+                /* Tracks the header's own box instead of a magic pixel value. */
+                top: 100%;
                 left: 0;
                 right: 0;
                 display: none;
                 height: auto;
+                /* Short landscape phones: scroll the panel rather than run it off-screen. */
+                max-height: calc(100svh - var(--header-h));
+                overflow-y: auto;
+                overscroll-behavior: contain;
                 padding: .7rem var(--gutter) 1.2rem;
                 flex-direction: column;
                 align-items: stretch;
@@ -893,24 +821,13 @@
             .no-js .menu-toggle { display: none; }
             .no-js .primary-nav { position: static; display: flex; width: 100%; padding: .35rem 0 0; flex-flow: row wrap; gap: .25rem 1rem; background: transparent; border: 0; box-shadow: none; }
             .no-js .primary-nav a { display: inline-flex; min-height: 36px; border: 0; }
-            .constellation-grid, .area-orbit, .evidence-grid, .network-orbit, .stagger-grid, .enquiry-orbit { grid-template-columns: 1fr; }
-            .thesis-pair, .question-method, .method-grid { grid-template-columns: 1fr; }
-            .marquee__static { grid-template-columns: 1fr; }
-            .marquee__static span { grid-template-columns: auto 1fr; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); text-align: left; }
-            .marquee__static span:last-child { border-bottom: 0; }
-            .record-readout { grid-template-columns: 1fr; }
-            .record-readout > * { border-right: 0; border-bottom: 1px solid var(--line); }
-            .record-readout > *:last-child { border-bottom: 0; }
-            .year-group { grid-template-columns: 1fr; gap: 1rem; }
-            .year-numeral { position: static; }
+            .area-orbit { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; }
             .footer-meta { flex-direction: column; }
         }
 
         @media (max-width: 620px) {
-            :root { --gutter: 1.15rem; --section: 4.5rem; }
-            .site-header { height: 68px; }
-            .primary-nav { top: 67px; }
+            :root { --gutter: 1.15rem; --section: 4.5rem; --header-h: 68px; }
             .brand-mark { width: 36px; height: 36px; flex-basis: 36px; }
             .brand-name { font-size: .98rem; }
             .page-intro__grid { padding-block: 2.8rem; }
@@ -947,13 +864,6 @@
             .selected-paper > a { grid-column: 2; }
             .action-row { align-items: stretch; flex-direction: column; }
             .button, .text-action { width: 100%; justify-content: center; text-align: center; }
-            .publication-line { grid-template-columns: 3.5rem 1fr; }
-            .publication-line > a { grid-column: 2; }
-            .invitation-panel { grid-template-columns: 1fr; padding: 2.2rem 0; }
-            .timeline { grid-template-columns: 1fr; }
-            .timeline-stop, .timeline-stop:nth-child(2) { border-right: 0; border-bottom: 1px solid var(--line); }
-            .course-strip { grid-template-columns: 1fr; gap: .35rem; }
-            .course-place { text-align: left; }
             .page-intro__media img { aspect-ratio: 4 / 3; }
             .page-intro__media figcaption { font-size: .78rem; line-height: 1.55; }
         }
@@ -972,7 +882,7 @@
         }
 
         @media (max-width: 900px) and (max-height: 520px) and (orientation: landscape) {
-            .personal-hero { min-height: max(36rem, calc(100svh - 68px)); }
+            .personal-hero { min-height: max(36rem, calc(100svh - var(--header-h))); }
             .personal-hero::before {
                 background:
                     linear-gradient(90deg, rgba(25,35,39,.9), rgba(38,51,56,.42) 66%, rgba(38,51,56,.08)),
@@ -1010,12 +920,84 @@
             html { scroll-behavior: auto !important; }
             *, *::before, *::after { animation: none !important; transition: none !important; }
         }
+
+        /* Academic pages get printed and saved as PDF. Drop the dark panels and the
+           live simulations, unstack the editorial grids into one reading column,
+           and spell out link destinations that a printed page can't follow. */
+        @media print {
+            :root { --header-h: 0px; --section: 1.6rem; --gutter: 0; --measure: none; }
+            @page { margin: 16mm 14mm; }
+            html, body { background: #fff; color: #000; font-size: 10.5pt; }
+            .site-header, .menu-toggle, .primary-nav, .skip-link,
+            .hero-simulation, .science-ornament, .langevin-model,
+            .page-intro__media--simulation,
+            .footer-wordmark, .career-timeline__toggle,
+            .action-row, .text-action, .button { display: none !important; }
+            .personal-hero::before, .personal-hero:has(.langevin-model__stage:focus-visible)::after { content: none !important; }
+
+            /* Every dark or tinted band becomes plain paper, with all of its text
+               (including inherited rgba whites) forced back to ink. */
+            .personal-hero, .philosophy-band, .section--plum, .contact-invitation,
+            .site-footer, .section--about, .section--field, .teaching-section,
+            .research-feature, .personal-coda, .page-intro, .collective-fact,
+            .research-study, .thesis-panel, .research-card, .contact-readout,
+            .contact-readout > * {
+                background: none #fff !important;
+                box-shadow: none !important;
+            }
+            .personal-hero, .personal-hero *, .philosophy-band *, .section--plum *,
+            .contact-invitation *, .site-footer * { color: #000 !important; }
+
+            .personal-hero { min-height: 0 !important; overflow: visible; }
+            .personal-hero__grid, .page-intro__grid { min-height: 0 !important; padding-block: 0 !important; }
+            .personal-hero__grid, .page-intro__grid, .bio-grid, .philosophy-grid,
+            .research-feature__grid, .collective-grid, .teaching-grid, .personal-coda__grid,
+            .contact-invitation__grid, .contact-readout, .footer-grid, .section-heading--split,
+            .personal-notes, .collective-facts { display: block; }
+            /* justify-self still aligns block-level boxes once the grids unstack,
+               so reset it or every "end"-aligned column hugs the right margin. */
+            .personal-hero__grid > *, .page-intro__grid > *, .contact-readout > *,
+            .personal-portrait, .page-intro__media, .research-study, .section-deck { justify-self: start; }
+            .personal-portrait { position: static !important; width: 46mm; margin: 1.2rem 0 0; }
+            .personal-portrait img { border-width: 2px; border-color: #000; box-shadow: none !important; }
+            .page-intro__media { width: auto; }
+            .bio-lead, .research-study { position: static; }
+            .section, .philosophy-grid, .personal-coda__grid,
+            .contact-invitation__grid, .footer-inner { padding-block: 1.4rem !important; }
+            .section-heading { margin-bottom: 1.2rem; }
+            .hero-credentials, .role-lines { break-inside: avoid; }
+
+            h1 { font-size: 26pt; }
+            h2 { font-size: 18pt; }
+            h3 { font-size: 13pt; }
+            .philosophy-quote { font-size: 20pt; }
+            .personal-role { font-size: 15pt; }
+            h1, h2, h3, figure, .career-timeline__item, .selected-paper,
+            .course-item, .question-row { break-inside: avoid; page-break-inside: avoid; }
+            h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+
+            a { color: #000; text-decoration: underline; }
+            main a { white-space: normal; }
+            /* Drop the "title | DOI" split so the spelled-out URL has the page width. */
+            .selected-paper { grid-template-columns: 4rem minmax(0, 1fr); }
+            .selected-paper > a { grid-column: 2; }
+            /* A printed link is useless without its target; internal anchors stay silent. */
+            main a[href^="http"]::after,
+            main a[href^="mailto:"]::after {
+                content: " (" attr(href) ")";
+                font-size: 8pt;
+                font-weight: 400;
+                letter-spacing: 0;
+                text-transform: none;
+                word-break: break-all;
+            }
+        }
     </style>
 
 <link rel="canonical" href="https://robertobendi.github.io/sarabonella/publications">
 <meta property="og:url" content="https://robertobendi.github.io/sarabonella/publications">
 <meta property="og:site_name" content="Sara Bonella">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="page-publications">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -1225,7 +1207,33 @@
                     closeMenu();
                     menuButton.focus();
                 });
+                // Tapping the page behind an open menu should dismiss it, as should
+                // widening past the breakpoint where the panel stops being a panel.
+                document.addEventListener('pointerdown', event => {
+                    if (menuButton.getAttribute('aria-expanded') !== 'true') return;
+                    if (event.target.closest('#primary-nav, .menu-toggle')) return;
+                    closeMenu();
+                });
+                const desktopNav = window.matchMedia('(min-width: 801px)');
+                const syncMenuToViewport = () => { if (desktopNav.matches) closeMenu(); };
+                desktopNav.addEventListener('change', syncMenuToViewport);
             }
+
+            // Printing a collapsed <details> loses its content, so open them for the
+            // print run and put them back exactly as the reader left them. The flag
+            // stops the timeline's accordion logic from re-closing them mid-print.
+            let printing = false;
+            let printReopened = [];
+            window.addEventListener('beforeprint', () => {
+                printing = true;
+                printReopened = [...document.querySelectorAll('details:not([open])')];
+                printReopened.forEach(details => { details.open = true; });
+            });
+            window.addEventListener('afterprint', () => {
+                printReopened.forEach(details => { details.open = false; });
+                printReopened = [];
+                printing = false;
+            });
 
             const timeline = document.querySelector('[data-career-timeline]');
             if (timeline) {
@@ -1236,7 +1244,7 @@
 
                 disclosures.forEach((disclosure, index) => {
                     disclosure.addEventListener('toggle', () => {
-                        if (!disclosure.open || synchronising) return;
+                        if (!disclosure.open || synchronising || printing) return;
                         synchronising = true;
                         disclosures.forEach((other, otherIndex) => { if (otherIndex !== index) other.open = false; });
                         synchronising = false;
