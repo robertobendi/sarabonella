@@ -37,7 +37,13 @@
                 <div><p class="eyebrow">Selection</p><h2 id="selected-papers-title">Where to start</h2></div>
                 <p class="section-deck">Selected for the way they trace recurring questions in Sara’s work—not as a ranking, but as an invitation into the research.</p>
             </div>
+            {# The collection's year DESC ordering does not reach a JSON field, so the
+               list arrives by recency and an edit reshuffles it. Sort here instead:
+               newest year first, then display order within a year. #}
             {% set selected_entries = entries|filter(item => item.field('featured')) %}
+            {% set selected_entries = selected_entries|sort((a, b) =>
+                (b.field('year', 0) <=> a.field('year', 0)) ?: (a.field('display_order', 0) <=> b.field('display_order', 0))
+            ) %}
             {% if selected_entries|length == 0 %}{% set selected_entries = entries|slice(0, 8) %}{% endif %}
             <div class="selected-work">
 {% if selected_entries|length > 0 %}
