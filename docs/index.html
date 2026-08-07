@@ -535,19 +535,42 @@
         }
         .science-ornament--right figcaption { right: calc(var(--section-edge) - var(--ornament-offset)); bottom: 1rem; justify-items: end; text-align: right; }
 
-        /* Halftone portrait as quiet background texture. It sits in normal flow at
-           the top of the heading column, so it can never land on the type however
-           the section reflows, and the column's end alignment grows it upward into
-           the space that was empty. */
+        /* Halftone portrait as background texture: a large, cropped figure that
+           the section's own box clips, faded out towards the columns where the
+           type actually sits. The mask box is the section, so anything reaching
+           past its edges is simply not painted. */
+        .section--portrait { position: relative; isolation: isolate; overflow: clip; }
+        .section--portrait > .shell { position: relative; z-index: 2; }
         .section-portrait {
-            width: clamp(14rem, 26vw, 23rem);
-            margin: 0 0 clamp(1.5rem, 4vw, 3rem);
-            opacity: .5;
+            position: absolute;
+            z-index: 1;
+            /* Tracks the content shell, not the section: past --max the section keeps
+               widening while the columns stay centred, and anchoring to the section
+               edge walks the figure straight under the heading. */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: min(100%, var(--max));
+            transform: translateX(-50%);
+            margin: 0;
+            opacity: .3;
             pointer-events: none;
-            -webkit-mask-image: linear-gradient(180deg, #000 56%, transparent 94%);
-            mask-image: linear-gradient(180deg, #000 56%, transparent 94%);
+            mix-blend-mode: screen;
+            -webkit-mask-image: radial-gradient(ellipse 48% 54% at 24% 24%, #000 0 26%, rgba(0,0,0,.6) 48%, rgba(0,0,0,.16) 70%, transparent 88%);
+            mask-image: radial-gradient(ellipse 48% 54% at 24% 24%, #000 0 26%, rgba(0,0,0,.6) 48%, rgba(0,0,0,.16) 70%, transparent 88%);
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
         }
-        .section-portrait img { width: 100%; height: auto; }
+        .section-portrait img {
+            position: absolute;
+            top: -9%;
+            left: 0;
+            width: clamp(26rem, 58%, 46rem);
+            max-width: none;
+            height: auto;
+        }
 
         .science-ornament--about {
             --ornament-offset: max(-10rem, calc((100vw - var(--max)) / 2 - 5.5rem));
@@ -1427,12 +1450,9 @@
 </figure>
     </section>
 
-    <section class="section section--plum" aria-labelledby="collective-title">
+    <section class="section section--plum section--portrait" aria-labelledby="collective-title">
         <div class="collective-grid shell">
             <div class="teaching-intro">
-                <figure class="section-portrait" aria-hidden="true">
-    <img src="/sarabonella/uploads/portrait/sara-bonella-halftone.png" alt="" width="823" height="868" loading="lazy" decoding="async">
-</figure>
                 <p class="eyebrow">CECAM</p>
                 <h2 id="collective-title">Research needs shared infrastructure</h2>
             </div>
@@ -1446,6 +1466,9 @@
                 <div class="action-row"><a class="text-action" href="/sarabonella/leadership" style="color:#fff;">Teaching and community <span aria-hidden="true">→</span></a></div>
             </div>
         </div>
+        <figure class="section-portrait" aria-hidden="true">
+    <img src="/sarabonella/uploads/portrait/sara-bonella-halftone.webp" alt="" width="899" height="953" loading="lazy" decoding="async">
+</figure>
 </section>
 
     <section class="section teaching-section" aria-labelledby="teaching-title">
