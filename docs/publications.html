@@ -517,7 +517,7 @@
             line-height: 1.4;
         }
         /* Faded rather than clipped when it passes under the sticky header. */
-        .is-behind-header { opacity: 0 !important; }
+        .is-obscured { opacity: 0 !important; }
         .science-ornament figcaption,
         .hero-simulation > figcaption,
         .sim-field__readout,
@@ -1533,24 +1533,41 @@
                 updateTimeline();
             }
 
-            // Overlay captions are positioned inside their section rather than in the
-            // flow, so scrolling slides them under the sticky header and clips them
-            // mid-word. Fade each one out as it reaches the header instead.
-            const fadeUnderHeader = document.querySelectorAll(
+            // Overlay captions sit inside their section rather than in the flow, so
+            // two things run over them as the page scrolls: the sticky header, and
+            // the sticky heading columns, which travel down the section and land on
+            // top of a caption pinned near its foot. Fade a caption out whenever
+            // either is over it, and bring it back when it is clear again.
+            const overlayCaptions = [...document.querySelectorAll(
                 '.science-ornament figcaption, .hero-simulation > figcaption, .sim-field__readout, .sim-field__notation, .sim-field__labels'
-            );
-            if (fadeUnderHeader.length && 'IntersectionObserver' in window) {
-                const headerBox = document.querySelector('.site-header');
-                const clearance = (headerBox ? headerBox.offsetHeight : 76) + 10;
-                const watcher = new IntersectionObserver(entries => {
-                    for (const entry of entries) {
-                        // Only hide once it has gone up past the header, not while it is
-                        // still below the fold waiting to be scrolled to.
-                        const above = entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.top : clearance);
-                        entry.target.classList.toggle('is-behind-header', !entry.isIntersecting && above);
+            )];
+            if (overlayCaptions.length) {
+                const stickyColumns = [...document.querySelectorAll('.bio-lead, .research-study, .year-numeral')];
+                const overlaps = (a, b) =>
+                    Math.min(a.right, b.right) - Math.max(a.left, b.left) > 4 &&
+                    Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 4;
+
+                let queued = 0;
+                const refresh = () => {
+                    queued = 0;
+                    const header = document.querySelector('.site-header');
+                    const clearance = (header ? header.offsetHeight : 76) + 10;
+                    // Measure the sticky columns once per pass, not once per caption.
+                    const columns = stickyColumns
+                        .filter(el => el.offsetParent !== null)
+                        .map(el => el.getBoundingClientRect());
+                    for (const caption of overlayCaptions) {
+                        const box = caption.getBoundingClientRect();
+                        if (box.width === 0 && box.height === 0) continue;
+                        const underHeader = box.top < clearance;
+                        const underColumn = columns.some(column => overlaps(box, column));
+                        caption.classList.toggle('is-obscured', underHeader || underColumn);
                     }
-                }, { rootMargin: '-' + clearance + 'px 0px 0px 0px', threshold: 0 });
-                fadeUnderHeader.forEach(node => watcher.observe(node));
+                };
+                const queue = () => { if (!queued) queued = requestAnimationFrame(refresh); };
+                window.addEventListener('scroll', queue, { passive: true });
+                window.addEventListener('resize', queue, { passive: true });
+                queue();
             }
 
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
