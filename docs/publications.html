@@ -333,6 +333,21 @@
             text-transform: uppercase;
             letter-spacing: .045em;
         }
+        /* A photograph layered over the field but under the veil: the field paints
+           an opaque ground each frame, so anything behind it would never show. It
+           is cropped by the frame and fades out across the copy. */
+        .hero-photo {
+            position: absolute;
+            z-index: 1;
+            inset: 0;
+            margin: 0;
+            opacity: .26;
+            pointer-events: none;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0 30%, rgba(0,0,0,.42) 54%, #000 86%);
+            mask-image: linear-gradient(90deg, transparent 0 30%, rgba(0,0,0,.42) 54%, #000 86%);
+        }
+        .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+
         .hero-simulation {
             position: absolute;
             inset: 0;
@@ -553,7 +568,7 @@
             width: min(100%, var(--max));
             transform: translateX(-50%);
             margin: 0;
-            opacity: .3;
+            opacity: .2;
             pointer-events: none;
             mix-blend-mode: screen;
             -webkit-mask-image: radial-gradient(ellipse 48% 54% at 24% 24%, #000 0 26%, rgba(0,0,0,.6) 48%, rgba(0,0,0,.16) 70%, transparent 88%);
@@ -1218,6 +1233,10 @@
 
     </div>
 
+    <figure class="hero-photo" aria-hidden="true">
+        <img src="/sarabonella/uploads/heroes/publications-plate.webp" alt="" loading="lazy" decoding="async" style="object-position: 50% 40%;">
+    </figure>
+
     <figure class="hero-simulation">
         <div class="sim-field sim-field--interference">
     <div
@@ -1263,6 +1282,7 @@
             <span>Two-slit interference</span>
             Detections land one at a time and the fringes build up from them. Move the pointer to change the slit separation.
              · <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Full record</a>
+             · <a href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&amp;search=The%20Philosophical%20Magazine%20journal%20theoretical%20experimental" target="_blank" rel="noopener">Journal plate</a>
         </figcaption>
     </figure>
 </section>
@@ -1874,6 +1894,144 @@
             };
 
             const heroFieldKinds = {
+                /* The portrait, resolved from particles. Each one is a damped
+                   oscillator about the point it belongs to; the pointer pushes them
+                   off it and the springs bring the picture back. Coverage is even
+                   and tone is carried by brightness — varying the density instead
+                   leaves too few particles in the mid-tones to read as a face. The
+                   sampled field is a small pre-matted image, so nothing here has to
+                   segment the photograph at runtime. */
+                particles: {
+                    asset: 'portrait-field',
+                    init(env) {
+                        const s = { points: [], ready: false, scatter: 0 };
+                        const source = env.assets && env.assets[this.asset];
+                        if (!source) return s;                       // stays empty until it loads
+
+                        const wanted = env.compact ? 2600 : 7000;
+                        const sw = source.width, sh = source.height;
+                        // Roughly half the field is subject, so oversample to land near
+                        // the wanted count after the alpha test.
+                        const cell = Math.max(1.5, Math.sqrt(sw * sh / (wanted / 0.5)));
+                        const data = source.data;
+                        for (let y = cell / 2; y < sh; y += cell) {
+                            for (let x = cell / 2; x < sw; x += cell) {
+                                const px = Math.min(sw - 1, x | 0), py = Math.min(sh - 1, y | 0);
+                                const i = (py * sw + px) * 4;
+                                const alpha = data[i + 3] / 255;
+                                if (alpha < .15) continue;
+                                const tone = data[i] / 255;
+                                // Jitter off the lattice, or the stipple reads as a grid.
+                                const jx = (env.random() - .5) * cell, jy = (env.random() - .5) * cell;
+                                s.points.push({
+                                    hx: (x + jx) / sw, hy: (y + jy) / sh,
+                                    x: 0, y: 0, vx: 0, vy: 0,
+                                    tone, alpha, ink: 0, size: 0
+                                });
+                            }
+                        }
+                        // Normalise against a high percentile of the subject's own
+                        // tone. The whiteboard left behind her hair is brighter than
+                        // she is, and without this it takes all the ink and her face
+                        // reads as a hollow.
+                        const tones = s.points.map(point => point.tone).sort((m, n) => m - n);
+                        const ceiling = Math.max(.25, tones[Math.floor(tones.length * .88)] || 1);
+                        for (const point of s.points) {
+                            const t = Math.min(1, point.tone / ceiling);
+                            point.ink = (.05 + Math.pow(t, 1.15) * .95) * point.alpha;
+                            point.size = .55 + t * .85;
+                        }
+
+                        for (const p of s.points) {
+                            const a = env.random() * Math.PI * 2, r = .3 + env.random() * .7;
+                            p.x = p.hx + Math.cos(a) * r;
+                            p.y = p.hy + Math.sin(a) * r;
+                        }
+                        s.ready = s.points.length > 0;
+                        return s;
+                    },
+                    update(s, dt, env) {
+                        if (!s.ready) {
+                            if (env.assets && env.assets[this.asset]) Object.assign(s, this.init(env));
+                            return;
+                        }
+                        const step = Math.min(.04, dt);
+                        const stiffness = 30, damping = 6.6;
+                        const px = env.pointer.x, py = env.pointer.y;
+                        const push = env.pointer.influence;
+                        const radius = .19, radius2 = radius * radius;
+                        let displaced = 0;
+
+                        for (let i = 0; i < s.points.length; i++) {
+                            const p = s.points[i];
+                            let ax = (p.hx - p.x) * stiffness - p.vx * damping;
+                            let ay = (p.hy - p.y) * stiffness - p.vy * damping;
+                            if (push > .02) {
+                                const dx = p.x - px, dy = p.y - py;
+                                const d2 = dx * dx + dy * dy;
+                                if (d2 < radius2) {
+                                    const d = Math.sqrt(d2) || 1e-4;
+                                    const force = push * 11 * (1 - d / radius) / d;
+                                    ax += dx * force;
+                                    ay += dy * force;
+                                }
+                            }
+                            p.vx += ax * step; p.vy += ay * step;
+                            p.x += p.vx * step; p.y += p.vy * step;
+                            const ox = p.x - p.hx, oy = p.y - p.hy;
+                            displaced += ox * ox + oy * oy;
+                        }
+                        s.scatter = Math.sqrt(displaced / s.points.length);
+                        env.readout = s.scatter > .01
+                            ? `${s.points.length.toLocaleString('en-GB')} particles · recomposing`
+                            : `${s.points.length.toLocaleString('en-GB')} particles · at rest`;
+                    },
+                    draw(s, ctx, env) {
+                        const { width, height, colours } = env;
+                        if (!s.ready) return;
+                        // On a narrow hero the copy runs the full width, so the
+                        // portrait moves up into the band above it rather than sitting
+                        // beside it.
+                        // 820px is where the hero stops being two columns, not the
+                        // 620px compact threshold, so that is what decides the placement.
+                        const stacked = env.width < 820;
+                        const placeX = stacked ? .5 : env.portraitX;
+                        const placeY = stacked ? .22 : env.portraitY;
+                        const placeScale = stacked ? .38 : env.portraitScale;
+                        const boxH = height * placeScale;
+                        const boxW = boxH * (env.portraitAspect || .87);
+                        const left = width * placeX - boxW / 2;
+                        const top = height * placeY - boxH / 2;
+                        const dot = env.portraitDot;
+                        // One fillStyle for the whole pass and globalAlpha per particle:
+                        // re-parsing an rgba() string several thousand times a frame is
+                        // the whole cost of drawing this.
+                        ctx.fillStyle = colours.paper;
+                        for (let i = 0; i < s.points.length; i++) {
+                            const p = s.points[i];
+                            const x = left + p.x * boxW, y = top + p.y * boxH;
+                            if (x < -8 || x > width + 8 || y < -8 || y > height + 8) continue;
+                            ctx.globalAlpha = p.ink;
+                            const r = p.size * dot;
+                            ctx.fillRect(x - r, y - r, r * 2, r * 2);
+                        }
+                        // Displaced particles pick up the accent, so the disturbance is
+                        // visible as colour as well as motion.
+                        if (s.scatter > .004) {
+                            ctx.fillStyle = colours.rose;
+                            for (let i = 0; i < s.points.length; i++) {
+                                const p = s.points[i];
+                                const drift = Math.hypot(p.x - p.hx, p.y - p.hy);
+                                if (drift < .012) continue;
+                                const x = left + p.x * boxW, y = top + p.y * boxH;
+                                ctx.globalAlpha = Math.min(.85, drift * 9) * p.ink * 1.6;
+                                const r = p.size * dot;
+                                ctx.fillRect(x - r, y - r, r * 2, r * 2);
+                            }
+                        }
+                        ctx.globalAlpha = 1;
+                    }
+                },
                 /* Split-step solution of the time-dependent Schrödinger equation.
                    A Gaussian packet runs at a barrier tuned near its own energy, so
                    part tunnels through and part reflects — the transmission readout
@@ -2464,11 +2622,37 @@
                 palette.sageLight = mixHex(palette.sage, palette.paper, .4);
 
                 const env = {
-                    width: 1, height: 1, compact: false,
+                    width: 1, height: 1, compact: false, aspect: 1,
                     colours: palette, rgba, mix: mixHex, random, gaussian,
                     pointer: { x: .5, y: .5, influence: 0, target: 0, inside: false, keyboard: false },
-                    readout: ''
+                    readout: '',
+                    assets: {},
+                    // Where a kind that draws an image should place it, read off the
+                    // stage so the markup can position it per hero.
+                    portraitX: parseFloat(stage.dataset.fieldX || '.5'),
+                    portraitY: parseFloat(stage.dataset.fieldY || '.5'),
+                    portraitScale: parseFloat(stage.dataset.fieldScale || '.8'),
+                    portraitDot: 1
                 };
+
+                // Kinds that sample an image declare it by name; the pixels are read
+                // once, off-screen, and handed to init as a plain ImageData.
+                if (kind.asset) {
+                    const asset = new Image();
+                    asset.decoding = 'async';
+                    asset.src = stage.dataset.fieldAsset;
+                    asset.addEventListener('load', () => {
+                        const buffer = document.createElement('canvas');
+                        buffer.width = asset.naturalWidth;
+                        buffer.height = asset.naturalHeight;
+                        const bufferContext = buffer.getContext('2d', { willReadFrequently: true });
+                        bufferContext.drawImage(asset, 0, 0);
+                        try {
+                            env.assets[kind.asset] = bufferContext.getImageData(0, 0, buffer.width, buffer.height);
+                            env.portraitAspect = asset.naturalWidth / asset.naturalHeight;
+                        } catch (error) { /* tainted canvas: the field simply stays empty */ }
+                    });
+                }
 
                 let state = null, animationFrame = 0, resizeFrame = 0, lastTime = 0, visible = true, pixelRatio = 1;
 
@@ -2480,6 +2664,8 @@
                     // Full-bleed heroes are far wider than the old side panel; fields
                     // that fill an area need to know, so they can scale with it.
                     env.wide = env.width / env.height > 1.5;
+                    env.aspect = env.width / env.height;
+                    env.portraitDot = Math.max(.75, Math.min(2.1, env.height / 620));
                     env.area = env.width * env.height;
                     pixelRatio = Math.min(2, window.devicePixelRatio || 1);
                     canvas.width = Math.round(env.width * pixelRatio);

@@ -47,18 +47,11 @@
                     <li>PhD programme committee · Physics, EPFL</li>
                 </ul>
             </div>
-
-            <figure class="personal-portrait">
-                <img src="/uploads/portrait/sara-bonella-seated.jpg" alt="Sara Bonella seated in front of a whiteboard covered with equations">
-                <figcaption>Portrait from the <a href="https://nccr-marvel.ch/outreach/equal-opportunities/women-profiles/sara-bonella" target="_blank" rel="noopener">NCCR MARVEL profile</a></figcaption>
-            </figure>
         </div>
 
         <figure class="hero-simulation">
-            {% set simulation_full = true %}
-            {% set simulation_compact = false %}
-            {% include '@theme/langevin-simulation.twig' %}
-            <figcaption><span>Langevin model</span> Particles crossing a double-well free-energy landscape · <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">research basis</a></figcaption>
+            {% include '@theme/hero-field.twig' with { field_kind: 'particles' } %}
+            <figcaption><span>Portrait field</span> Several thousand particles held on the portrait by damped springs. Move the pointer through them. · <a href="https://nccr-marvel.ch/outreach/equal-opportunities/women-profiles/sara-bonella" target="_blank" rel="noopener">Photograph</a></figcaption>
         </figure>
     </section>
 

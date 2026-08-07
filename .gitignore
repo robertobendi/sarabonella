@@ -18,6 +18,10 @@
 !/uploads/portrait/
 !/uploads/portrait/sara-bonella-seated.jpg
 !/uploads/portrait/sara-bonella-halftone.webp
+!/uploads/portrait/sara-bonella-field.webp
+# Hero photographs, pre-processed to greyscale WebP from the sourced originals.
+!/uploads/heroes/
+!/uploads/heroes/*.webp
 # The link-preview card is part of the design, not user-uploaded content.
 !/uploads/social/
 !/uploads/social/sara-bonella-card.jpg

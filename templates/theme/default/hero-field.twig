@@ -5,6 +5,12 @@
     stands in before the canvas is ready and stays put with JS disabled.
 #}
 {% set field_meta = {
+    particles: {
+        label: 'a portrait of Sara Bonella resolved from several thousand particles',
+        interaction: 'Move the pointer through the field, or focus it and use the arrow keys, to push the particles off their positions; the springs pull the picture back together.',
+        notation: ['ẍ = −k(x − x₀) − γẋ + F(pointer)', 'damped oscillator per particle'],
+        labels: ['scattered', 'recomposed']
+    },
     wavepacket: {
         label: 'quantum wavepacket scattering off a potential barrier',
         interaction: 'Move the pointer up and down, or focus the field and use the arrow keys, to raise and lower the barrier and change how much of the packet gets through.',
@@ -42,6 +48,11 @@
     <div
         class="sim-field__stage"
         data-hero-field="{{ field_kind }}"
+{% if field_kind == 'particles' %}        data-field-asset="/uploads/portrait/sara-bonella-field.webp"
+        data-field-x="{{ field_x|default('0.62') }}"
+        data-field-y="{{ field_y|default('0.52') }}"
+        data-field-scale="{{ field_scale|default('0.86') }}"
+{% endif %}
         data-hero-field-hint="{{ field.interaction }}"
         role="region"
         tabindex="-1"
@@ -49,7 +60,16 @@
     >
         <svg class="sim-field__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
             <rect width="500" height="600" fill="#263338"/>
-{% if field_kind == 'wavepacket' %}
+{% if field_kind == 'particles' %}
+            <g fill="#d7ded2" opacity=".55">
+                <circle cx="250" cy="170" r="52"/><circle cx="250" cy="300" r="30"/>
+            </g>
+            <path d="M150 430C150 350 196 300 250 300C304 300 350 350 350 430Z" fill="#d7ded2" opacity=".38"/>
+            <g fill="#86b2bb" opacity=".7">
+                <circle cx="120" cy="120" r="3"/><circle cx="384" cy="146" r="2.6"/><circle cx="96" cy="300" r="2.4"/>
+                <circle cx="408" cy="330" r="3"/><circle cx="160" cy="492" r="2.6"/><circle cx="352" cy="470" r="2.4"/>
+            </g>
+{% elseif field_kind == 'wavepacket' %}
             <path d="M40 470H460" stroke="#8d998d" stroke-width="1" opacity=".4"/>
             <path d="M250 150V470" stroke="#d8a6af" stroke-width="14" opacity=".16"/>
             <path d="M250 150V470" stroke="#d8a6af" stroke-width="1.4" opacity=".5"/>
