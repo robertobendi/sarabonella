@@ -1876,7 +1876,7 @@
                         const source = env.assets && env.assets[this.asset];
                         if (!source) return s;                       // stays empty until it loads
 
-                        const wanted = env.compact ? 2600 : 7000;
+                        const wanted = env.compact ? 3200 : 12500;
                         const sw = source.width, sh = source.height;
                         // Roughly half the field is subject, so oversample to land near
                         // the wanted count after the alpha test.
@@ -1903,17 +1903,32 @@
                         // she is, and without this it takes all the ink and her face
                         // reads as a hollow.
                         const tones = s.points.map(point => point.tone).sort((m, n) => m - n);
-                        const ceiling = Math.max(.25, tones[Math.floor(tones.length * .88)] || 1);
+                        const ceiling = Math.max(.25, tones[Math.floor(tones.length * .985)] || 1);
                         for (const point of s.points) {
                             const t = Math.min(1, point.tone / ceiling);
-                            point.ink = (.05 + Math.pow(t, 1.15) * .95) * point.alpha;
-                            point.size = .55 + t * .85;
+                            point.ink = (.04 + Math.pow(t, 1.9) * .96) * point.alpha;
+                            point.size = .35 + Math.pow(t, 1.5) * 1.85;
                         }
 
                         for (const p of s.points) {
                             const a = env.random() * Math.PI * 2, r = .3 + env.random() * .7;
                             p.x = p.hx + Math.cos(a) * r;
                             p.y = p.hy + Math.sin(a) * r;
+                        }
+
+                        // Sort by quantised ink and record the runs. Drawing then costs
+                        // one path per level instead of one fill per particle, which is
+                        // the difference between 50 and 60fps at this count.
+                        const LEVELS = 12;
+                        for (const point of s.points) point.level = Math.min(LEVELS - 1, Math.floor(point.ink * LEVELS));
+                        s.points.sort((m, n) => m.level - n.level);
+                        s.runs = [];
+                        for (let i = 0; i < s.points.length;) {
+                            const level = s.points[i].level;
+                            let j = i;
+                            while (j < s.points.length && s.points[j].level === level) j++;
+                            s.runs.push({ from: i, to: j, alpha: (level + .5) / LEVELS });
+                            i = j;
                         }
                         s.ready = s.points.length > 0;
                         return s;
@@ -1932,6 +1947,9 @@
 
                         for (let i = 0; i < s.points.length; i++) {
                             const p = s.points[i];
+                            // A settled particle with nothing pushing it costs nothing:
+                            // at rest that is nearly the whole population.
+                            if (p.rest && push < .02) continue;
                             let ax = (p.hx - p.x) * stiffness - p.vx * damping;
                             let ay = (p.hy - p.y) * stiffness - p.vy * damping;
                             if (push > .02) {
@@ -1947,7 +1965,9 @@
                             p.vx += ax * step; p.vy += ay * step;
                             p.x += p.vx * step; p.y += p.vy * step;
                             const ox = p.x - p.hx, oy = p.y - p.hy;
-                            displaced += ox * ox + oy * oy;
+                            const still = ox * ox + oy * oy + (p.vx * p.vx + p.vy * p.vy) * .01;
+                            if (still < 1e-8) { p.x = p.hx; p.y = p.hy; p.vx = 0; p.vy = 0; p.rest = 1; }
+                            else { p.rest = 0; displaced += ox * ox + oy * oy; }
                         }
                         s.scatter = Math.sqrt(displaced / s.points.length);
                         env.readout = s.scatter > .01
@@ -1974,30 +1994,65 @@
                         // One fillStyle for the whole pass and globalAlpha per particle:
                         // re-parsing an rgba() string several thousand times a frame is
                         // the whole cost of drawing this.
-                        ctx.fillStyle = colours.paper;
-                        for (let i = 0; i < s.points.length; i++) {
-                            const p = s.points[i];
-                            const x = left + p.x * boxW, y = top + p.y * boxH;
-                            if (x < -8 || x > width + 8 || y < -8 || y > height + 8) continue;
-                            ctx.globalAlpha = p.ink;
-                            const r = p.size * dot;
-                            ctx.fillRect(x - r, y - r, r * 2, r * 2);
+                        // At rest nothing moves, so the settled frame is rendered once
+                        // into an offscreen canvas and blitted after that. Rasterising
+                        // thirteen thousand rectangles every frame is what costs; doing
+                        // it only while they are actually in motion is not.
+                        const key = Math.round(width) + 'x' + Math.round(height) + 'x' + dot.toFixed(2);
+                        if (s.cacheKey !== key) {
+                            s.cache = document.createElement('canvas');
+                            s.cache.width = Math.round(width * env.pixelRatio);
+                            s.cache.height = Math.round(height * env.pixelRatio);
+                            s.cacheKey = key;
+                            s.cacheValid = false;
+                        }
+                        const moving = s.scatter > .0008;
+                        if (!moving && s.cacheValid) {
+                            ctx.drawImage(s.cache, 0, 0, width, height);
+                            return;
+                        }
+                        const target = moving ? ctx : s.cache.getContext('2d');
+                        // Anything still in motion invalidates the settled frame, or the
+                        // first draw — taken before the first update, while the particles
+                        // are still scattered — would be cached and blitted forever.
+                        if (moving) s.cacheValid = false;
+                        if (!moving) {
+                            target.setTransform(env.pixelRatio, 0, 0, env.pixelRatio, 0, 0);
+                            target.clearRect(0, 0, width, height);
+                        }
+
+                        target.fillStyle = colours.paper;
+                        for (const run of s.runs) {
+                            target.globalAlpha = run.alpha;
+                            target.beginPath();
+                            for (let i = run.from; i < run.to; i++) {
+                                const p = s.points[i];
+                                const x = left + p.x * boxW, y = top + p.y * boxH;
+                                if (x < -8 || x > width + 8 || y < -8 || y > height + 8) continue;
+                                const r = p.size * dot;
+                                target.rect(x - r, y - r, r * 2, r * 2);
+                            }
+                            target.fill();
                         }
                         // Displaced particles pick up the accent, so the disturbance is
                         // visible as colour as well as motion.
                         if (s.scatter > .004) {
-                            ctx.fillStyle = colours.rose;
+                            target.fillStyle = colours.rose;
                             for (let i = 0; i < s.points.length; i++) {
                                 const p = s.points[i];
                                 const drift = Math.hypot(p.x - p.hx, p.y - p.hy);
                                 if (drift < .012) continue;
                                 const x = left + p.x * boxW, y = top + p.y * boxH;
-                                ctx.globalAlpha = Math.min(.85, drift * 9) * p.ink * 1.6;
+                                target.globalAlpha = Math.min(.85, drift * 9) * p.ink * 1.6;
                                 const r = p.size * dot;
-                                ctx.fillRect(x - r, y - r, r * 2, r * 2);
+                                target.fillRect(x - r, y - r, r * 2, r * 2);
                             }
                         }
-                        ctx.globalAlpha = 1;
+                        target.globalAlpha = 1;
+                        if (!moving) {
+                            s.cacheValid = true;
+                            ctx.drawImage(s.cache, 0, 0, width, height);
+                        }
                     }
                 },
                 /* Split-step solution of the time-dependent Schrödinger equation.
@@ -2633,7 +2688,8 @@
                     // that fill an area need to know, so they can scale with it.
                     env.wide = env.width / env.height > 1.5;
                     env.aspect = env.width / env.height;
-                    env.portraitDot = Math.max(.75, Math.min(2.1, env.height / 620));
+                    env.portraitDot = Math.max(.8, Math.min(2.4, env.height / 560));
+                    env.pixelRatio = pixelRatio;
                     env.area = env.width * env.height;
                     pixelRatio = Math.min(2, window.devicePixelRatio || 1);
                     canvas.width = Math.round(env.width * pixelRatio);
