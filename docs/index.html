@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-<style id="bismuth-img-reset">img,svg,video{max-width:100%;height:auto}</style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>document.documentElement.className = 'js';</script>
@@ -11,10 +10,11 @@
     <meta property="og:description" content="Meet Sara Bonella, computational physicist, EPFL Senior Scientist, teacher, and Deputy Director of CECAM in Lausanne.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_GB">
-    <meta property="og:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
+        <meta property="og:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Sara Bonella — computational physicist, Senior Scientist at EPFL and Deputy Director of CECAM.">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
     <meta name="theme-color" content="#f4f1eb">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f4f1eb' stroke='%23202522' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='serif' font-size='24' font-weight='600' fill='%237d303b'%3ESB%3C/text%3E%3C/svg%3E">
@@ -516,6 +516,13 @@
             border-top: 1px solid color-mix(in srgb, var(--lake) 42%, transparent);
             line-height: 1.4;
         }
+        /* Faded rather than clipped when it passes under the sticky header. */
+        .is-behind-header { opacity: 0 !important; }
+        .science-ornament figcaption,
+        .hero-simulation > figcaption,
+        .sim-field__readout,
+        .sim-field__notation,
+        .sim-field__labels { transition: opacity .28s ease; }
         .science-ornament figcaption strong { color: var(--lake); font-size: .7rem; font-weight: 600; letter-spacing: .075em; text-transform: uppercase; }
         .science-ornament__formula { color: var(--oxblood); font: 500 1rem/1.25 var(--font-display); letter-spacing: .015em; }
         .science-ornament figcaption small { color: var(--muted); font-size: .75rem; line-height: 1.45; }
@@ -745,6 +752,17 @@
             gap: clamp(1rem, 3vw, 3rem);
             padding: 2rem 0;
             border-bottom: 1px solid var(--line);
+        }
+        /* With a plate, the row becomes year / image / text / link. Without one it
+           keeps the original three-column rhythm, so a publication added from the
+           admin without an image still looks deliberate. */
+        .selected-paper--illustrated { grid-template-columns: 5rem 9rem minmax(0, 1fr) auto; }
+        .selected-paper__plate {
+            width: 100%;
+            aspect-ratio: 900 / 560;
+            object-fit: cover;
+            border: 1px solid var(--line);
+            background: var(--deep);
         }
         .selected-paper time { color: var(--oxblood); font: 500 1.35rem/1 var(--font-display); }
         .selected-paper:nth-child(3n + 2) time { color: var(--lake); }
@@ -1058,6 +1076,8 @@
             .personal-notes div, .personal-notes div:last-child { border-right: 0; border-bottom: 1px solid var(--line-dark); }
             .personal-notes div:last-child { border-bottom: 0; }
             .selected-paper { grid-template-columns: 3.5rem 1fr; }
+            .selected-paper--illustrated { grid-template-columns: 3.5rem 1fr; }
+            .selected-paper--illustrated .selected-paper__plate { grid-column: 2; max-width: 12rem; }
             .selected-paper > a { grid-column: 2; }
             .action-row { align-items: stretch; flex-direction: column; }
             .button, .text-action { width: 100%; justify-content: center; text-align: center; }
@@ -1211,17 +1231,16 @@
   ]
 }
 </script>
-
 <link rel="canonical" href="https://robertobendi.github.io/sarabonella/">
 <meta property="og:url" content="https://robertobendi.github.io/sarabonella/">
 <meta property="og:site_name" content="Sara Bonella">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="page-home">
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="index.html#main">Skip to content</a>
     <header class="site-header">
         <div class="header-inner">
-            <a class="brand" href="/sarabonella/" aria-label="Sara Bonella — Home">
+            <a class="brand" href="index.html" aria-label="Sara Bonella — Home">
                 <svg class="brand-mark" viewBox="0 0 44 44" role="img" aria-label="Sara Bonella monogram">
                     <circle cx="22" cy="22" r="20" fill="#f4f1eb" stroke="#202522"/>
                     <text x="22" y="28" text-anchor="middle" fill="#7d303b" font-family="Newsreader,serif" font-size="17" font-weight="600">SB</text>
@@ -1230,11 +1249,11 @@
             </a>
             <button class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false">Menu</button>
             <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
-                <a class="nav-about" href="/sarabonella/#about">About</a>
-                <a class="nav-research" href="/sarabonella/research">Research</a>
-                <a class="nav-publications" href="/sarabonella/publications">Publications</a>
-                <a class="nav-leadership" href="/sarabonella/leadership">Teaching &amp; community</a>
-                <a class="nav-contact" href="/sarabonella/contact">Contact</a>
+                <a class="nav-about" href="index.html#about">About</a>
+                <a class="nav-research" href="research.html">Research</a>
+                <a class="nav-publications" href="publications.html">Publications</a>
+                <a class="nav-leadership" href="leadership.html">Teaching &amp; community</a>
+                <a class="nav-contact" href="contact.html">Contact</a>
             </nav>
         </div>
     </header>
@@ -1248,8 +1267,8 @@
                 <p class="personal-role">Physicist, teacher, and Deputy Director of CECAM.</p>
                 <p class="personal-deck">Sara develops simulation methods to understand matter in motion—from quantum effects and non-equilibrium dynamics to electrochemical interfaces. At EPFL and CECAM she also teaches, supervises, and runs scientific programmes.</p>
                 <div class="action-row">
-                    <a class="button" href="/sarabonella/research">Explore the research</a>
-                    <a class="text-action" href="/sarabonella/contact">Write to Sara <span aria-hidden="true">→</span></a>
+                    <a class="button" href="research.html">Explore the research</a>
+                    <a class="text-action" href="contact.html">Write to Sara <span aria-hidden="true">→</span></a>
                 </div>
                 <ul class="hero-credentials" aria-label="Current roles">
                     <li>Senior Scientist · EPFL</li>
@@ -1257,11 +1276,11 @@
                     <li>PhD programme committee · Physics, EPFL</li>
                 </ul>
             </div>
-
         </div>
 
         <figure class="hero-simulation">
-            <div class="sim-field sim-field--particles">
+            
+<div class="sim-field sim-field--particles">
     <div
         class="sim-field__stage"
         data-hero-field="particles"
@@ -1276,7 +1295,6 @@
     >
         <svg class="sim-field__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
             <rect width="500" height="600" fill="#263338"/>
-
             <g fill="#d7ded2" opacity=".55">
                 <circle cx="250" cy="170" r="52"/><circle cx="250" cy="300" r="30"/>
             </g>
@@ -1291,8 +1309,8 @@
             <span>ẍ = −k(x − x₀) − γẋ + F(pointer)</span>
             <span>damped oscillator per particle</span>
         </div>
-        <div class="sim-field__labels" aria-hidden="true"><span>scattered</span><span>recomposed</span>
-        </div>
+        <div class="sim-field__labels" aria-hidden="true">
+<span>scattered</span><span>recomposed</span>        </div>
         <p class="sim-field__readout" data-hero-field-readout aria-hidden="true"></p>
     </div>
 </div>
@@ -1435,7 +1453,7 @@
                         <div><h3>What happens where materials meet?</h3><p>Statistical mechanics, rare events, charged interfaces, transport, and the non-equilibrium behaviour of condensed-phase systems.</p></div>
                     </article>
                 </div>
-                <div class="action-row"><a class="text-action" href="/sarabonella/research">Read about the research <span aria-hidden="true">→</span></a></div>
+                <div class="action-row"><a class="text-action" href="research.html">Read about the research <span aria-hidden="true">→</span></a></div>
             </div>
 
             <aside class="research-study" aria-labelledby="research-thread-title">
@@ -1477,13 +1495,13 @@
                     <div class="collective-fact"><span>Open infrastructure</span><strong>Software, data, training, and shared methods</strong></div>
                     <div class="collective-fact"><span>Public science</span><strong>Conversations, educational tools, and science comics</strong></div>
                 </div>
-                <div class="action-row"><a class="text-action" href="/sarabonella/leadership" style="color:#fff;">Teaching and community <span aria-hidden="true">→</span></a></div>
+                <div class="action-row"><a class="text-action" href="leadership.html" style="color:#fff;">Teaching and community <span aria-hidden="true">→</span></a></div>
             </div>
         </div>
         <figure class="section-portrait" aria-hidden="true">
-    <img src="/sarabonella/uploads/portrait/sara-bonella-halftone.webp" alt="" width="637" height="710" loading="lazy" decoding="async">
+    <img src="uploads/portrait/sara-bonella-halftone.webp" alt="" width="637" height="710" loading="lazy" decoding="async">
 </figure>
-</section>
+    </section>
 
     <section class="section teaching-section" aria-labelledby="teaching-title">
         <div class="teaching-grid shell">
@@ -1491,7 +1509,7 @@
                 <p class="eyebrow">Teaching &amp; mentoring</p>
                 <h2 id="teaching-title">Teaching and supervision</h2>
                 <p class="section-deck" style="margin-top:1.4rem;">In the classroom, in doctoral supervision, and through open computational tools, teaching, supervision, and open tools are part of the same work.</p>
-                <div class="action-row"><a class="text-action" href="/sarabonella/leadership#public">See public engagement <span aria-hidden="true">→</span></a></div>
+                <div class="action-row"><a class="text-action" href="leadership.html#public">See public engagement <span aria-hidden="true">→</span></a></div>
             </div>
             <div class="course-list">
                 <article class="course-item">
@@ -1554,7 +1572,7 @@
                     <a href="https://doi.org/10.1177/10943420251331673" target="_blank" rel="noopener">DOI ↗</a>
                 </article>
             </div>
-            <div class="action-row"><a class="button" href="/sarabonella/publications">Browse selected publications</a><a class="text-action" href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Open ORCID <span aria-hidden="true">↗</span></a></div>
+            <div class="action-row"><a class="button" href="publications.html">Browse selected publications</a><a class="text-action" href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Open ORCID <span aria-hidden="true">↗</span></a></div>
         </div>
     </section>
 
@@ -1592,11 +1610,11 @@
                 <nav aria-label="Footer navigation">
                     <p class="footer-heading">Explore</p>
                     <ul class="footer-links">
-                        <li><a href="/sarabonella/#about">About</a></li>
-                        <li><a href="/sarabonella/research">Research</a></li>
-                        <li><a href="/sarabonella/publications">Publications</a></li>
-                        <li><a href="/sarabonella/leadership">Teaching &amp; community</a></li>
-                        <li><a href="/sarabonella/leadership#public">Public engagement</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="research.html">Research</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="leadership.html">Teaching &amp; community</a></li>
+                        <li><a href="leadership.html#public">Public engagement</a></li>
                     </ul>
                 </nav>
                 <section aria-labelledby="footer-contact-heading">
@@ -1611,7 +1629,7 @@
             <div class="footer-meta">
                 <span>© 2026 Sara Bonella</span>
                 <span>No enquiry data, cookies, or personal analytics identifiers. Aggregate page-view counts only.</span>
-                                <a href="/sarabonella/404" rel="nofollow" aria-hidden="true" tabindex="-1" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">Page not found</a>
+                                <a href="404.html" rel="nofollow" aria-hidden="true" tabindex="-1" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">Page not found</a>
             </div>
         </div>
     </footer>
@@ -1720,6 +1738,26 @@
                 window.addEventListener('scroll', queueTimelineUpdate, { passive: true });
                 window.addEventListener('resize', queueTimelineUpdate, { passive: true });
                 updateTimeline();
+            }
+
+            // Overlay captions are positioned inside their section rather than in the
+            // flow, so scrolling slides them under the sticky header and clips them
+            // mid-word. Fade each one out as it reaches the header instead.
+            const fadeUnderHeader = document.querySelectorAll(
+                '.science-ornament figcaption, .hero-simulation > figcaption, .sim-field__readout, .sim-field__notation, .sim-field__labels'
+            );
+            if (fadeUnderHeader.length && 'IntersectionObserver' in window) {
+                const headerBox = document.querySelector('.site-header');
+                const clearance = (headerBox ? headerBox.offsetHeight : 76) + 10;
+                const watcher = new IntersectionObserver(entries => {
+                    for (const entry of entries) {
+                        // Only hide once it has gone up past the header, not while it is
+                        // still below the fold waiting to be scrolled to.
+                        const above = entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.top : clearance);
+                        entry.target.classList.toggle('is-behind-header', !entry.isIntersecting && above);
+                    }
+                }, { rootMargin: '-' + clearance + 'px 0px 0px 0px', threshold: 0 });
+                fadeUnderHeader.forEach(node => watcher.observe(node));
             }
 
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

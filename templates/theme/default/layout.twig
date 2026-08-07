@@ -517,6 +517,13 @@
             border-top: 1px solid color-mix(in srgb, var(--lake) 42%, transparent);
             line-height: 1.4;
         }
+        /* Faded rather than clipped when it passes under the sticky header. */
+        .is-behind-header { opacity: 0 !important; }
+        .science-ornament figcaption,
+        .hero-simulation > figcaption,
+        .sim-field__readout,
+        .sim-field__notation,
+        .sim-field__labels { transition: opacity .28s ease; }
         .science-ornament figcaption strong { color: var(--lake); font-size: .7rem; font-weight: 600; letter-spacing: .075em; text-transform: uppercase; }
         .science-ornament__formula { color: var(--oxblood); font: 500 1rem/1.25 var(--font-display); letter-spacing: .015em; }
         .science-ornament figcaption small { color: var(--muted); font-size: .75rem; line-height: 1.45; }
@@ -746,6 +753,17 @@
             gap: clamp(1rem, 3vw, 3rem);
             padding: 2rem 0;
             border-bottom: 1px solid var(--line);
+        }
+        /* With a plate, the row becomes year / image / text / link. Without one it
+           keeps the original three-column rhythm, so a publication added from the
+           admin without an image still looks deliberate. */
+        .selected-paper--illustrated { grid-template-columns: 5rem 9rem minmax(0, 1fr) auto; }
+        .selected-paper__plate {
+            width: 100%;
+            aspect-ratio: 900 / 560;
+            object-fit: cover;
+            border: 1px solid var(--line);
+            background: var(--deep);
         }
         .selected-paper time { color: var(--oxblood); font: 500 1.35rem/1 var(--font-display); }
         .selected-paper:nth-child(3n + 2) time { color: var(--lake); }
@@ -1059,6 +1077,8 @@
             .personal-notes div, .personal-notes div:last-child { border-right: 0; border-bottom: 1px solid var(--line-dark); }
             .personal-notes div:last-child { border-bottom: 0; }
             .selected-paper { grid-template-columns: 3.5rem 1fr; }
+            .selected-paper--illustrated { grid-template-columns: 3.5rem 1fr; }
+            .selected-paper--illustrated .selected-paper__plate { grid-column: 2; max-width: 12rem; }
             .selected-paper > a { grid-column: 2; }
             .action-row { align-items: stretch; flex-direction: column; }
             .button, .text-action { width: 100%; justify-content: center; text-align: center; }
@@ -1359,6 +1379,26 @@
                 window.addEventListener('scroll', queueTimelineUpdate, { passive: true });
                 window.addEventListener('resize', queueTimelineUpdate, { passive: true });
                 updateTimeline();
+            }
+
+            // Overlay captions are positioned inside their section rather than in the
+            // flow, so scrolling slides them under the sticky header and clips them
+            // mid-word. Fade each one out as it reaches the header instead.
+            const fadeUnderHeader = document.querySelectorAll(
+                '.science-ornament figcaption, .hero-simulation > figcaption, .sim-field__readout, .sim-field__notation, .sim-field__labels'
+            );
+            if (fadeUnderHeader.length && 'IntersectionObserver' in window) {
+                const headerBox = document.querySelector('.site-header');
+                const clearance = (headerBox ? headerBox.offsetHeight : 76) + 10;
+                const watcher = new IntersectionObserver(entries => {
+                    for (const entry of entries) {
+                        // Only hide once it has gone up past the header, not while it is
+                        // still below the fold waiting to be scrolled to.
+                        const above = entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.top : clearance);
+                        entry.target.classList.toggle('is-behind-header', !entry.isIntersecting && above);
+                    }
+                }, { rootMargin: '-' + clearance + 'px 0px 0px 0px', threshold: 0 });
+                fadeUnderHeader.forEach(node => watcher.observe(node));
             }
 
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

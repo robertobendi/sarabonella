@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-<style id="bismuth-img-reset">img,svg,video{max-width:100%;height:auto}</style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>document.documentElement.className = 'js';</script>
@@ -11,10 +10,11 @@
     <meta property="og:description" content="Selected publications by Sara Bonella in molecular simulation, statistical physics, quantum dynamics, electrochemistry, and scientific computing.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_GB">
-    <meta property="og:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
+        <meta property="og:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Sara Bonella — computational physicist, Senior Scientist at EPFL and Deputy Director of CECAM.">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://robertobendi.github.io/sarabonella/uploads/social/sara-bonella-card.jpg">
     <meta name="theme-color" content="#f4f1eb">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f4f1eb' stroke='%23202522' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='serif' font-size='24' font-weight='600' fill='%237d303b'%3ESB%3C/text%3E%3C/svg%3E">
@@ -516,6 +516,13 @@
             border-top: 1px solid color-mix(in srgb, var(--lake) 42%, transparent);
             line-height: 1.4;
         }
+        /* Faded rather than clipped when it passes under the sticky header. */
+        .is-behind-header { opacity: 0 !important; }
+        .science-ornament figcaption,
+        .hero-simulation > figcaption,
+        .sim-field__readout,
+        .sim-field__notation,
+        .sim-field__labels { transition: opacity .28s ease; }
         .science-ornament figcaption strong { color: var(--lake); font-size: .7rem; font-weight: 600; letter-spacing: .075em; text-transform: uppercase; }
         .science-ornament__formula { color: var(--oxblood); font: 500 1rem/1.25 var(--font-display); letter-spacing: .015em; }
         .science-ornament figcaption small { color: var(--muted); font-size: .75rem; line-height: 1.45; }
@@ -745,6 +752,17 @@
             gap: clamp(1rem, 3vw, 3rem);
             padding: 2rem 0;
             border-bottom: 1px solid var(--line);
+        }
+        /* With a plate, the row becomes year / image / text / link. Without one it
+           keeps the original three-column rhythm, so a publication added from the
+           admin without an image still looks deliberate. */
+        .selected-paper--illustrated { grid-template-columns: 5rem 9rem minmax(0, 1fr) auto; }
+        .selected-paper__plate {
+            width: 100%;
+            aspect-ratio: 900 / 560;
+            object-fit: cover;
+            border: 1px solid var(--line);
+            background: var(--deep);
         }
         .selected-paper time { color: var(--oxblood); font: 500 1.35rem/1 var(--font-display); }
         .selected-paper:nth-child(3n + 2) time { color: var(--lake); }
@@ -1058,6 +1076,8 @@
             .personal-notes div, .personal-notes div:last-child { border-right: 0; border-bottom: 1px solid var(--line-dark); }
             .personal-notes div:last-child { border-bottom: 0; }
             .selected-paper { grid-template-columns: 3.5rem 1fr; }
+            .selected-paper--illustrated { grid-template-columns: 3.5rem 1fr; }
+            .selected-paper--illustrated .selected-paper__plate { grid-column: 2; max-width: 12rem; }
             .selected-paper > a { grid-column: 2; }
             .action-row { align-items: stretch; flex-direction: column; }
             .button, .text-action { width: 100%; justify-content: center; text-align: center; }
@@ -1190,17 +1210,16 @@
             }
         }
     </style>
-
 <link rel="canonical" href="https://robertobendi.github.io/sarabonella/publications">
 <meta property="og:url" content="https://robertobendi.github.io/sarabonella/publications">
 <meta property="og:site_name" content="Sara Bonella">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="page-publications">
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="publications.html#main">Skip to content</a>
     <header class="site-header">
         <div class="header-inner">
-            <a class="brand" href="/sarabonella/" aria-label="Sara Bonella — Home">
+            <a class="brand" href="index.html" aria-label="Sara Bonella — Home">
                 <svg class="brand-mark" viewBox="0 0 44 44" role="img" aria-label="Sara Bonella monogram">
                     <circle cx="22" cy="22" r="20" fill="#f4f1eb" stroke="#202522"/>
                     <text x="22" y="28" text-anchor="middle" fill="#7d303b" font-family="Newsreader,serif" font-size="17" font-weight="600">SB</text>
@@ -1209,17 +1228,17 @@
             </a>
             <button class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false">Menu</button>
             <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
-                <a class="nav-about" href="/sarabonella/#about">About</a>
-                <a class="nav-research" href="/sarabonella/research">Research</a>
-                <a class="nav-publications" href="/sarabonella/publications">Publications</a>
-                <a class="nav-leadership" href="/sarabonella/leadership">Teaching &amp; community</a>
-                <a class="nav-contact" href="/sarabonella/contact">Contact</a>
+                <a class="nav-about" href="index.html#about">About</a>
+                <a class="nav-research" href="research.html">Research</a>
+                <a class="nav-publications" href="publications.html">Publications</a>
+                <a class="nav-leadership" href="leadership.html">Teaching &amp; community</a>
+                <a class="nav-contact" href="contact.html">Contact</a>
             </nav>
         </div>
     </header>
 
     <main id="main">
-                                                                <section class="page-intro hero--publications page-intro--immersive" data-langevin-surface aria-labelledby="hero-title-publications">
+                                                                                                        <section class="page-intro hero--publications page-intro--immersive" data-langevin-surface aria-labelledby="hero-title-publications">
     <div class="page-intro__grid shell">
         <div class="hero-panel">
             <p class="eyebrow">Publications</p>
@@ -1230,18 +1249,19 @@
                 <li>Methods and physical applications</li><li>Collaborative, peer-reviewed work</li><li>Full record available through ORCID</li>            </ul>
 
             <div class="action-row">
-                <a class="button" href="#selected-papers">Read the selection</a>
+                <a class="button" href="publications.html#selected-papers">Read the selection</a>
                 <a class="text-action" href="https://orcid.org/0000-0003-4131-2513">Open ORCID <span aria-hidden="true">→</span></a>            </div>
         </div>
 
     </div>
 
-    <figure class="hero-photo" aria-hidden="true">
-        <img src="/sarabonella/uploads/heroes/publications-plate.webp" alt="" loading="lazy" decoding="async" style="object-position: 50% 40%;">
+        <figure class="hero-photo" aria-hidden="true">
+        <img src="uploads/heroes/publications-plate.webp" alt="" loading="lazy" decoding="async" style="object-position: 50% 40%;">
     </figure>
 
     <figure class="hero-simulation">
-        <div class="sim-field sim-field--interference">
+        
+<div class="sim-field sim-field--interference">
     <div
         class="sim-field__stage"
         data-hero-field="interference"
@@ -1252,7 +1272,6 @@
     >
         <svg class="sim-field__fallback" viewBox="0 0 500 600" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
             <rect width="500" height="600" fill="#263338"/>
-
             <path d="M60 96V504" stroke="#8d998d" stroke-width="1" opacity=".34"/>
             <g fill="#d7ded2" opacity=".8">
                 <circle cx="112" cy="188" r="2.4"/><circle cx="168" cy="214" r="2"/><circle cx="141" cy="300" r="2.6"/>
@@ -1276,14 +1295,13 @@
             <span>I(y) ∝ cos²(πdy/λD) · sinc²(πay/λD)</span>
             <span>d = slit separation, a = slit width</span>
         </div>
-        <div class="sim-field__labels" aria-hidden="true"><span>single detections</span><span>fringe spacing ∝ λD/d</span>
-        </div>
+        <div class="sim-field__labels" aria-hidden="true">
+<span>single detections</span><span>fringe spacing ∝ λD/d</span>        </div>
         <p class="sim-field__readout" data-hero-field-readout aria-hidden="true"></p>
     </div>
 </div>
-        <figcaption>
-            <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Full record</a> · <a href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&amp;search=The%20Philosophical%20Magazine%20journal%20theoretical%20experimental" target="_blank" rel="noopener">Journal plate</a>
-        </figcaption>
+                <figcaption>
+            <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Full record</a>             · <a href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&amp;search=The%20Philosophical%20Magazine%20journal%20theoretical%20experimental" target="_blank" rel="noopener">Journal plate</a>        </figcaption>
     </figure>
 </section>
 
@@ -1294,37 +1312,37 @@
                 <p class="section-deck">Selected for the way they trace recurring questions in Sara’s work—not as a ranking, but as an invitation into the research.</p>
             </div>
                                     <div class="selected-work">
-                <article class="selected-paper">
-                    <time>2025</time>
-                    <div><h3>Electrically driven first-order phase transition of a 2D ionic crystal at the electrode/electrolyte interface</h3><p>F. Angiolari, A. Coretti, M. Salanne &amp; S. Bonella · PNAS 122</p></div>
-                    <a href="https://doi.org/10.1073/pnas.2520026122" target="_blank" rel="noopener">DOI ↗</a>
-                </article>
-                <article class="selected-paper">
-                    <time>2025</time>
-                    <div><h3>mass-zero constrained molecular dynamics for electrostatic interactions</h3><p>F. Troni, D. Grassano, J. Narayan, B. Roux &amp; S. Bonella · The Journal of Chemical Physics 163</p></div>
-                    <a href="https://doi.org/10.1063/5.0283356" target="_blank" rel="noopener">DOI ↗</a>
-                </article>
-                <article class="selected-paper">
-                    <time>2025</time>
-                    <div><h3>A tale of two codes: CUDA vs OpenACC for mass-zero constrained dynamics</h3><p>A. Vignolo et al. · International Journal of High Performance Computing Applications</p></div>
-                    <a href="https://doi.org/10.1177/10943420251331673" target="_blank" rel="noopener">DOI ↗</a>
-                </article>
-                <article class="selected-paper">
-                    <time>2024</time>
-                    <div><h3>Jupyter widgets and extensions for education and research in computational physics and chemistry</h3><p>D. Du et al. · Computer Physics Communications 305</p></div>
-                    <a href="https://doi.org/10.1016/j.cpc.2024.109353" target="_blank" rel="noopener">DOI ↗</a>
-                </article>
-                <article class="selected-paper">
-                    <time>2023</time>
-                    <div><h3>Inferring free-energy barriers and kinetic rates from molecular dynamics via underdamped Langevin models</h3><p>D. Girardier, H. Vroylandt, S. Bonella &amp; F. Pietrucci · The Journal of Chemical Physics 159</p></div>
-                    <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">DOI ↗</a>
-                </article>
-                <article class="selected-paper">
-                    <time>2023</time>
-                    <div><h3>OSSCAR, an open platform for collaborative development of computational tools for education in science</h3><p>D. Du, T. J. Baird, S. Bonella &amp; G. Pizzi · Computer Physics Communications 282</p></div>
-                    <a href="https://doi.org/10.1016/j.cpc.2022.108546" target="_blank" rel="noopener">DOI ↗</a>
-                </article>
-            </div>
+                                    <article class="selected-paper selected-paper--illustrated">
+                        <time>2023</time>
+                        <img class="selected-paper__plate" src="uploads/publications/pub-langevin-barriers.webp" alt="Diagram: a trajectory crossing the barrier between the two basins of a double-well free-energy profile" loading="lazy" decoding="async" width="900" height="560">
+                        <div><h3>Inferring free-energy barriers and kinetic rates from molecular dynamics via underdamped Langevin models</h3><p>D. Girardier, H. Vroylandt, S. Bonella &amp; F. Pietrucci · The Journal of Chemical Physics 159</p></div>
+                        <a href="https://doi.org/10.1063/5.0169050" target="_blank" rel="noopener">DOI ↗</a>                    </article>
+                                    <article class="selected-paper selected-paper--illustrated">
+                        <time>2025</time>
+                        <img class="selected-paper__plate" src="uploads/publications/pub-electrode-interface.webp" alt="Diagram: ions ordering into a two-dimensional lattice against a charged electrode surface" loading="lazy" decoding="async" width="900" height="560">
+                        <div><h3>Electrically driven first-order phase transition of a 2D ionic crystal at the electrode/electrolyte interface</h3><p>F. Angiolari, A. Coretti, M. Salanne &amp; S. Bonella · Proceedings of the National Academy of Sciences 122</p></div>
+                        <a href="https://doi.org/10.1073/pnas.2520026122" target="_blank" rel="noopener">DOI ↗</a>                    </article>
+                                    <article class="selected-paper selected-paper--illustrated">
+                        <time>2025</time>
+                        <img class="selected-paper__plate" src="uploads/publications/pub-mass-zero.webp" alt="Diagram: massive sites joined by rigid constraints to the mass-zero sites that carry the electrostatics" loading="lazy" decoding="async" width="900" height="560">
+                        <div><h3>mass-zero constrained molecular dynamics for electrostatic interactions</h3><p>F. Troni, D. Grassano, J. Narayan, B. Roux &amp; S. Bonella · The Journal of Chemical Physics 163</p></div>
+                        <a href="https://doi.org/10.1063/5.0283356" target="_blank" rel="noopener">DOI ↗</a>                    </article>
+                                    <article class="selected-paper selected-paper--illustrated">
+                        <time>2025</time>
+                        <img class="selected-paper__plate" src="uploads/publications/pub-cuda-openacc.webp" alt="Diagram: two compute grids side by side, the same work mapped onto them at different occupancy" loading="lazy" decoding="async" width="900" height="560">
+                        <div><h3>A tale of two codes: CUDA vs OpenACC for mass-zero constrained dynamics</h3><p>A. Vignolo et al. · International Journal of High Performance Computing Applications</p></div>
+                        <a href="https://doi.org/10.1177/10943420251331673" target="_blank" rel="noopener">DOI ↗</a>                    </article>
+                                    <article class="selected-paper selected-paper--illustrated">
+                        <time>2024</time>
+                        <img class="selected-paper__plate" src="uploads/publications/pub-jupyter-widgets.webp" alt="Diagram: notebook cells with an interactive plot between them" loading="lazy" decoding="async" width="900" height="560">
+                        <div><h3>Jupyter widgets and extensions for education and research in computational physics and chemistry</h3><p>D. Du et al. · Computer Physics Communications 305</p></div>
+                        <a href="https://doi.org/10.1016/j.cpc.2024.109353" target="_blank" rel="noopener">DOI ↗</a>                    </article>
+                                    <article class="selected-paper selected-paper--illustrated">
+                        <time>2023</time>
+                        <img class="selected-paper__plate" src="uploads/publications/pub-osscar.webp" alt="Diagram: contributors around a shared platform at the centre" loading="lazy" decoding="async" width="900" height="560">
+                        <div><h3>OSSCAR, an open platform for collaborative development of computational tools for education in science</h3><p>D. Du, T. J. Baird, S. Bonella &amp; G. Pizzi · Computer Physics Communications 282</p></div>
+                        <a href="https://doi.org/10.1016/j.cpc.2022.108546" target="_blank" rel="noopener">DOI ↗</a>                    </article>
+                            </div>
         </div>
     </section>
 
@@ -1346,9 +1364,9 @@
                 <div class="action-row"><a class="button" href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Open ORCID</a></div>
             </aside>
         </div>
-            <figure class="science-ornament science-ornament--vortex science-ornament--left" data-science-ornament="vortex">
+        <figure class="science-ornament science-ornament--vortex science-ornament--left" data-science-ornament="vortex">
     <div class="science-ornament__stage">
-<svg class="science-ornament__fallback" viewBox="0 0 320 220" aria-hidden="true">
+        <svg class="science-ornament__fallback" viewBox="0 0 320 220" aria-hidden="true">
             <g fill="none" stroke="#416974" stroke-width="1.2" opacity=".48">
                 <path d="M22 110C22 54 82 33 128 61C163 82 156 133 121 150C82 169 48 143 56 106C63 75 101 71 113 95"/>
                 <path d="M298 110C298 166 238 187 192 159C157 138 164 87 199 70C238 51 272 77 264 114C257 145 219 149 207 125"/>
@@ -1364,7 +1382,7 @@
         <small>Passive tracers circulate through a periodic incompressible velocity field.</small>
     </figcaption>
 </figure>
-</section>
+    </section>
 
     <section class="contact-invitation" aria-labelledby="publication-contact-title">
         <div class="contact-invitation__grid shell">
@@ -1385,11 +1403,11 @@
                 <nav aria-label="Footer navigation">
                     <p class="footer-heading">Explore</p>
                     <ul class="footer-links">
-                        <li><a href="/sarabonella/#about">About</a></li>
-                        <li><a href="/sarabonella/research">Research</a></li>
-                        <li><a href="/sarabonella/publications">Publications</a></li>
-                        <li><a href="/sarabonella/leadership">Teaching &amp; community</a></li>
-                        <li><a href="/sarabonella/leadership#public">Public engagement</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="research.html">Research</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="leadership.html">Teaching &amp; community</a></li>
+                        <li><a href="leadership.html#public">Public engagement</a></li>
                     </ul>
                 </nav>
                 <section aria-labelledby="footer-contact-heading">
@@ -1404,7 +1422,7 @@
             <div class="footer-meta">
                 <span>© 2026 Sara Bonella</span>
                 <span>No enquiry data, cookies, or personal analytics identifiers. Aggregate page-view counts only.</span>
-                                <a href="/sarabonella/404" rel="nofollow" aria-hidden="true" tabindex="-1" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">Page not found</a>
+                                <a href="404.html" rel="nofollow" aria-hidden="true" tabindex="-1" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">Page not found</a>
             </div>
         </div>
     </footer>
@@ -1513,6 +1531,26 @@
                 window.addEventListener('scroll', queueTimelineUpdate, { passive: true });
                 window.addEventListener('resize', queueTimelineUpdate, { passive: true });
                 updateTimeline();
+            }
+
+            // Overlay captions are positioned inside their section rather than in the
+            // flow, so scrolling slides them under the sticky header and clips them
+            // mid-word. Fade each one out as it reaches the header instead.
+            const fadeUnderHeader = document.querySelectorAll(
+                '.science-ornament figcaption, .hero-simulation > figcaption, .sim-field__readout, .sim-field__notation, .sim-field__labels'
+            );
+            if (fadeUnderHeader.length && 'IntersectionObserver' in window) {
+                const headerBox = document.querySelector('.site-header');
+                const clearance = (headerBox ? headerBox.offsetHeight : 76) + 10;
+                const watcher = new IntersectionObserver(entries => {
+                    for (const entry of entries) {
+                        // Only hide once it has gone up past the header, not while it is
+                        // still below the fold waiting to be scrolled to.
+                        const above = entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.top : clearance);
+                        entry.target.classList.toggle('is-behind-header', !entry.isIntersecting && above);
+                    }
+                }, { rootMargin: '-' + clearance + 'px 0px 0px 0px', threshold: 0 });
+                fadeUnderHeader.forEach(node => watcher.observe(node));
             }
 
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

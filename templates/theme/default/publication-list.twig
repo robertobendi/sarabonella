@@ -42,8 +42,11 @@
             <div class="selected-work">
 {% if selected_entries|length > 0 %}
                 {% for item in selected_entries %}
-                    <article class="selected-paper">
+                    <article class="selected-paper{% if item.field('image') %} selected-paper--illustrated{% endif %}">
                         <time>{{ item.field('year') }}</time>
+{% if item.field('image') %}
+                        <img class="selected-paper__plate" src="{{ item.field('image') }}" alt="{{ item.field('image_alt')|default('') }}"{% if not item.field('image_alt') %} aria-hidden="true"{% endif %} loading="lazy" decoding="async" width="900" height="560">
+{% endif %}
                         <div><h3>{{ item.field('title') }}</h3><p>{{ item.field('authors') }} · {{ item.field('venue') }}</p></div>
                         {% if item.field('doi_url') %}<a href="{{ item.field('doi_url') }}" target="_blank" rel="noopener">DOI ↗</a>{% else %}<a href="/publications/{{ item.slug }}">Details →</a>{% endif %}
                     </article>
