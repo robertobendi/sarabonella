@@ -358,22 +358,25 @@
         .hero-simulation .sim-field__stage { width: 100%; height: 100%; }
         .hero-simulation .sim-field__stage { aspect-ratio: auto; border: 0; box-shadow: none; }
         .hero-simulation .sim-field__stage:focus-visible { outline: 3px solid var(--rose); outline-offset: -8px; }
+        /* Credits only, set quietly in the corner: no card, no title, nothing
+           explaining the field. */
         .hero-simulation > figcaption {
             position: absolute;
             z-index: 3;
-            top: clamp(2rem, 5vw, 4.5rem);
+            top: clamp(1.4rem, 4vw, 3rem);
             right: var(--gutter);
-            max-width: 31ch;
-            padding: .55rem .75rem;
-            border-left: 1px solid var(--rose);
-            color: rgba(255,254,250,.72);
-            background: rgba(38,51,56,.66);
-            backdrop-filter: blur(8px);
-            font-size: .72rem;
+            max-width: 34ch;
+            /* .55 is the lowest alpha that still clears 4.5:1 on --deep; these
+               are links, so they have to be readable however quiet they look. */
+            color: rgba(255,254,250,.55);
+            font-size: .68rem;
             line-height: 1.45;
+            letter-spacing: .02em;
+            text-align: right;
         }
-        .hero-simulation > figcaption span { display: block; margin-bottom: .15rem; color: var(--rose); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-        .hero-simulation > figcaption a { color: var(--rose); }
+        .hero-simulation > figcaption:empty { display: none; }
+        .hero-simulation > figcaption a { color: inherit; text-decoration-color: rgba(255,254,250,.4); }
+        .hero-simulation > figcaption a:hover { color: var(--rose); text-decoration-color: currentColor; }
         .personal-portrait {
             position: relative;
             z-index: 3;
@@ -917,7 +920,7 @@
             .personal-hero__grid { display: block; min-height: inherit; padding-top: clamp(16rem, 39svh, 22rem); padding-bottom: 6.5rem; }
             .personal-hero__copy { max-width: 44rem; }
             .page-intro__media { width: min(100%, 580px); justify-self: start; }
-            .hero-simulation > figcaption { top: auto; right: var(--gutter); bottom: 1.25rem; left: var(--gutter); max-width: 38ch; padding: .55rem 0 0; border-top: 1px solid rgba(255,254,250,.28); border-left: 0; background: transparent; backdrop-filter: none; }
+            .hero-simulation > figcaption { top: auto; bottom: 1rem; right: var(--gutter); left: auto; max-width: 30ch; }
             /* The caption takes the bottom of the frame here, so the live readout
                moves to the free strip above the headline and the axis labels go. */
             .hero-simulation .sim-field__readout { top: .7rem; right: var(--gutter); bottom: auto; left: auto; }
@@ -1033,7 +1036,7 @@
             .personal-portrait { top: 1rem; width: clamp(7.5rem, 32vw, 9.5rem); }
             .personal-portrait img { border-width: 6px; box-shadow: 7px 7px 0 var(--oxblood), 0 16px 40px rgba(10,18,21,.3); }
             .personal-portrait figcaption { max-width: 22ch; padding-top: .55rem; font-size: .68rem; }
-            .hero-simulation > figcaption { right: var(--gutter); bottom: .85rem; left: var(--gutter); max-width: none; padding: .45rem .55rem; font-size: .72rem; }
+            .hero-simulation > figcaption { bottom: .8rem; max-width: 22ch; font-size: .64rem; }
             .sim-field__notation { display: none; }
             .sim-field__labels { left: .7rem; right: .7rem; bottom: .6rem; padding-right: 0 !important; font-size: .66rem; }
             .personal-hero .sim-field__labels { display: none; }
@@ -1092,7 +1095,7 @@
             .personal-deck { font-size: 1rem; line-height: 1.5; }
             .personal-portrait { top: 1.8rem; width: clamp(7.5rem, 20vw, 9.5rem); }
             .personal-portrait figcaption { font-size: .66rem; }
-            .hero-simulation > figcaption { right: var(--gutter); left: auto; max-width: 28ch; }
+            .hero-simulation > figcaption { right: var(--gutter); left: auto; max-width: 24ch; }
         }
 
         @media (min-width: 640px) and (max-width: 900px) and (max-height: 650px) and (orientation: landscape) {
@@ -1279,10 +1282,7 @@
     </div>
 </div>
         <figcaption>
-            <span>Two-slit interference</span>
-            Detections land one at a time and the fringes build up from them. Move the pointer to change the slit separation.
-             · <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Full record</a>
-             · <a href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&amp;search=The%20Philosophical%20Magazine%20journal%20theoretical%20experimental" target="_blank" rel="noopener">Journal plate</a>
+            <a href="https://orcid.org/0000-0003-4131-2513" target="_blank" rel="noopener">Full record</a> · <a href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&amp;search=The%20Philosophical%20Magazine%20journal%20theoretical%20experimental" target="_blank" rel="noopener">Journal plate</a>
         </figcaption>
     </figure>
 </section>
@@ -1908,7 +1908,7 @@
                         const source = env.assets && env.assets[this.asset];
                         if (!source) return s;                       // stays empty until it loads
 
-                        const wanted = env.compact ? 3200 : 12500;
+                        const wanted = env.compact ? 3200 : 9800;
                         const sw = source.width, sh = source.height;
                         // Roughly half the field is subject, so oversample to land near
                         // the wanted count after the alpha test.
@@ -1971,10 +1971,10 @@
                             return;
                         }
                         const step = Math.min(.04, dt);
-                        const stiffness = 30, damping = 6.6;
+                        const stiffness = 21, damping = 5.4;
                         const px = env.pointer.x, py = env.pointer.y;
                         const push = env.pointer.influence;
-                        const radius = .19, radius2 = radius * radius;
+                        const radius = .24, radius2 = radius * radius;
                         let displaced = 0;
 
                         for (let i = 0; i < s.points.length; i++) {
@@ -1989,9 +1989,17 @@
                                 const d2 = dx * dx + dy * dy;
                                 if (d2 < radius2) {
                                     const d = Math.sqrt(d2) || 1e-4;
-                                    const force = push * 11 * (1 - d / radius) / d;
-                                    ax += dx * force;
-                                    ay += dy * force;
+                                    // Mostly swirl, barely any push. A radial force alone
+                                    // blows a hole through the portrait; letting the
+                                    // particles travel around the pointer instead reads
+                                    // as the picture parting and closing again.
+                                    const falloff = 1 - d / radius;
+                                    const smooth = falloff * falloff;
+                                    const nx = dx / d, ny = dy / d;
+                                    const outward = push * 2.1 * smooth;
+                                    const swirl = push * 5.4 * smooth;
+                                    ax += nx * outward - ny * swirl;
+                                    ay += ny * outward + nx * swirl;
                                 }
                             }
                             p.vx += ax * step; p.vy += ay * step;
@@ -2065,20 +2073,6 @@
                                 target.rect(x - r, y - r, r * 2, r * 2);
                             }
                             target.fill();
-                        }
-                        // Displaced particles pick up the accent, so the disturbance is
-                        // visible as colour as well as motion.
-                        if (s.scatter > .004) {
-                            target.fillStyle = colours.rose;
-                            for (let i = 0; i < s.points.length; i++) {
-                                const p = s.points[i];
-                                const drift = Math.hypot(p.x - p.hx, p.y - p.hy);
-                                if (drift < .012) continue;
-                                const x = left + p.x * boxW, y = top + p.y * boxH;
-                                target.globalAlpha = Math.min(.85, drift * 9) * p.ink * 1.6;
-                                const r = p.size * dot;
-                                target.fillRect(x - r, y - r, r * 2, r * 2);
-                            }
                         }
                         target.globalAlpha = 1;
                         if (!moving) {

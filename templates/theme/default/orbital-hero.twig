@@ -45,11 +45,11 @@
 
     <figure class="hero-simulation">
         {% include '@theme/hero-field.twig' with { field_kind: hero_field|default('wavepacket') } %}
+        {# Credits only: the field speaks for itself, and the model is named in
+           the notation along the bottom edge. #}
         <figcaption>
-            <span>{{ hero_simulation_title|default('Live model') }}</span>
-            {{ hero_simulation_caption }}
-            {% if hero_simulation_source_url %} · <a href="{{ hero_simulation_source_url }}" target="_blank" rel="noopener">{{ hero_simulation_source_label|default('Research basis') }}</a>{% endif %}
-            {% if hero_photo_source_url %} · <a href="{{ hero_photo_source_url }}" target="_blank" rel="noopener">{{ hero_photo_label|default('Photograph') }}</a>{% endif %}
+            {% if hero_simulation_source_url %}<a href="{{ hero_simulation_source_url }}" target="_blank" rel="noopener">{{ hero_simulation_source_label|default('Research basis') }}</a>{% endif %}
+            {% if hero_photo_source_url %}{% if hero_simulation_source_url %} · {% endif %}<a href="{{ hero_photo_source_url }}" target="_blank" rel="noopener">{{ hero_photo_label|default('Photograph') }}</a>{% endif %}
         </figcaption>
     </figure>
 {% endif %}
