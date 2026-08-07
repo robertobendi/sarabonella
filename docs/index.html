@@ -534,6 +534,21 @@
             mask-image: radial-gradient(ellipse 74% 74% at 76% 76%, #000 0 30%, rgba(0,0,0,.78) 48%, rgba(0,0,0,.2) 68%, transparent 95%);
         }
         .science-ornament--right figcaption { right: calc(var(--section-edge) - var(--ornament-offset)); bottom: 1rem; justify-items: end; text-align: right; }
+
+        /* Halftone portrait as quiet background texture. It sits in normal flow at
+           the top of the heading column, so it can never land on the type however
+           the section reflows, and the column's end alignment grows it upward into
+           the space that was empty. */
+        .section-portrait {
+            width: clamp(14rem, 26vw, 23rem);
+            margin: 0 0 clamp(1.5rem, 4vw, 3rem);
+            opacity: .5;
+            pointer-events: none;
+            -webkit-mask-image: linear-gradient(180deg, #000 56%, transparent 94%);
+            mask-image: linear-gradient(180deg, #000 56%, transparent 94%);
+        }
+        .section-portrait img { width: 100%; height: auto; }
+
         .science-ornament--about {
             --ornament-offset: max(-10rem, calc((100vw - var(--max)) / 2 - 5.5rem));
             top: clamp(10rem, 14vw, 14rem);
@@ -924,6 +939,8 @@
                 -webkit-mask-image: radial-gradient(ellipse 74% 64% at 14% 92%, #000 0 24%, rgba(0,0,0,.7) 43%, rgba(0,0,0,.17) 62%, transparent 86%);
                 mask-image: radial-gradient(ellipse 74% 64% at 14% 92%, #000 0 24%, rgba(0,0,0,.7) 43%, rgba(0,0,0,.17) 62%, transparent 86%);
             }
+            /* Once the grids stack there is no empty column left to fill. */
+            .section-portrait { display: none; }
             .research-feature { background: var(--field); }
             .research-study { background: var(--lake-wash); }
             .section-heading--split .section-deck { justify-self: start; }
@@ -1069,7 +1086,7 @@
             @page { margin: 16mm 14mm; }
             html, body { background: #fff; color: #000; font-size: 10.5pt; }
             .site-header, .menu-toggle, .primary-nav, .skip-link,
-            .hero-simulation, .science-ornament, .sim-field,
+            .hero-simulation, .science-ornament, .section-portrait, .sim-field,
             .footer-wordmark, .career-timeline__toggle,
             .action-row, .text-action, .button { display: none !important; }
             .personal-hero::before, .personal-hero:has(.sim-field__stage:focus-visible)::after { content: none !important; }
@@ -1413,6 +1430,9 @@
     <section class="section section--plum" aria-labelledby="collective-title">
         <div class="collective-grid shell">
             <div class="teaching-intro">
+                <figure class="section-portrait" aria-hidden="true">
+    <img src="/sarabonella/uploads/portrait/sara-bonella-halftone.png" alt="" width="823" height="868" loading="lazy" decoding="async">
+</figure>
                 <p class="eyebrow">CECAM</p>
                 <h2 id="collective-title">Research needs shared infrastructure</h2>
             </div>
@@ -1426,7 +1446,7 @@
                 <div class="action-row"><a class="text-action" href="/sarabonella/leadership" style="color:#fff;">Teaching and community <span aria-hidden="true">→</span></a></div>
             </div>
         </div>
-    </section>
+</section>
 
     <section class="section teaching-section" aria-labelledby="teaching-title">
         <div class="teaching-grid shell">
